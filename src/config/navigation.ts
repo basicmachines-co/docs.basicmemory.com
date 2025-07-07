@@ -25,7 +25,7 @@ export const navConfig = {
     {
       title: 'Get Started',
       items: [
-        { title: 'Introduction', href: '/' },
+        { title: 'Basic Memory', href: '/' },
         { title: 'Getting Started', href: '/getting-started' },
         { title: 'User Guide', href: '/user-guide' },
       ],

@@ -23,10 +23,10 @@ const { title, description } = Astro.props.frontmatter || Astro.props
           <article class="max-w-4xl py-8">
             <slot />
           </article>
+          <Footer />
         </main>
         <TableOfContents />
       </div>
     </div>
-    <Footer />
   </div>
 </Layout>
