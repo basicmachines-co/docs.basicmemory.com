@@ -6,9 +6,9 @@ import { navConfig } from '@/config/navigation'
 
 <header class="sticky top-0 z-50 w-full border-b border-gray-100 bg-background">
   <div class="flex justify-center">
-    <div class="flex h-14 w-full max-w-screen-2xl items-center">
-      <!-- Logo aligned with left sidebar (w-72) -->
-      <div class="w-72 flex items-center px-8">
+    <div class="flex h-14 w-full max-w-screen-2xl items-center px-4 md:px-0">
+      <!-- Logo -->
+      <div class="flex-shrink-0 md:w-72 flex items-center md:px-8">
         <a href="/" class="flex items-center space-x-2">
           <img 
             src="/logo-light.png" 
@@ -23,8 +23,8 @@ import { navConfig } from '@/config/navigation'
         </a>
       </div>
       
-      <!-- Centered search and right navigation -->
-      <div class="flex flex-1 items-center justify-between px-6">
+      <!-- Desktop navigation -->
+      <div class="hidden md:flex flex-1 items-center justify-between px-6">
         <div class="flex-1 max-w-md mx-auto">
           <button class="inline-flex items-center whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 relative w-full justify-start text-sm text-muted-foreground">
           <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,6 +63,89 @@ import { navConfig } from '@/config/navigation'
           <ThemeToggle client:load />
         </nav>
       </div>
+      
+      <!-- Mobile right side buttons -->
+      <div class="flex md:hidden items-center ml-auto space-x-4">
+        <!-- Search icon -->
+        <button class="p-2 text-muted-foreground hover:text-foreground transition-colors">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
+          </svg>
+        </button>
+        
+        <!-- Three dots menu -->
+        <div class="relative">
+          <button 
+            id="mobile-menu-trigger"
+            class="p-2 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+            </svg>
+          </button>
+          
+          <!-- Dropdown menu -->
+          <div 
+            id="mobile-menu-dropdown"
+            class="absolute right-0 mt-2 w-48 bg-background border border-border rounded-md shadow-lg opacity-0 invisible transition-all duration-200"
+          >
+            <div class="py-1">
+              {navConfig.topNav.map((item) => (
+                <a 
+                  href={item.href} 
+                  class="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                  style="text-decoration: none"
+                >
+                  {item.title}
+                </a>
+              ))}
+              
+              <a 
+                href="/getting-started"
+                class="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                style="text-decoration: none"
+              >
+                Get Started
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('mobile-menu-trigger');
+    const dropdown = document.getElementById('mobile-menu-dropdown');
+    
+    if (trigger && dropdown) {
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.contains('opacity-100');
+        
+        if (isOpen) {
+          dropdown.classList.remove('opacity-100', 'visible');
+          dropdown.classList.add('opacity-0', 'invisible');
+        } else {
+          dropdown.classList.remove('opacity-0', 'invisible');
+          dropdown.classList.add('opacity-100', 'visible');
+        }
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', () => {
+        dropdown.classList.remove('opacity-100', 'visible');
+        dropdown.classList.add('opacity-0', 'invisible');
+      });
+      
+      // Prevent dropdown from closing when clicking inside
+      dropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+  });
+</script>
