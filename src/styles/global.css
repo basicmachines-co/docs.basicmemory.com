@@ -194,7 +194,24 @@
   }
   
   img {
-    @apply rounded-lg my-6;
+    @apply rounded-lg my-6 cursor-pointer transition-opacity hover:opacity-90;
+  }
+  
+  /* Full screen image viewer */
+  .image-viewer {
+    @apply fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300;
+  }
+  
+  .image-viewer.active {
+    @apply opacity-100 visible;
+  }
+  
+  .image-viewer img {
+    @apply max-w-full max-h-full object-contain rounded-lg cursor-default;
+  }
+  
+  .image-viewer-close {
+    @apply absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors cursor-pointer;
   }
   
   /* Steps component numbering */
