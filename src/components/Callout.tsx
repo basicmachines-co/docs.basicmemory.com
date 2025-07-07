@@ -56,7 +56,10 @@ const icons = {
   ),
   tip: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+      <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.05 1.5 3.5.76.76 1.23 1.52 1.41 2.5" />
+      <path d="M13 18h-2a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1Z" />
     </svg>
   )
 }
@@ -69,7 +72,7 @@ export default function Callout({ children, type = 'note', title, className }: C
   return (
     <div className={cn('my-6 rounded-lg border p-4', styles.container, className)}>
       <div className="flex gap-3">
-        <div className={cn('mt-0.5 flex-shrink-0', styles.icon)}>
+        <div className={cn('flex-shrink-0 pt-2', styles.icon)}>
           {icon}
         </div>
         <div className="flex-1 space-y-2">
