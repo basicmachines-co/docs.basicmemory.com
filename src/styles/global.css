@@ -108,7 +108,7 @@
   }
   
   pre {
-    @apply mb-4 mt-6 overflow-x-auto rounded-lg bg-gray-100 dark:bg-gray-900 p-4 pr-12;
+    @apply mb-4 mt-6 overflow-x-auto rounded-lg bg-gray-100/50 dark:bg-gray-900 p-4 pr-12 border border-gray-200 dark:border-gray-800;
   }
   
   pre code {
@@ -126,6 +126,47 @@
   
   .code-block-wrapper .copy-button.copied {
     @apply text-green-600 dark:text-green-400;
+  }
+  
+  /* Markdown syntax highlighting */
+  pre code .line {
+    display: inline-block;
+    width: 100%;
+  }
+  
+  /* Markdown headings in code blocks */
+  pre code .token.title,
+  pre code .token.heading {
+    @apply text-blue-600 dark:text-blue-400 font-semibold;
+  }
+  
+  pre code .token.punctuation.heading {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+  
+  /* Markdown links */
+  pre code .token.link,
+  pre code .token.url {
+    @apply text-purple-600 dark:text-purple-400;
+  }
+  
+  /* Markdown bold/italic */
+  pre code .token.bold {
+    @apply font-semibold;
+  }
+  
+  pre code .token.italic {
+    font-style: italic;
+  }
+  
+  /* Markdown lists */
+  pre code .token.list {
+    @apply text-gray-600 dark:text-gray-400;
+  }
+  
+  /* Markdown code */
+  pre code .token.code {
+    @apply bg-gray-200 dark:bg-gray-800 px-1 rounded;
   }
   
   a {
