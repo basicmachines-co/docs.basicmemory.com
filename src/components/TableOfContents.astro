@@ -1,0 +1,47 @@
+---
+// Extract headings from the current page
+// This is a simplified version - in a real implementation you might want to
+// generate this from the MDX content or pass it as a prop
+const tocItems = [
+  { id: 'true-ai-collaboration', title: 'True AI Collaboration', level: 2 },
+  { id: 'pick-up-conversations-exactly-where-you-left-off', title: 'Pick up conversations exactly where you left off', level: 2 },
+  { id: 'knowledge-that-compounds', title: 'Knowledge that compounds', level: 2 },
+  { id: 'beyond-chat-summaries', title: 'Beyond Chat Summaries', level: 3 },
+  { id: 'semantic-connections', title: 'Semantic Connections', level: 3 },
+  { id: 'your-knowledge-your-control', title: 'Your Knowledge, Your Control', level: 2 },
+  { id: 'versatile-knowledge-building', title: 'Versatile Knowledge Building', level: 2 },
+  { id: 'real-time-knowledge-flow', title: 'Real-Time Knowledge Flow', level: 2 },
+  { id: 'designed-for-collaboration', title: 'Designed for Collaboration', level: 2 },
+  { id: 'ai-integration', title: 'AI Integration', level: 3 },
+  { id: 'human-friendly', title: 'Human-Friendly', level: 3 },
+  { id: 'get-started', title: 'Get Started', level: 2 },
+]
+---
+
+<aside class="hidden xl:block w-64 flex-shrink-0">
+  <div class="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto py-6 pl-6">
+    <div class="space-y-3">
+      <div class="flex items-center gap-2 text-sm font-medium text-gray-900">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+        </svg>
+        <span>On this page</span>
+      </div>
+      <nav>
+        <ul class="space-y-1 text-sm">
+          {tocItems.map((item) => (
+            <li class={item.level === 3 ? 'ml-4' : ''}>
+              <a
+                href={`#${item.id}`}
+                class="block py-1 text-gray-600 hover:text-gray-900 transition-colors"
+                style="text-decoration: none"
+              >
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</aside>

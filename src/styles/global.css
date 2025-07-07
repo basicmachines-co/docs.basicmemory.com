@@ -64,11 +64,11 @@
   }
   
   h2 {
-    @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+    @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-12 mb-4;
   }
   
   h3 {
-    @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+    @apply scroll-m-20 text-2xl font-semibold tracking-tight mt-12 mb-4;
   }
   
   h4 {
@@ -92,15 +92,15 @@
   }
   
   code {
-    @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+    @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
   }
   
   pre {
-    @apply mb-4 mt-6 overflow-x-auto rounded-lg bg-gray-900 p-4;
+    @apply mb-4 mt-6 overflow-x-auto rounded-lg bg-gray-100 dark:bg-gray-900 p-4;
   }
   
   pre code {
-    @apply bg-transparent p-0 text-gray-100;
+    @apply bg-transparent p-0 text-gray-900 dark:text-gray-100 font-light;
   }
   
   a {

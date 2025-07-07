@@ -8,10 +8,6 @@ import react from '@astrojs/react';
 export default defineConfig({
   integrations: [mdx(), react()],
   markdown: {
-    syntaxHighlight: 'shiki',
-    shikiConfig: {
-      theme: 'github-dark',
-      wrap: false
-    }
+    syntaxHighlight: false
   }
 });
