@@ -77,7 +77,7 @@ export default function Callout({ children, type = 'note', title, className }: C
         </div>
         <div className="flex-1 space-y-2">
           {(title || !children || typeof children === 'string') && (
-            <div className={cn('font-semibold leading-none tracking-tight', styles.title)}>
+            <div className={cn('font-medium leading-none tracking-tight', styles.title)}>
               {title || defaultTitle}
             </div>
           )}

@@ -34,7 +34,7 @@ export default function MobileMenu() {
             <div className="space-y-6">
               {navConfig.sidebar.map((section) => (
                 <div key={section.title} className="space-y-3">
-                  <h4 className="text-sm font-semibold leading-none tracking-tight">
+                  <h4 className="text-sm font-medium leading-none tracking-tight">
                     {section.title}
                   </h4>
                   <ul className="space-y-1">

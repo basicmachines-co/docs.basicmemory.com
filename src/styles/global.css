@@ -61,15 +61,15 @@
 
   /* Typography */
   h1 {
-    @apply scroll-m-20 text-3xl font-bold tracking-tight mb-6;
+    @apply scroll-m-20 text-3xl font-semibold tracking-tight mb-6;
   }
 
   h2 {
-    @apply scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0 mt-12 mb-4;
+    @apply scroll-m-20 text-3xl font-medium tracking-tight first:mt-0 mt-12 mb-4;
   }
 
   h3 {
-    @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+    @apply scroll-m-20 text-2xl font-medium tracking-tight;
   }
 
   /* Article content h3 spacing - only applies to h3 in main content */
@@ -78,7 +78,7 @@
   }
 
   h4 {
-    @apply scroll-m-20 text-xl font-semibold tracking-tight;
+    @apply scroll-m-20 text-xl font-medium tracking-tight;
   }
 
   p {
@@ -171,6 +171,20 @@
 
   a {
     @apply font-medium text-primary hover:text-primary/80;
+  }
+  
+  /* Underline links in article content */
+  article a {
+    @apply underline underline-offset-2;
+  }
+  
+  /* Remove underlines from specific areas */
+  header a,
+  nav a,
+  aside a,
+  footer a,
+  .no-underline {
+    text-decoration: none !important;
   }
 
   table {

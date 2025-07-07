@@ -31,7 +31,7 @@ const currentPath = Astro.url.pathname
       <!-- Regular navigation sections -->
       {navConfig.sidebar.map((section) => (
         <div>
-          <h4 class="text-sm font-semibold leading-none tracking-tight text-gray-900 px-3 mb-4 mt-10">
+          <h4 class="text-sm font-medium leading-none tracking-tight text-gray-900 px-3 mb-4 mt-10">
             {section.title}
           </h4>
           <ul class="space-y-1 list-none m-0 p-0">
@@ -41,7 +41,7 @@ const currentPath = Astro.url.pathname
                   href={item.href}
                   class={`block px-3 py-1.5 text-sm transition-colors hover:text-gray-900 rounded-md ${
                     currentPath === item.href
-                      ? 'text-gray-900 font-semibold bg-gray-100'
+                      ? 'text-gray-900 font-medium bg-gray-100'
                       : 'text-gray-600 font-normal hover:bg-gray-50'
                   }`}
                   style="text-decoration: none"
