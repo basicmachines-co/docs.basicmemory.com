@@ -6,7 +6,7 @@ export interface Props {
   description?: string
 }
 
-const { title, description = 'Basic Memory - Persistent memory for Claude AI' } = Astro.props
+const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory for Claude AI' } = Astro.props
 ---
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ const { title, description = 'Basic Memory - Persistent memory for Claude AI' } 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <title>Basic Memory - {title}</title>
+    <title>{!title || title === 'Basic Memory' ? 'Basic Memory' : `${title} - Basic Memory`}</title>
   </head>
   <body>
     <slot />
