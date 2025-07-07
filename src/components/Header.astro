@@ -4,47 +4,61 @@ import MobileMenu from './MobileMenu'
 import { navConfig } from '@/config/navigation'
 ---
 
-<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-  <div class="container flex h-16 items-center px-4">
-    <MobileMenu client:load />
-    
-    <div class="flex flex-1 items-center justify-between space-x-2 md:justify-start">
-      <a href="/" class="flex items-center space-x-2">
-        <img 
-          src="/logo/logo-light.png" 
-          alt="Basic Memory" 
-          class="h-8 w-auto dark:hidden"
-        />
-        <img 
-          src="/logo/logo-dark.png" 
-          alt="Basic Memory" 
-          class="hidden h-8 w-auto dark:block"
-        />
-      </a>
+<header class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  <div class="flex justify-center">
+    <div class="flex h-14 w-full max-w-screen-2xl items-center">
+      <!-- Logo aligned with left sidebar (w-64) -->
+      <div class="w-64 flex items-center px-4">
+        <a href="/" class="flex items-center space-x-2">
+          <img 
+            src="/logo-light.png" 
+            alt="Basic Memory" 
+            class="h-8 dark:hidden"
+          />
+          <img 
+            src="/logo-dark.png" 
+            alt="Basic Memory" 
+            class="hidden h-8 dark:block"
+          />
+        </a>
+      </div>
       
-      <div class="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-        <nav class="hidden items-center space-x-6 text-sm font-medium md:flex">
+      <!-- Centered search and right navigation -->
+      <div class="flex flex-1 items-center justify-between px-6">
+        <div class="flex-1 max-w-md mx-auto">
+          <button class="inline-flex items-center whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 relative w-full justify-start text-sm text-muted-foreground">
+          <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
+          </svg>
+          <span>Search...</span>
+          <kbd class="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+            <span class="text-xs">⌘K</span>
+          </kbd>
+          </button>
+        </div>
+        
+        <nav class="flex items-center space-x-8 ml-8">
           {navConfig.topNav.map((item) => (
             <a 
               href={item.href} 
-              class="transition-colors hover:text-foreground/80 text-foreground/60"
+              class="text-sm font-normal transition-colors hover:text-foreground text-muted-foreground"
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noopener noreferrer" : undefined}
+              style="text-decoration: none"
             >
               {item.title}
             </a>
           ))}
-        </nav>
-        
-        <div class="flex items-center space-x-2">
+          
           <a 
             href="/getting-started"
-            class="hidden md:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-foreground text-background hover:bg-foreground/80 hover:text-background h-9 px-4 py-2"
+            style="text-decoration: none"
           >
             Get Started
           </a>
           <ThemeToggle client:load />
-        </div>
+        </nav>
       </div>
     </div>
   </div>

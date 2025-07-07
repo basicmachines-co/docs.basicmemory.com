@@ -2,6 +2,7 @@
 import Layout from './Layout.astro'
 import Header from '@/components/Header.astro'
 import Sidebar from '@/components/Sidebar.astro'
+import TableOfContents from '@/components/TableOfContents.astro'
 import Footer from '@/components/Footer.astro'
 
 export interface Props {
@@ -15,13 +16,16 @@ const { title, description } = Astro.props
 <Layout title={title} description={description}>
   <div class="min-h-screen flex flex-col">
     <Header />
-    <div class="flex flex-1">
-      <Sidebar />
-      <main class="flex-1 w-full">
-        <article class="mx-auto max-w-4xl px-6 py-8 lg:px-8">
-          <slot />
-        </article>
-      </main>
+    <div class="flex flex-1 justify-center">
+      <div class="flex w-full max-w-screen-2xl">
+        <Sidebar />
+        <main class="flex-1 min-w-0 px-6">
+          <article class="max-w-4xl py-8">
+            <slot />
+          </article>
+        </main>
+        <TableOfContents />
+      </div>
     </div>
     <Footer />
   </div>
