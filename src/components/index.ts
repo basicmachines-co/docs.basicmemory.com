@@ -10,6 +10,9 @@ export { default as Tip } from './Tip'
 export { default as Callout } from './Callout'
 
 // Interactive components
-export { Accordion, AccordionItem } from './Accordion'
+export { Accordion, AccordionItem } from './AccordionStatic'
 export { Steps, Step } from './Steps'
 export { default as CodeGroup, CodeTab } from './CodeGroup'
+
+// Icon components
+export { default as IconMap } from './IconMap'

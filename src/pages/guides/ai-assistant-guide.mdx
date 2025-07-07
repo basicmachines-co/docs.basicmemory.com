@@ -142,57 +142,46 @@ recent_activity(timeframe="1 week")     # Check what's been updated
 
 Basic Memory uses a special URL format to reference entities in the knowledge graph:
 
-<CodeGroup>
-<CodeTab label="By Title">
+### URL Formats
+
+**By Title:**
 ```text
 memory://title
 ```
-</CodeTab>
 
-<CodeTab label="By Folder and Title">
+**By Folder and Title:**
 ```text
 memory://folder/title
 ```
-</CodeTab>
 
-<CodeTab label="By Permalink">
+**By Permalink:**
 ```text
 memory://permalink
 ```
-</CodeTab>
 
-<CodeTab label="Follow Relations">
+**Follow Relations:**
 ```text
 memory://path/relation_type/*
 ```
-</CodeTab>
 
-<CodeTab label="Find Relations to Target">
+**Find Relations to Target:**
 ```text
 memory://path/*/target
 ```
-</CodeTab>
-</CodeGroup>
 
 ## Semantic Markdown Format
 
 Knowledge is encoded in standard markdown using simple patterns:
 
-<Accordion>
-  <AccordionItem title="Observations" defaultOpen={true}>
-    Facts about an entity:
-    ```markdown
-    - [category] This is an observation #tag1 #tag2 (optional context)
-    ```
-  </AccordionItem>
-  
-  <AccordionItem title="Relations">
-    Links between entities:
-    ```markdown
-    - relation_type [[Target Entity]] (optional context)
-    ```
-  </AccordionItem>
-</Accordion>
+Facts about an entity:
+```markdown
+- [category] This is an observation #tag1 #tag2 (optional context)
+```
+
+Links between entities:
+```markdown
+- relation_type [[Target Entity]] (optional context)
+```
 
 **Common Categories & Relation Types:**
 - **Categories**: `[idea]`, `[decision]`, `[question]`, `[fact]`, `[requirement]`, `[technique]`, `[recipe]`, `[preference]`

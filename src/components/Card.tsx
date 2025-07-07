@@ -1,8 +1,9 @@
 import { cn } from '@/lib/utils'
+import IconMap from './IconMap'
 
 interface CardProps {
   title: string
-  icon?: React.ReactNode
+  icon?: React.ReactNode | string
   href?: string
   children?: React.ReactNode
   className?: string
@@ -23,7 +24,7 @@ export default function Card({ title, icon, href, children, className }: CardPro
       <div className="flex items-start gap-4">
         {icon && (
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-            {icon}
+            {typeof icon === 'string' ? <IconMap name={icon} size={20} /> : icon}
           </div>
         )}
         <div className="flex-1">

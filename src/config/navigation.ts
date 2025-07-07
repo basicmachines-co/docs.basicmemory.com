@@ -2,6 +2,7 @@ export interface NavItem {
   title: string
   href: string
   external?: boolean
+  icon?: string
 }
 
 export interface SidebarSection {
@@ -11,11 +12,14 @@ export interface SidebarSection {
 
 export const navConfig = {
   topNav: [
-    { title: 'Basic Machines', href: 'https://basicmachines.co', external: true },
     { title: 'GitHub', href: 'https://github.com/basicmachines-co/basic-memory', external: true },
-    { title: 'Discord', href: 'https://discord.gg/basicmachines', external: true },
-    { title: 'Reddit', href: 'https://reddit.com/r/BasicMemory', external: true },
-    { title: 'PyPI', href: 'https://pypi.org/project/basic-memory/', external: true },
+  ],
+  sidebarTopLinks: [
+    { title: 'Basic Machines', href: 'https://basicmachines.co', external: true, icon: 'website' },
+    { title: 'GitHub', href: 'https://github.com/basicmachines-co/basic-memory', external: true, icon: 'github' },
+    { title: 'Discord', href: 'https://discord.gg/tyvKNccgqN', external: true, icon: 'discord' },
+    { title: 'Reddit', href: 'https://www.reddit.com/r/basicmemory', external: true, icon: 'reddit' },
+    { title: 'PyPI', href: 'https://pypi.org/project/basic-memory/', external: true, icon: 'pypi' },
   ],
   sidebar: [
     {
