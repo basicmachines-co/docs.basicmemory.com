@@ -7,19 +7,9 @@ interface StepsProps {
 }
 
 export function Steps({ children, className }: StepsProps) {
-  const steps = React.Children.toArray(children)
-  
   return (
-    <div className={cn('space-y-4', className)}>
-      {steps.map((step, index) => {
-        if (React.isValidElement(step) && step.type === Step) {
-          return React.cloneElement(step as React.ReactElement<StepProps>, {
-            stepNumber: index + 1,
-            key: index
-          })
-        }
-        return step
-      })}
+    <div className={cn('space-y-4 steps-container', className)}>
+      {children}
     </div>
   )
 }
@@ -27,15 +17,13 @@ export function Steps({ children, className }: StepsProps) {
 interface StepProps {
   title?: string
   children: React.ReactNode
-  stepNumber?: number
   className?: string
 }
 
-export function Step({ title, children, stepNumber, className }: StepProps) {
+export function Step({ title, children, className }: StepProps) {
   return (
-    <div className={cn('relative pl-10', className)}>
-      <div className="absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-        {stepNumber}
+    <div className={cn('relative pl-10 step-item', className)}>
+      <div className="step-number absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-sm font-semibold text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
       </div>
       <div className="space-y-2">
         {title && (

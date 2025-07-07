@@ -55,6 +55,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   
@@ -64,11 +65,16 @@
   }
   
   h2 {
-    @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-12 mb-4;
+    @apply scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0 mt-12 mb-4;
   }
   
   h3 {
-    @apply scroll-m-20 text-2xl font-semibold tracking-tight mt-12 mb-4;
+    @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+  }
+  
+  /* Article content h3 spacing - only applies to h3 in main content */
+  article > h3:not([class*="text-lg"]) {
+    @apply mt-8 mb-4;
   }
   
   h4 {
@@ -77,6 +83,8 @@
   
   p {
     @apply leading-7 [&:not(:first-child)]:mt-6;
+    color: #3e3e3e;
+    font-size: 16px;
   }
   
   blockquote {
@@ -91,20 +99,37 @@
     @apply my-6 ml-6 list-decimal [&>li]:mt-2;
   }
   
+  li {
+    color: #3e3e3e;
+  }
+  
   code {
     @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
   }
   
   pre {
-    @apply mb-4 mt-6 overflow-x-auto rounded-lg bg-gray-100 dark:bg-gray-900 p-4;
+    @apply mb-4 mt-6 overflow-x-auto rounded-lg bg-gray-100 dark:bg-gray-900 p-4 pr-12;
   }
   
   pre code {
     @apply bg-transparent p-0 text-gray-900 dark:text-gray-100 font-light;
   }
   
+  /* Code block wrapper */
+  .code-block-wrapper {
+    @apply relative;
+  }
+  
+  .code-block-wrapper .copy-button {
+    @apply absolute top-2 right-2 p-2 rounded-md bg-transparent text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors;
+  }
+  
+  .code-block-wrapper .copy-button.copied {
+    @apply text-green-600 dark:text-green-400;
+  }
+  
   a {
-    @apply font-medium text-primary underline underline-offset-4 hover:text-primary/80;
+    @apply font-medium text-primary hover:text-primary/80;
   }
   
   table {
@@ -129,5 +154,18 @@
   
   img {
     @apply rounded-lg my-6;
+  }
+  
+  /* Steps component numbering */
+  .steps-container {
+    counter-reset: step-counter;
+  }
+  
+  .step-item {
+    counter-increment: step-counter;
+  }
+  
+  .step-item .step-number::before {
+    content: counter(step-counter);
   }
 }

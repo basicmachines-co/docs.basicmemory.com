@@ -1,21 +1,6 @@
 ---
 // Extract headings from the current page
-// This is a simplified version - in a real implementation you might want to
-// generate this from the MDX content or pass it as a prop
-const tocItems = [
-  { id: 'true-ai-collaboration', title: 'True AI Collaboration', level: 2 },
-  { id: 'pick-up-conversations-exactly-where-you-left-off', title: 'Pick up conversations exactly where you left off', level: 2 },
-  { id: 'knowledge-that-compounds', title: 'Knowledge that compounds', level: 2 },
-  { id: 'beyond-chat-summaries', title: 'Beyond Chat Summaries', level: 3 },
-  { id: 'semantic-connections', title: 'Semantic Connections', level: 3 },
-  { id: 'your-knowledge-your-control', title: 'Your Knowledge, Your Control', level: 2 },
-  { id: 'versatile-knowledge-building', title: 'Versatile Knowledge Building', level: 2 },
-  { id: 'real-time-knowledge-flow', title: 'Real-Time Knowledge Flow', level: 2 },
-  { id: 'designed-for-collaboration', title: 'Designed for Collaboration', level: 2 },
-  { id: 'ai-integration', title: 'AI Integration', level: 3 },
-  { id: 'human-friendly', title: 'Human-Friendly', level: 3 },
-  { id: 'get-started', title: 'Get Started', level: 2 },
-]
+// We'll use a client-side script to dynamically generate the TOC
 ---
 
 <aside class="hidden xl:block w-64 flex-shrink-0">
@@ -28,20 +13,61 @@ const tocItems = [
         <span>On this page</span>
       </div>
       <nav>
-        <ul class="space-y-1 text-sm">
-          {tocItems.map((item) => (
-            <li class={item.level === 3 ? 'ml-4' : ''}>
-              <a
-                href={`#${item.id}`}
-                class="block py-1 text-gray-600 hover:text-gray-900 transition-colors"
-                style="text-decoration: none"
-              >
-                {item.title}
-              </a>
-            </li>
-          ))}
+        <ul id="toc-list" class="space-y-1 text-sm">
+          <!-- TOC items will be dynamically generated -->
         </ul>
       </nav>
     </div>
   </div>
 </aside>
+
+<script>
+  function generateTOC() {
+    const tocList = document.getElementById('toc-list');
+    if (!tocList) return;
+
+    // Find all headings h2 and h3 in the main content
+    const headings = document.querySelectorAll('main h2, main h3');
+    
+    // Clear existing TOC
+    tocList.innerHTML = '';
+    
+    // If no headings found, hide the TOC
+    if (headings.length === 0) {
+      const aside = document.querySelector('aside:has(#toc-list)');
+      if (aside) aside.style.display = 'none';
+      return;
+    }
+    
+    // Generate TOC items
+    headings.forEach((heading) => {
+      const level = parseInt(heading.tagName.substring(1)); // h2 -> 2, h3 -> 3
+      const id = heading.id || heading.textContent?.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+      const title = heading.textContent || '';
+      
+      // Set id if not already set
+      if (!heading.id && id) {
+        heading.id = id;
+      }
+      
+      // Create TOC item
+      const li = document.createElement('li');
+      li.className = level === 3 ? 'ml-4' : '';
+      
+      const a = document.createElement('a');
+      a.href = `#${id}`;
+      a.className = 'block py-1 text-gray-600 hover:text-gray-900 transition-colors';
+      a.style.textDecoration = 'none';
+      a.textContent = title;
+      
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+  }
+  
+  // Generate TOC when page loads
+  document.addEventListener('DOMContentLoaded', generateTOC);
+  
+  // Re-generate TOC if content changes (for SPA navigation)
+  document.addEventListener('astro:page-load', generateTOC);
+</script>
