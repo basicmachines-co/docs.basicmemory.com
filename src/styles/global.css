@@ -58,172 +58,189 @@
     font-family: 'Inter', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-  
+
   /* Typography */
   h1 {
-    @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-6;
+    @apply scroll-m-20 text-3xl font-bold tracking-tight mb-6;
   }
-  
+
   h2 {
     @apply scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0 mt-12 mb-4;
   }
-  
+
   h3 {
     @apply scroll-m-20 text-2xl font-semibold tracking-tight;
   }
-  
+
   /* Article content h3 spacing - only applies to h3 in main content */
   article > h3:not([class*="text-lg"]) {
     @apply mt-8 mb-4;
   }
-  
+
   h4 {
     @apply scroll-m-20 text-xl font-semibold tracking-tight;
   }
-  
+
   p {
     @apply leading-7 [&:not(:first-child)]:mt-6;
     color: #3e3e3e;
     font-size: 16px;
   }
-  
+
   blockquote {
     @apply mt-6 border-l-2 pl-6 italic;
   }
-  
+
   ul {
     @apply my-4 ml-6 list-disc [&>li]:mt-2;
   }
-  
+
   ol {
     @apply my-6 ml-6 list-decimal [&>li]:mt-2;
   }
-  
+
   li {
     color: #3e3e3e;
   }
-  
+
   code {
     @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
   }
-  
+
   pre {
     @apply mb-4 mt-6 overflow-x-auto rounded-lg bg-gray-100/50 dark:bg-gray-900 p-4 pr-12 border border-gray-200 dark:border-gray-800;
   }
-  
+
   pre code {
     @apply bg-transparent p-0 text-gray-900 dark:text-gray-100 font-light;
   }
-  
+
   /* Code block wrapper */
   .code-block-wrapper {
     @apply relative;
   }
-  
+
   .code-block-wrapper .copy-button {
     @apply absolute top-2 right-2 p-2 rounded-md bg-transparent text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors;
   }
-  
+
   .code-block-wrapper .copy-button.copied {
     @apply text-green-600 dark:text-green-400;
   }
-  
+
   /* Markdown syntax highlighting */
   pre code .line {
     display: inline-block;
     width: 100%;
   }
-  
+
   /* Markdown headings in code blocks */
   pre code .token.title,
   pre code .token.heading {
     @apply text-blue-600 dark:text-blue-400 font-semibold;
   }
-  
+
   pre code .token.punctuation.heading {
     @apply text-blue-600 dark:text-blue-400;
   }
-  
+
   /* Markdown links */
   pre code .token.link,
   pre code .token.url {
     @apply text-purple-600 dark:text-purple-400;
   }
-  
+
   /* Markdown bold/italic */
   pre code .token.bold {
     @apply font-semibold;
   }
-  
+
   pre code .token.italic {
     font-style: italic;
   }
-  
+
   /* Markdown lists */
   pre code .token.list {
     @apply text-gray-600 dark:text-gray-400;
   }
-  
+
   /* Markdown code */
   pre code .token.code {
     @apply bg-gray-200 dark:bg-gray-800 px-1 rounded;
   }
-  
+
   a {
     @apply font-medium text-primary hover:text-primary/80;
   }
-  
+
   table {
     @apply w-full;
   }
-  
+
   table thead tr {
     @apply m-0 border-t p-0 even:bg-muted;
   }
-  
+
   table thead th {
     @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
   }
-  
+
   table tbody tr {
     @apply m-0 border-t p-0 even:bg-muted;
   }
-  
+
   table tbody td {
     @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
   }
-  
+
+  hr {
+    @apply my-16 border-gray-200;
+  }
+
   img {
     @apply rounded-lg my-6 cursor-pointer transition-opacity hover:opacity-90;
   }
-  
+
   /* Full screen image viewer */
   .image-viewer {
     @apply fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300;
   }
-  
+
   .image-viewer.active {
     @apply opacity-100 visible;
   }
-  
+
   .image-viewer img {
     @apply max-w-full max-h-full object-contain rounded-lg cursor-default;
   }
-  
+
   .image-viewer-close {
     @apply absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors cursor-pointer;
   }
-  
+
   /* Steps component numbering */
   .steps-container {
     counter-reset: step-counter;
   }
-  
+
   .step-item {
     counter-increment: step-counter;
   }
-  
+
   .step-item .step-number::before {
     content: counter(step-counter);
+  }
+
+  /* Table of Contents styles */
+  #toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #toc-list li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 }

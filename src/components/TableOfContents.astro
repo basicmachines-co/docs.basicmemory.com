@@ -56,7 +56,9 @@
       
       const a = document.createElement('a');
       a.href = `#${id}`;
-      a.className = 'block py-1 text-gray-600 hover:text-gray-900 transition-colors';
+      a.className = level === 3 
+        ? 'block py-1 pl-4 text-sm text-gray-500 hover:text-gray-900 transition-colors font-normal'
+        : 'block py-1 text-gray-600 hover:text-gray-900 transition-colors';
       a.style.textDecoration = 'none';
       a.textContent = title;
       
