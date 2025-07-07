@@ -23,11 +23,11 @@ interface StepProps {
 export function Step({ title, children, className }: StepProps) {
   return (
     <div className={cn('relative pl-10 step-item', className)}>
-      <div className="step-number absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-sm font-semibold text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
+      <div className="step-number absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
       </div>
       <div className="space-y-2">
         {title && (
-          <h4 className="text-lg font-semibold leading-none tracking-tight">
+          <h4 className="text-lg font-medium leading-none tracking-tight">
             {title}
           </h4>
         )}
