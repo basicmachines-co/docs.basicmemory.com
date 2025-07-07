@@ -1,0 +1,51 @@
+---
+import ThemeToggle from './ThemeToggle'
+import MobileMenu from './MobileMenu'
+import { navConfig } from '@/config/navigation'
+---
+
+<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  <div class="container flex h-16 items-center px-4">
+    <MobileMenu client:load />
+    
+    <div class="flex flex-1 items-center justify-between space-x-2 md:justify-start">
+      <a href="/" class="flex items-center space-x-2">
+        <img 
+          src="/logo/logo-light.png" 
+          alt="Basic Memory" 
+          class="h-8 w-auto dark:hidden"
+        />
+        <img 
+          src="/logo/logo-dark.png" 
+          alt="Basic Memory" 
+          class="hidden h-8 w-auto dark:block"
+        />
+      </a>
+      
+      <div class="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+        <nav class="hidden items-center space-x-6 text-sm font-medium md:flex">
+          {navConfig.topNav.map((item) => (
+            <a 
+              href={item.href} 
+              class="transition-colors hover:text-foreground/80 text-foreground/60"
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
+            >
+              {item.title}
+            </a>
+          ))}
+        </nav>
+        
+        <div class="flex items-center space-x-2">
+          <a 
+            href="/getting-started"
+            class="hidden md:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
+          >
+            Get Started
+          </a>
+          <ThemeToggle client:load />
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
