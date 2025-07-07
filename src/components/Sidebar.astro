@@ -9,16 +9,20 @@ const currentPath = Astro.url.pathname
   <nav class="sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto py-6 pr-6 pl-8">
     <div class="space-y-6">
       <!-- Top links section -->
-      <div class="space-y-1">
+      <div class="space-y-2">
         {navConfig.sidebarTopLinks.map((link) => (
           <a
             href={link.href}
             target={link.external ? "_blank" : undefined}
             rel={link.external ? "noopener noreferrer" : undefined}
-            class="flex items-center gap-3 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors no-underline"
+            class="flex items-center gap-3 px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors no-underline group"
             style="text-decoration: none"
           >
-            {link.icon && <Icon name={link.icon} class="w-4 h-4" />}
+            {link.icon && (
+              <div class="flex items-center justify-center w-6 h-6 rounded-md border border-gray-200 group-hover:bg-black group-hover:border-black transition-all">
+                <Icon name={link.icon} class="w-4 h-4 text-gray-400 group-hover:text-white" />
+              </div>
+            )}
             <span>{link.title}</span>
           </a>
         ))}
