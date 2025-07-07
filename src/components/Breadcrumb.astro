@@ -1,0 +1,24 @@
+---
+import { navConfig } from '@/config/navigation'
+
+const currentPath = Astro.url.pathname
+
+// Find the current page in the navigation
+let sectionTitle = ''
+let pageTitle = ''
+
+for (const section of navConfig.sidebar) {
+  const item = section.items.find(item => item.href === currentPath)
+  if (item) {
+    sectionTitle = section.title
+    pageTitle = item.title
+    break
+  }
+}
+---
+
+{sectionTitle && currentPath !== '/' && (
+  <div class="mb-4 text-sm text-gray-600 font-semibold">
+    <span>{sectionTitle}</span>
+  </div>
+)}
