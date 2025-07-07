@@ -16,14 +16,14 @@ export default function Card({ title, icon, href, children, className }: CardPro
     <CardWrapper
       href={href}
       className={cn(
-        'group relative rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md',
+        'group relative rounded-lg border bg-card p-6 shadow-sm transition-all',
         href && 'hover:border-foreground/20 cursor-pointer',
         className
       )}
     >
       <div className="flex items-start gap-4">
         {icon && (
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <div className="flex items-center justify-center text-primary">
             {typeof icon === 'string' ? <IconMap name={icon} size={20} /> : icon}
           </div>
         )}
