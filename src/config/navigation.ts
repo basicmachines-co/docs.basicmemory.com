@@ -1,0 +1,73 @@
+export interface NavItem {
+  title: string
+  href: string
+  external?: boolean
+}
+
+export interface SidebarSection {
+  title: string
+  items: NavItem[]
+}
+
+export const navConfig = {
+  topNav: [
+    { title: 'Basic Machines', href: 'https://basicmachines.co', external: true },
+    { title: 'GitHub', href: 'https://github.com/basicmachines-co/basic-memory', external: true },
+    { title: 'Discord', href: 'https://discord.gg/basicmachines', external: true },
+    { title: 'Reddit', href: 'https://reddit.com/r/BasicMemory', external: true },
+    { title: 'PyPI', href: 'https://pypi.org/project/basic-memory/', external: true },
+  ],
+  sidebar: [
+    {
+      title: 'Get Started',
+      items: [
+        { title: 'Introduction', href: '/' },
+        { title: 'Getting Started', href: '/getting-started' },
+        { title: 'User Guide', href: '/user-guide' },
+      ],
+    },
+    {
+      title: "What's New",
+      items: [
+        { title: "What's New", href: '/whats-new' },
+        { title: 'Latest Releases', href: '/latest-releases' },
+      ],
+    },
+    {
+      title: 'Guides',
+      items: [
+        { title: 'Knowledge Format', href: '/guides/knowledge-format' },
+        { title: 'MCP Tools Reference', href: '/guides/mcp-tools-reference' },
+        { title: 'Canvas', href: '/guides/canvas' },
+        { title: 'CLI Reference', href: '/guides/cli-reference' },
+        { title: 'AI Assistant Guide', href: '/guides/ai-assistant-guide' },
+      ],
+    },
+    {
+      title: 'Integrations',
+      items: [
+        { title: 'Claude Desktop', href: '/integrations/claude-desktop' },
+        { title: 'Claude Code', href: '/integrations/claude-code' },
+        { title: 'Cursor', href: '/integrations/cursor' },
+        { title: 'VS Code', href: '/integrations/vscode' },
+        { title: 'Obsidian', href: '/integrations/obsidian' },
+      ],
+    },
+    {
+      title: 'How you can use Basic Memory',
+      items: [
+        { title: 'Project Documentation', href: '/how-to/project-documentation' },
+        { title: 'Writing & Organization', href: '/how-to/writing-organization' },
+        { title: 'Research & Learning', href: '/how-to/research-learning' },
+        { title: 'Note Taking', href: '/how-to/note-taking' },
+        { title: 'Personal Knowledge', href: '/how-to/personal-knowledge' },
+      ],
+    },
+    {
+      title: 'Technical',
+      items: [
+        { title: 'Technical Information', href: '/technical/technical-information' },
+      ],
+    },
+  ] as SidebarSection[],
+}
