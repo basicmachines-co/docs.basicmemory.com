@@ -1,27 +1,46 @@
 ---
 import { navConfig } from '@/config/navigation'
+import Icon from './Icon.astro'
 
 const currentPath = Astro.url.pathname
 ---
 
-<aside class="hidden md:block w-64 flex-shrink-0 border-r bg-background">
+<aside class="hidden md:block w-64 flex-shrink-0 bg-background">
   <nav class="sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto py-6 pr-6 pl-8">
     <div class="space-y-6">
+      <!-- Top links section -->
+      <div class="space-y-1">
+        {navConfig.sidebarTopLinks.map((link) => (
+          <a
+            href={link.href}
+            target={link.external ? "_blank" : undefined}
+            rel={link.external ? "noopener noreferrer" : undefined}
+            class="flex items-center gap-3 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors no-underline"
+            style="text-decoration: none"
+          >
+            {link.icon && <Icon name={link.icon} class="w-4 h-4" />}
+            <span>{link.title}</span>
+          </a>
+        ))}
+      </div>
+      
+      <!-- Regular navigation sections -->
       {navConfig.sidebar.map((section) => (
         <div class="space-y-3">
-          <h4 class="text-sm font-semibold leading-none tracking-tight">
+          <h4 class="text-sm font-semibold leading-none tracking-tight text-gray-900 px-3">
             {section.title}
           </h4>
-          <ul class="space-y-1">
+          <ul class="space-y-1 list-none m-0 p-0">
             {section.items.map((item) => (
               <li>
                 <a
                   href={item.href}
-                  class={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground ${
+                  class={`block px-3 py-1.5 text-sm transition-colors hover:text-gray-900 rounded-md ${
                     currentPath === item.href
-                      ? 'bg-accent text-accent-foreground font-medium'
-                      : 'text-muted-foreground'
+                      ? 'text-gray-900 font-semibold bg-gray-100'
+                      : 'text-gray-600 font-normal hover:bg-gray-50'
                   }`}
+                  style="text-decoration: none"
                 >
                   {item.title}
                 </a>
