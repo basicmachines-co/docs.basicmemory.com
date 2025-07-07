@@ -4,11 +4,11 @@ import MobileMenu from './MobileMenu'
 import { navConfig } from '@/config/navigation'
 ---
 
-<header class="sticky top-0 z-50 w-full border-b border-border bg-background">
+<header class="sticky top-0 z-50 w-full border-b border-gray-100 bg-background">
   <div class="flex justify-center">
     <div class="flex h-14 w-full max-w-screen-2xl items-center">
-      <!-- Logo aligned with left sidebar (w-64) -->
-      <div class="w-64 flex items-center px-4">
+      <!-- Logo aligned with left sidebar (w-72) -->
+      <div class="w-72 flex items-center px-8">
         <a href="/" class="flex items-center space-x-2">
           <img 
             src="/logo-light.png" 
@@ -37,11 +37,11 @@ import { navConfig } from '@/config/navigation'
           </button>
         </div>
         
-        <nav class="flex items-center space-x-8 ml-8">
+        <nav class="flex items-center ml-8">
           {navConfig.topNav.map((item) => (
             <a 
               href={item.href} 
-              class="text-sm font-normal transition-colors hover:text-foreground text-muted-foreground"
+              class="text-sm font-normal transition-colors hover:text-foreground text-muted-foreground mr-8"
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noopener noreferrer" : undefined}
               style="text-decoration: none"
@@ -52,10 +52,13 @@ import { navConfig } from '@/config/navigation'
           
           <a 
             href="/getting-started"
-            class="inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-foreground text-background hover:bg-foreground/80 hover:text-background h-9 px-4 py-2"
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-light transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-foreground text-background hover:bg-foreground/80 hover:text-background h-9 px-4 py-2 mr-6"
             style="text-decoration: none"
           >
             Get Started
+            <svg class="ml-1 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
           </a>
           <ThemeToggle client:load />
         </nav>
