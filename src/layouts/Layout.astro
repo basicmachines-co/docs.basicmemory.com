@@ -26,6 +26,23 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
     <slot />
     
     <script>
+      // Preserve sidebar scroll position
+      document.addEventListener('click', (e) => {
+        const sidebar = document.getElementById('sidebar-nav');
+        if (sidebar && e.target.closest('a')) {
+          sessionStorage.setItem('sidebarScrollPos', sidebar.scrollTop);
+        }
+      });
+
+      // Restore scroll position after navigation
+      document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar-nav');
+        const scrollPos = sessionStorage.getItem('sidebarScrollPos');
+        if (sidebar && scrollPos) {
+          sidebar.scrollTop = parseInt(scrollPos);
+        }
+      });
+
       // Handle accordion interactions
       document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', (e) => {
