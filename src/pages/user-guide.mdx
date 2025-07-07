@@ -1,0 +1,342 @@
+---
+layout: '@/layouts/DocsLayout.astro'
+title: 'User Guide'
+description: 'Learn how to effectively use Basic Memory in your daily workflow to build rich semantic knowledge'
+---
+
+import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
+
+Once you have Basic Memory installed, here's how to make the most of it. This covers everything from creating your first notes to building a comprehensive knowledge graph.
+
+## Basic Memory Workflow
+
+Using Basic Memory follows a natural cycle:
+
+1. **Have conversations** with AI assistants like Claude
+2. **Capture knowledge** in Markdown files
+3. **Build connections** between pieces of knowledge
+4. **Reference your knowledge** in future conversations
+5. **Edit files directly** when needed
+6. **Sync changes** automatically
+
+## Creating Knowledge
+
+### Through Conversations
+
+To create knowledge during conversations with Claude:
+
+```
+You: We've covered several authentication approaches. Could you create a note summarizing what we've discussed?
+
+Claude: I'll create a note summarizing our authentication discussion.
+```
+
+This creates a Markdown file in your `~/basic-memory` directory with semantic markup.
+
+### Direct File Creation
+
+You can create files directly:
+
+1. Create a new Markdown file in your `~/basic-memory` directory
+2. Add frontmatter with title, type, and optional tags
+3. Structure content with observations and relations
+4. Save the file
+5. Run `basic-memory sync` if not in watch mode
+
+## Using Special Prompts
+
+Basic Memory includes several special prompts that help you leverage your knowledge base more effectively. In apps like
+Claude Desktop, these prompts trigger specific tools to search and analyze your knowledge base.
+
+### Continue Conversation
+
+Use this prompt to resume previous topics with full context:
+
+```
+"Let's continue our conversation about [topic]"
+```
+
+**What happens:**
+- Searches your knowledge base for relevant content
+- Builds context from related documents  
+- Resumes with awareness of previous discussions
+
+### Recent Activity
+
+See what you've been working on recently:
+
+```
+"What have we been discussing recently?"
+```
+
+**What happens:**
+- Retrieves recently modified documents
+- Summarizes main topics and points
+- Offers to continue any discussions
+
+### Search
+
+Find specific information in your knowledge base:
+
+```
+"Find information about [topic]"
+```
+
+**What happens:**
+- Searches across all your documents
+- Summarizes key findings
+- Offers to explore specific documents
+
+## Working with Memory URLs
+
+Basic Memory uses special `memory://` URLs to reference knowledge:
+
+### URL Formats
+
+```
+memory://title                    # Reference by title
+memory://folder/title            # Reference by folder and title
+memory://permalink               # Reference by permalink  
+memory://path/relation_type/*    # Follow all relations of type
+memory://path/*/target           # Find entities with relations to target
+```
+
+### Using Memory URLs
+
+Reference existing knowledge in conversations:
+
+```
+You: "Take a look at memory://coffee-brewing-methods and let's discuss improvements"
+```
+
+Claude will load that specific document and any related context.
+
+## Building Knowledge Connections
+
+### Creating Relations
+
+Use WikiLink syntax to connect knowledge:
+
+```markdown
+- implements [[Authentication System]]
+- requires [[Database Schema]]
+- relates_to [[Security Guidelines]]
+```
+
+### Common Relation Types
+
+- `implements` - One thing implements another
+- `requires` - Dependencies
+- `relates_to` - General connections
+- `part_of` - Hierarchy relationships
+- `extends` - Extensions or enhancements
+- `pairs_with` - Things that work together
+
+### Adding Observations
+
+Structure facts with semantic categories:
+
+```markdown
+- [decision] We chose JWT tokens for stateless auth
+- [requirement] Must support 2FA for sensitive operations
+- [technique] Use bcrypt for password hashing
+- [issue] Rate limiting needed for login attempts
+```
+
+## File Organization
+
+### Directory Structure
+
+```
+~/basic-memory/
+├── projects/           # Project-specific notes
+├── decisions/          # Decision records
+├── learning/          # Learning notes and research
+├── meetings/          # Meeting notes
+└── archive/           # Archived content
+```
+
+### Best Practices
+
+- Use descriptive filenames
+- Group related content in folders
+- Include dates in time-sensitive notes
+- Archive old content regularly
+
+## Multi-Project Features
+
+### Project Management
+
+```bash
+# Create new project
+basic-memory project add work ~/work-notes
+
+# Switch projects instantly during conversations  
+
+```
+Switch to my work project
+```
+
+# List all projects
+```
+basic-memory project list
+```
+
+### Enhanced Editing
+
+**Incremental editing** instead of rewriting:
+
+```
+You: "Add a troubleshooting section to my setup guide"
+Claude: [Uses edit_note to append new section]
+```
+
+**Smart file organization**:
+
+```
+You: "Move my old meeting notes to the archive folder"  
+Claude: [Uses move_note with database consistency]
+```
+
+### Enhanced Search
+
+Search now includes frontmatter tags:
+
+```markdown
+---
+title: Coffee Notes
+tags: [brewing, equipment, techniques]
+---
+```
+
+Tags are searchable: `"Find my brewing notes"` will find this document.
+
+## Syncing and Updates
+
+### Real-time Sync (Default)
+
+Basic Memory automatically syncs file changes in real-time. No manual sync needed.
+
+### Manual Sync
+
+If you prefer manual control:
+
+```bash
+# Sync once
+basic-memory sync
+
+# Disable auto-sync and sync manually
+basic-memory sync --no-watch
+```
+
+### Checking Status
+
+```bash
+# View sync status
+basic-memory status
+
+# View project information
+basic-memory project info
+```
+
+## Integration Tips
+
+### With Obsidian
+
+1. Open your `~/basic-memory` directory in Obsidian
+2. Use graph view to see connections
+3. Edit files directly in Obsidian
+4. Changes are synced in real time. Ask the AI to read a note to see changes.
+
+### With Git
+
+```bash
+cd ~/basic-memory
+git init
+git add .
+git commit -m "Initial knowledge base"
+```
+
+Basic Memory files are git-friendly and work well with version control.
+
+### With Other Editors
+
+Basic Memory uses standard Markdown files that work with:
+
+- VS Code with Markdown extensions
+- Typora for rich text editing  
+- Any text editor for quick edits
+- Web editors for remote access
+
+## Troubleshooting
+
+### Common Issues
+
+**Changes not syncing:**
+- Check `basic-memory status` for sync status
+- Restart sync with `basic-memory sync --watch`
+- Verify file permissions
+
+**Claude can't find knowledge:**
+- Confirm files are in the correct project directory
+- Check frontmatter formatting
+- Try `memory://` URLs for direct references
+
+**Performance issues:**
+- Large knowledge bases may need optimization
+- Use `basic-memory project info` to check database size
+- Consider archiving old content
+
+### Getting Help
+
+```bash
+# View all available commands
+basic-memory --help
+
+# Get help for specific commands
+basic-memory sync --help
+basic-memory project --help
+```
+
+## Best Practices
+
+### Knowledge Creation
+
+1. **Be descriptive** - Use clear titles and rich content
+2. **Add context** - Include background and reasoning
+3. **Create connections** - Link related concepts
+4. **Use categories** - Structure observations semantically
+5. **Review and refine** - Edit AI-generated content for accuracy
+
+### Workflow
+
+1. **Start conversations contextually** - Use special prompts
+2. **Build incrementally** - Add to existing notes rather than creating duplicates
+3. **Organize regularly** - Move old content to appropriate folders
+4. **Cross-reference** - Link new content to existing knowledge
+5. **Switch projects** - Use different projects for different contexts
+
+### Long-term Maintenance
+
+1. **Archive old content** - Keep active knowledge base focused
+2. **Refactor connections** - Update relations as knowledge evolves
+3. **Regular reviews** - Periodically review and update key documents
+4. **Backup regularly** - Use git or other backup solutions
+5. **Share appropriately** - Use git for collaboration when needed
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Knowledge Format" href="/guides/knowledge-format">
+    Learn the semantic patterns for structuring knowledge
+  </Card>
+  <Card title="AI Assistant Guide" href="/guides/ai-assistant-guide">
+    Reference for AI assistants using Basic Memory
+  </Card>
+  <Card title="CLI Reference" href="/guides/cli-reference">
+    Complete command line reference
+  </Card>
+  <Card title="Obsidian Integration" href="/integrations/obsidian">
+    Set up visual knowledge navigation
+  </Card>
+</CardGroup>
