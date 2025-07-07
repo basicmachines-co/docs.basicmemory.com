@@ -1,0 +1,622 @@
+---
+layout: '@/layouts/DocsLayout.astro'
+title: "What's New in v0.14.0"
+description: 'Major release introducing multi-project management, advanced note editing, and enhanced AI collaboration workflows'
+---
+
+import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
+
+Basic Memory v0.14.0 is a **major release** that transforms Basic Memory into a true remote MCP Server and is ready for your advanced agentic workflows.
+
+This also improves the multi-project knowledge management system's fluid project switching, advanced note editing capabilities, and robust file management with numerous bug fixes.
+
+## 🐳 Docker Support
+
+**Run Basic Memory in Docker Desktop or your own container runtime:**
+
+Update the docker-compose.yml to set the path to your knowledge folder and then:
+```
+$ docker-compose up
+```
+
+Basic Memory now supports SSE and can be used with [n8n ↗️](https://n8n.io) workflows.
+
+## 🎯 Multi-Project Management
+
+**Switch between different knowledge bases instantly during conversations:**
+
+### Project Switching in Action
+
+```
+You: "What projects do I have?"
+
+Claude: Available projects:
+• main (current, default) - 127 entities, 340 observations
+• work-notes - 89 entities, 245 observations
+• creative-writing - 34 entities, 156 observations
+• research-papers - 67 entities, 189 observations
+
+You: "Switch to creative-writing"
+
+Claude: ✓ Switched to creative-writing project
+
+Project Summary:
+• 34 entities (characters, plots, themes)
+• 156 observations
+• 23 relations
+• Last updated: 2 hours ago
+
+You: "What have I been working on in this project?"
+
+Claude: [Shows recent activity from creative-writing project only]
+Recent updates to your novel planning:
+- Updated character development for Sarah Chen
+- Added new plot twist in Chapter 12
+- Research notes on neural implant technology
+```
+
+### Real-World Project Organization
+
+**Professional Developer Setup:**
+```
+You: "Create a new project for the client work"
+
+Claude: [Creates new project structure]
+✓ Created project: client-webapp
+Location: ~/knowledge/client-webapp/
+Folders: architecture/, decisions/, api/, frontend/, deployment/
+
+You: "Switch to client-webapp and document today's architecture meeting"
+
+Claude: [Switches context and creates meeting notes with relevant technical context]
+```
+
+**Personal Knowledge Management:**
+```
+You: "Switch to my personal project and add today's reflections"
+
+Claude: [Switches to personal knowledge base]
+✓ Now in personal project
+I can see your previous reflections, goal tracking, and habit notes.
+What insights would you like to add from today?
+```
+
+## ✏️ Advanced Note Editing
+
+**Edit notes incrementally without rewriting entire documents:**
+
+### Append Operations
+
+**Adding to existing meeting notes:**
+```
+You: "Add today's action items to our project meeting notes"
+
+Claude: [Uses edit_note with append operation]
+✓ Added to "Weekly Project Meeting Notes":
+
+## Action Items - January 15, 2025
+- [ ] Sarah: Update API documentation by Friday
+- [ ] Mike: Review security implementation
+- [ ] Team: Prepare demo for client meeting next week
+- [ ] Jenny: Coordinate user testing sessions
+
+[Content appended to existing note without affecting previous sections]
+```
+
+**Building research over time:**
+```
+You: "Add the new study findings to my climate research note"
+
+Claude: [Appends new research section]
+✓ Added to "Climate Change Solutions Research":
+
+## Recent Studies - January 2025
+- [study] MIT carbon capture efficiency improved 40% #breakthrough
+- [finding] Solar panel costs dropped 15% year-over-year #economics
+- [policy] EU carbon tax showing measurable emissions reduction #policy-impact
+
+Relations automatically updated to connect with existing energy and policy notes.
+```
+
+### Prepend Operations
+
+**Adding timestamps to journals:**
+```
+You: "Add today's entry to my learning journal"
+
+Claude: [Uses prepend to add newest entry at top]
+✓ Added to beginning of "Daily Learning Journal":
+
+## January 15, 2025 - React Performance Insights
+- [discovery] useMemo doesn't help with props.children changes #react-gotcha
+- [technique] React.Children.count for shallow comparison #workaround
+- [pattern] Custom hooks for complex state logic #architecture
+
+[New entry added above previous entries, maintaining chronological order]
+```
+
+### Section Replacement
+
+**Updating specific documentation sections:**
+```
+You: "Update the deployment section in our API docs with the new Docker setup"
+
+Claude: [Replaces specific section under ## Deployment header]
+✓ Updated "API Documentation" → ## Deployment section:
+
+## Deployment
+
+### Docker Setup (Updated)
+# Build the application
+docker build -t my-api:latest .
+
+# Run with environment variables
+docker run -d \
+  -p 8000:8000 \
+  -e DATABASE_URL=postgresql://... \
+  -e REDIS_URL=redis://... \
+  my-api:latest
+
+### Environment Variables
+- `DATABASE_URL`: PostgreSQL connection string
+- `REDIS_URL`: Redis cache connection
+- `JWT_SECRET`: Secret key for token signing
+
+[Only the deployment section was updated, rest of documentation unchanged]
+```
+
+### Find and Replace
+
+**Version updates across documentation:**
+```
+You: "Update all references to v0.12.0 to v0.13.0 in the configuration guide"
+
+Claude: [Uses find_replace with validation]
+✓ Updated "Configuration Guide":
+Found and replaced 3 occurrences of "v0.12.0" with "v0.13.0"
+
+Changes made:
+- Line 23: Version requirement updated
+- Line 45: Docker image tag updated
+- Line 67: Example configuration updated
+```
+
+## 📁 Smart File Management
+
+**Move and organize notes with full database consistency:**
+
+### Organizing Project Documentation
+
+**Moving notes to appropriate folders:**
+```
+You: "Move all my old meeting notes to an archive folder"
+
+Claude: [Moves files and updates database]
+✓ Moved 8 meeting notes to archive/:
+- meeting-2024-12-01.md → archive/meetings/meeting-2024-12-01.md
+- meeting-2024-12-08.md → archive/meetings/meeting-2024-12-08.md
+- weekly-standup-notes.md → archive/meetings/weekly-standup-notes.md
+
+Database updated: permalinks, search index, and relations preserved.
+All links to these notes remain functional.
+```
+
+**Reorganizing research by topic:**
+```
+You: "Move my AI research notes into a dedicated ai-research folder"
+
+Claude: [Creates folder structure and moves files]
+✓ Created folder: ai-research/
+✓ Moved 12 AI-related notes:
+- neural-networks.md → ai-research/neural-networks.md
+- transformer-architecture.md → ai-research/transformer-architecture.md
+- ai-ethics-considerations.md → ai-research/ethics/ai-ethics-considerations.md
+
+Search functionality maintained, all relations preserved.
+```
+
+### Renaming and Restructuring
+
+**Renaming notes for clarity:**
+```
+You: "Rename 'temp-notes.md' to 'database-design-decisions.md'"
+
+Claude: [Renames file and updates all references]
+✓ Renamed: temp-notes.md → database-design-decisions.md
+✓ Updated permalink: /temp-notes → /database-design-decisions
+✓ Search index updated
+✓ All internal links automatically updated
+```
+
+## 📖 View Notes as Formatted Artifacts
+
+**Display notes as html formatted artifacts in Claude Desktop:**
+
+### Technical Documentation
+
+```
+You: "Show me the API documentation as a formatted artifact"
+
+Claude: [Uses view_note tool to display formatted artifact]
+```
+
+*Claude displays a html formatted artifact with:*
+- Proper heading hierarchy
+- Syntax-highlighted code blocks
+- Organized sections and subsections
+- Clean typography and spacing
+- Clickable links and references
+
+### Creative Writing Projects
+
+```
+You: "Display my character development notes as an artifact"
+
+Claude: [Creates formatted view of character notes]
+```
+
+*Result: Clean, readable format showing:*
+- Character profiles with clear sections
+- Relationship maps and connections
+- Story arc progression
+- Research and background details
+
+### Research Summaries
+
+```
+You: "View my climate research compilation as an artifact"
+
+Claude: [Formats comprehensive research note]
+```
+
+*Displays: Professional research document with:*
+- Executive summary
+- Organized findings by category
+- Source citations and links
+- Visual hierarchy of information
+
+## 🔍 Enhanced Search & Discovery
+
+**Find content more easily with frontmatter tag search:**
+
+### Searchable Frontmatter Tags
+
+**Before v0.13.0** - Only content was searchable:
+```markdown
+---
+title: Coffee Brewing Methods
+tags: [coffee, brewing, equipment, chemex]
+---
+
+# Coffee Brewing Methods
+Pour-over techniques for better coffee...
+```
+*Search for "chemex" would find nothing*
+
+**v0.13.0** - Tags are now indexed and searchable:
+```
+You: "Search for all my chemex notes"
+
+Claude: [Finds notes with 'chemex' in tags or content]
+Found 4 notes mentioning 'chemex':
+• Coffee Brewing Methods (tag match)
+• Morning Routine - Coffee Setup (content match)
+• Kitchen Equipment Reviews (tag match)
+• Weekend Coffee Experiments (content match)
+```
+
+### Better Content Discovery
+
+**Topic-based discovery:**
+```
+You: "Find all my notes about productivity"
+
+Claude: [Searches across titles, content, tags, and metadata]
+Found 12 productivity-related notes:
+
+By Tags:
+• Daily Habits Tracking [productivity, habits]
+• Time Management Systems [productivity, time-management]
+• Focus Techniques [productivity, deep-work]
+
+By Content:
+• Weekly Reviews (mentions productivity goals)
+• Book Notes: Deep Work (productivity principles)
+• Morning Routine (productivity habits)
+```
+
+**Project-scoped search:**
+```
+You: "Search for 'authentication' in my work project only"
+
+Claude: [Searches within current work project]
+Found 6 authentication-related notes in work-notes project:
+• API Authentication Strategy
+• OAuth Implementation Guide
+• Security Review - Auth System
+• User Session Management
+• Password Reset Flow
+• Two-Factor Authentication Setup
+```
+
+## 🗄️ Unified Database Architecture
+
+**Single app-level database for better performance and project management:**
+
+### Automatic Migration
+
+**Seamless upgrade from v0.12.x:**
+
+After upgrading, Basic Memory will re-index all your project notes into a single project. Basic Memory uses your files
+as the source of truth, so there is no risk of data loss. You can see the status any time.
+
+```
+You: what is the sync status?
+
+Claude:
+
+**Current Status**: 🔄 Syncing 1 projects (231/331 files, 70%)
+**System Ready**: 🔄 Processing
+
+🔄 **File synchronization in progress**
+
+Basic Memory is automatically processing all configured projects and building knowledge graphs.
+This typically takes 1-3 minutes depending on the amount of content.
+
+**Currently Processing:**
+- **main**: Processing new files (231/331, 70%)
+
+**What's happening:**
+- Scanning and indexing markdown files
+- Building entity and relationship graphs
+- Setting up full-text search indexes
+- Processing file changes and updates
+
+**What you can do:**
+- Wait for automatic processing to complete - no action needed
+- Use this tool again to check progress
+- Simple operations may work already
+- All projects will be available once sync finishes
+
+**Note**: All configured projects will be automatically synced during startup.
+You don't need to manually switch projects - Basic Memory handles this for you.
+```
+
+### Better Project Isolation
+
+**Secure project boundaries:**
+```
+You: "Switch to work-notes project"
+Claude: ✓ Switched to work-notes
+
+You: "Search for client information"
+Claude: [Searches only within work-notes project]
+Found 3 client-related notes in work-notes:
+• Client Requirements Document
+• Meeting Notes - Client Kickoff
+• Client Feedback Analysis
+
+[Personal project notes remain completely isolated]
+```
+
+## 🛠️ Complete MCP Tool Suite
+
+### New Project Management Tools
+
+**Discover and manage projects:**
+```python
+# List all available projects
+list_projects()
+→ Shows: main (default, current), work-notes, personal-journal
+
+# Switch project context
+switch_project("work-notes")
+→ Changes active project for all subsequent operations
+
+# Get current project info
+get_current_project()
+→ Returns: project name, stats, last updated
+
+# Check sync status
+sync_status()
+→ Shows: file sync status, background operations, any issues
+```
+
+### Enhanced Note Operations
+
+**Incremental editing tools:**
+```python
+# Append new content
+edit_note("meeting-notes", "append", "\n## New Action Items\n- Task 1\n- Task 2")
+
+# Prepend timestamp
+edit_note("journal", "prepend", "# January 15, 2025\nToday's insights...")
+
+# Replace specific section
+edit_note("api-docs", "replace_section", "New deployment steps...", section="## Deployment")
+
+# Find and replace with validation
+edit_note("config", "find_replace", "v0.13.0", find_text="v0.12.0", expected_replacements=3)
+```
+
+**File management tools:**
+```python
+# Move notes with database consistency
+move_note("old-location.md", "new-folder/better-name.md")
+
+# View formatted artifacts
+view_note("important-document")
+→ Displays note as beautifully formatted artifact in Claude Desktop
+```
+
+## Real-World Workflows
+
+### Software Development Team
+
+**Morning standup routine:**
+```
+You: "Switch to our team project and show yesterday's progress"
+
+Claude: [Switches to team project]
+✓ Switched to team-project
+
+Recent activity (last 24 hours):
+• Updated API documentation with new authentication endpoints
+• Added deployment guide for Docker setup
+• Meeting notes from client feedback session
+• Bug tracking for payment processing issues
+
+You: "Add today's standup notes"
+
+Claude: [Creates structured standup note]
+✓ Created "Daily Standup - January 15, 2025"
+
+## Team Updates
+- Sarah: Completed user authentication module, starting on password reset
+- Mike: Fixed payment processing bug, investigating performance issues
+- Jenny: Client demo went well, gathering requirements for Phase 2
+
+## Blockers
+- Need DevOps review for production deployment
+- Waiting on client approval for UI changes
+
+[Automatically linked to previous standup notes and relevant project documentation]
+```
+
+### Academic Researcher
+
+**Research session workflow:**
+```
+You: "Switch to my research project and add today's paper notes"
+
+Claude: [Switches to research context]
+✓ Switched to phd-research project
+
+You: "Create detailed notes on the transformer architecture paper"
+
+Claude: [Creates comprehensive research note]
+✓ Created "Attention Is All You Need - Paper Analysis"
+
+## Key Contributions
+- [innovation] Self-attention mechanism replaces RNN/CNN architectures #breakthrough
+- [performance] Parallelizable training reduces computation time significantly #efficiency
+- [impact] Enables larger models and better sequence understanding #scaling
+
+## Technical Details
+- [architecture] Multi-head attention with scaled dot-product attention #technical
+- [training] Position encoding for sequence order without recurrence #implementation
+- [results] BLEU score improvements on translation tasks #evaluation
+
+## Relations
+- revolutionizes [[Natural Language Processing]]
+- enables [[Large Language Models]]
+- influences [[Computer Vision - Vision Transformers]]
+
+[Automatically connects to existing AI research and methodology notes]
+
+You: "Move this to my 'foundational-papers' folder"
+
+Claude: [Organizes research]
+✓ Moved to foundational-papers/attention-is-all-you-need.md
+✓ Updated research index and cross-references
+```
+
+### Creative Writer
+
+**Novel planning session:**
+```
+You: "Switch to my novel project and update character development"
+
+Claude: [Switches to creative writing project]
+✓ Switched to sci-fi-novel project
+
+You: "Add new backstory details to Sarah Chen's character profile"
+
+Claude: [Uses append to add to existing character note]
+✓ Updated "Sarah Chen - Protagonist Character Profile"
+
+## New Backstory Details
+- [background] Lost younger brother in early neural implant experiment #trauma
+- [motivation] Brother's death drives her investigation into NeuroLink Corp #personal-stakes
+- [skill] Developed advanced hacking abilities after brother's accident #character-development
+- [relationship] Estranged from father who worked for competing tech company #family-conflict
+
+## Character Arc Implications
+- [growth] Must overcome trust issues to work with allies #emotional-journey
+- [conflict] Personal vendetta vs. broader social justice #internal-struggle
+
+Relations updated:
+- drives [[Main Plot - Corporate Conspiracy]]
+- connects_to [[NeuroLink Corporation - Antagonist]]
+- influences [[Theme - Technology vs Humanity]]
+
+You: "View the character profile as a formatted artifact"
+
+Claude: [Displays beautiful character sheet]
+[Shows organized character profile with clear sections, relationship maps, and story connections]
+```
+
+### Personal Knowledge Management
+
+**Weekly life review:**
+```
+You: "Switch to my personal project and create this week's reflection"
+
+Claude: [Switches to personal knowledge context]
+✓ Switched to personal-life project
+
+You: "Review this week's notes and create a summary of patterns and insights"
+
+Claude: [Analyzes recent personal notes]
+✓ Created "Weekly Reflection - January 15, 2025"
+
+## This Week's Patterns
+- [energy] Most productive mornings when I exercise first #health-performance-link
+- [social] Deep conversations with friends boost mood for 2+ days #relationship-impact
+- [work] Finished projects faster when I break tasks into 25-minute chunks #productivity-technique
+
+## Growth Areas Identified
+- [challenge] Procrastination increases when overwhelmed - need better task management #self-awareness
+- [opportunity] Reading before bed improves sleep quality #habit-optimization
+
+## Goal Progress
+- [fitness] Ran 3 times this week (goal: 3x) ✓ #achievement
+- [learning] Completed 2 Spanish lessons (goal: 3x) #partial-progress
+- [creativity] No creative writing this week #missed-goal
+
+## Relations
+- builds_on [[Monthly Goals - January 2025]]
+- informs [[Habit Tracking and Optimization]]
+- connects_to [[Work-Life Balance Strategies]]
+
+You: "Move my old reflections to an archive folder"
+
+Claude: [Organizes personal history]
+✓ Moved 12 reflection notes to archive/reflections/
+✓ Maintained chronological order and cross-references
+✓ Updated personal development timeline
+```
+
+## Getting Started with v0.13.0
+
+### Installation
+
+```bash
+# Install the latest release
+uv tool install basic-memory
+```
+
+### Upgrading from Previous Versions
+
+```bash
+# Upgrade existing installation
+uv tool upgrade basic-memory
+
+# Check version
+basic-memory --version
+```
+<Note>
+**Automatic Migration**: The first run will automatically migrate your existing data to the new unified database structure. No manual action required - all your notes and projects are preserved exactly as they were.
+</Note>
+
+**Ready to experience the next evolution of AI-human collaboration?** [Get started with Basic Memory v0.13.0 →](/getting-started)
