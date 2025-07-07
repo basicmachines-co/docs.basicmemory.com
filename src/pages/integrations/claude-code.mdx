@@ -1,0 +1,170 @@
+---
+layout: '@/layouts/DocsLayout.astro'
+title: "Claude Code"
+description: "Set up Basic Memory with Claude Code for persistent development knowledge and enhanced coding sessions"
+---
+
+import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step, CodeGroup, CodeTab } from '@/components'
+
+Claude Code provides native support for Basic Memory through the Model Context Protocol (MCP), enabling persistent context across development sessions and building comprehensive coding knowledge.
+
+## Setup
+
+### Install Basic Memory cli
+
+```bash
+# Install Basic Memory
+uv tool install basic-memory
+
+# Or with pip
+pip install basic-memory
+```
+
+### Configure Claude Code
+
+Basic Memory works automatically with Claude Code through MCP. Install it with:
+
+```bash
+claude mcp add basic-memory basic-memory mcp
+```
+
+<Info>
+You can use the `/mcp` command in Claude Code to check MCP server status and available tools.
+</Info>
+
+### Verify Installation
+
+In Claude Code, check that Basic Memory tools are available:
+
+```
+You: "What tools do you have access to?"
+```
+
+You should see Basic Memory tools listed, including note creation, search, and project management.
+
+## Quick Start
+
+Once configured, you can immediately start using Basic Memory in your development workflow:
+
+```
+You: "Create a note about our authentication strategy for the API"
+Claude: I'll document the authentication strategy we discussed...
+[Creates structured note with technical details and rationale]
+
+You: "Switch to my personal coding project"
+Claude: [Changes context to personal project knowledge base]
+```
+
+## MCP Integration Benefits
+
+Claude Code's native MCP support provides:
+
+- **Automatic tool access** - No manual setup required
+- **Project-aware context** - Maintains separate knowledge bases per project
+- **Real-time sync** - Changes are immediately available
+- **Persistent memory** - Context survives between sessions
+- **Structured knowledge** - Uses Basic Memory's semantic format
+
+### Available Tools
+
+Through MCP, Claude Code can access all Basic Memory functionality:
+
+- **write_note** - Create and update documentation
+- **read_note** - Access existing knowledge and context
+- **search_notes** - Find relevant information across projects
+- **edit_note** - Update documentation incrementally
+- **recent_activity** - Check what you've been working on
+- **project management** - Switch between different knowledge bases
+- **build_context** - Load conversation context from memory:// URLs
+
+## Integration with Development
+
+### CLAUDE.md Enhancement
+
+Claude Code uses CLAUDE.md files for project instructions. Basic Memory complements this by:
+
+- **Storing detailed knowledge** outside the context window
+- **Enabling search** across your entire knowledge base
+- **Maintaining history** of decisions and learnings
+- **Linking related concepts** through relations
+
+### Project Context
+
+Basic Memory maintains separate knowledge bases for different projects:
+
+```
+You: "Switch to my work project"
+Claude: [Loads work project context and knowledge]
+
+You: "Based on our API design notes, what's the next step?"
+Claude: [References existing documentation to provide contextual guidance]
+```
+
+## Troubleshooting
+
+### Common Issues
+
+<Accordion>
+  <AccordionItem title="Claude Code can't access Basic Memory">
+    **Solutions:**
+    - Verify Basic Memory is installed: `basic-memory --version`
+    - Check MCP server status: `/mcp` in Claude Code
+    - Reinstall if needed: `claude mcp remove basic-memory` then `claude mcp add basic-memory basic-memory mcp`
+  </AccordionItem>
+
+  <AccordionItem title="Context not loading from memory:// URLs">
+    **Solutions:**
+    - Confirm files exist in current project
+    - Check memory:// URL syntax (e.g., `memory://folder/note`)
+    - Verify sync is working: `basic-memory status`
+  </AccordionItem>
+
+  <AccordionItem title="Notes not updating">
+    **Solutions:**
+    - Check file permissions in knowledge base directory
+    - Verify real-time sync is enabled in config
+    - Try manual sync: `basic-memory sync`
+  </AccordionItem>
+</Accordion>
+
+### Performance Tips
+
+- **Multiple projects**: Use separate Basic Memory projects for different codebases
+- **Organized structure**: Keep consistent folder organization across projects
+- **Regular cleanup**: Archive old projects to maintain performance
+
+## Alternative Usage
+
+If MCP isn't working, you can still use Basic Memory:
+
+<CardGroup cols={2}>
+  <Card title="CLI Integration">
+    Use Basic Memory CLI tools from Claude Code's terminal
+  </Card>
+  <Card title="File Editing">
+    Edit Basic Memory notes directly and sync manually
+  </Card>
+  <Card title="Manual Context">
+    Copy content from Basic Memory into conversations
+  </Card>
+  <Card title="Parallel Usage">
+    Use Claude Desktop alongside Claude Code. With Basic Memory they can see the same notes and share context.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Project Documentation" href="/how-to/project-documentation">
+    Learn how to document your development projects
+  </Card>
+  <Card title="Research & Learning" href="/how-to/research-learning">
+    Build knowledge from your coding sessions
+  </Card>
+  <Card title="CLI Reference" href="/guides/cli-reference">
+    Master Basic Memory command line tools
+  </Card>
+  <Card title="Knowledge Format" href="/guides/knowledge-format">
+    Structure effective development documentation
+  </Card>
+</CardGroup>

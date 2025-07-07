@@ -1,0 +1,264 @@
+---
+layout: '@/layouts/DocsLayout.astro'
+title: "Claude Desktop"
+description: "Set up Basic Memory with Claude Desktop for persistent conversations and knowledge management"
+---
+
+import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step, CodeGroup, CodeTab } from '@/components'
+
+Claude Desktop is the recommended way to use Basic Memory. It provides seamless integration through the Model Context Protocol (MCP), giving Claude direct access to your knowledge base.
+
+## Installation
+
+### Prerequisites
+
+<Info>
+- **`uv` must be installed and available in your system PATH**. Claude Desktop runs in its own isolated environment and needs `uv` to manage dependencies.
+- **On macOS, install `uv` globally with Homebrew**: `brew install uv`. This ensures Claude Desktop can detect it.
+</Info>
+
+### Configure Claude Desktop
+
+Edit your Claude Desktop config, located at:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+
+```json
+{
+  "mcpServers": {
+    "basic-memory": {
+      "command": "uvx",
+      "args": [
+        "basic-memory",
+        "mcp"
+      ]
+    }
+  }
+}
+```
+
+### Install Basic Memory (Optional)
+
+```bash
+# Stable release (recommended)
+uv tool install basic-memory
+# or: pip install basic-memory
+
+# Beta releases (new features, testing)
+pip install basic-memory --pre
+
+# Development builds (latest changes)
+pip install basic-memory --pre --force-reinstall
+```
+
+### Restart Claude Desktop
+
+After saving the config, restart Claude Desktop. You should see Basic Memory tools available in the tools menu (hammer icon in bottom-right).
+
+![Claude Desktop Tools Menu](/attachments/claude-tools-menu.png)
+
+## Features
+
+### Core Capabilities
+
+<CardGroup cols={2}>
+  <Card title="Knowledge Creation">
+    Create and update notes through natural conversation
+  </Card>
+  <Card title="Knowledge Search">
+    Find information across your entire knowledge base
+  </Card>
+  <Card title="Context Building">
+    Load context from previous conversations using memory:// URLs
+  </Card>
+  <Card title="Project Management">
+    Switch between different knowledge projects instantly
+  </Card>
+  <Card title="Visual Note Display">
+    View notes as formatted artifacts for better readability
+  </Card>
+</CardGroup>
+
+### Real-time Sync
+
+Changes you make to files are immediately available in conversations:
+
+1. Edit a file in any text editor
+2. Save the changes
+3. Ask Claude to read the note - it will see your updates
+
+### Memory URLs
+
+Reference specific knowledge with `memory://` URLs:
+
+```
+You: "Take a look at memory://project-planning and let's continue our discussion"
+```
+
+Claude will load that specific note and any related context.
+
+## Common Workflows
+
+### Creating Knowledge
+
+**During a conversation:**
+```
+You: "Could you create a note summarizing our discussion about API design?"
+Claude: I'll create a note capturing our API design discussion...
+[Creates structured note with observations and relations]
+```
+
+**Building on existing knowledge:**
+```
+You: "Add a section about authentication to my API documentation"
+Claude: [Uses edit_note to append new content without rewriting]
+```
+
+### Searching and Discovery
+
+**Find information:**
+```
+You: "What did we decide about the database schema?"
+Claude: [Searches knowledge base and provides relevant information]
+```
+
+**View formatted notes:**
+```
+You: "Show me the project documentation as a formatted artifact"
+Claude: [Uses view_note to display the note as a readable artifact]
+```
+
+**Recent activity:**
+```
+You: "What have we been working on lately?"
+Claude: [Shows recently modified notes and offers to continue discussions]
+```
+
+### Project Management
+
+**Switch contexts:**
+```
+You: "Switch to my personal project and show recent notes"
+Claude: [Switches active project and shows personal knowledge]
+```
+
+**Create targeted content:**
+```
+You: "Create a note about weekend recipes in my personal project"
+Claude: [Creates note in specified project while maintaining conversation context]
+```
+
+## Advanced Usage
+
+### Special Prompts
+
+Basic Memory includes prompts that trigger specific behaviors:
+
+- **"Continue our conversation about [topic]"** - Loads relevant context
+- **"What have we been discussing recently?"** - Shows recent activity
+- **"Find information about [topic]"** - Searches knowledge base
+
+### Incremental Editing
+
+Instead of rewriting entire notes, Claude can edit incrementally:
+
+- **Append**: Add new sections to existing notes
+- **Prepend**: Add content to the beginning
+- **Replace sections**: Update specific parts
+- **Find and replace**: Make targeted text changes
+
+### File Organization
+
+Claude can help organize your knowledge base:
+
+- Move notes to appropriate folders
+- Archive old content
+- Create directory structures
+- Maintain database consistency during moves
+
+## Troubleshooting
+
+### Common Issues
+
+<Accordion>
+  <AccordionItem title="Claude can't find Basic Memory tools">
+    **Solutions:**
+    - Verify `uv` is installed: `which uvx`
+    - Check config file syntax is valid JSON
+    - Restart Claude Desktop after config changes
+    - Try absolute path to uvx in config
+  </AccordionItem>
+
+  <AccordionItem title="Tools appear but don't work">
+    **Solutions:**
+    - Check Basic Memory is installed: `basic-memory --version`
+    - Verify sync is running: `basic-memory status`
+    - Check file permissions in `~/basic-memory`
+    - Look for error messages in Claude Desktop
+  </AccordionItem>
+
+  <AccordionItem title="Changes not syncing">
+    **Solutions:**
+    - Confirm real-time sync is enabled (default)
+    - Check `basic-memory status` for sync status
+    - Restart sync: `basic-memory sync --watch`
+    - Verify file is in the correct project directory
+  </AccordionItem>
+</Accordion>
+
+### Getting Help
+
+```bash
+# Check installation
+basic-memory --version
+
+# View sync status
+basic-memory status
+
+# Get help with commands
+basic-memory --help
+```
+
+## Best Practices
+
+### Knowledge Creation
+
+1. **Use descriptive titles** - They become link targets
+2. **Add semantic observations** - Categorize information
+3. **Create relations** - Connect related concepts
+4. **Use tags** - Enable better search
+5. **Review AI-generated content** - Edit for accuracy
+
+### Conversation Management
+
+1. **Reference existing knowledge** - Use memory:// URLs
+2. **Build incrementally** - Add to existing notes
+3. **Switch projects** - Use different contexts
+4. **Use special prompts** - Leverage built-in behaviors
+5. **Organize regularly** - Keep knowledge base clean
+
+### Performance
+
+1. **Archive old content** - Keep active knowledge focused
+2. **Use meaningful filenames** - Improve discoverability
+3. **Regular backups** - Use git for version control
+4. **Monitor project size** - Check with `basic-memory project info`
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="User Guide" href="/user-guide">
+    Learn comprehensive usage patterns
+  </Card>
+  <Card title="Knowledge Format" href="/guides/knowledge-format">
+    Understand the semantic markup
+  </Card>
+  <Card title="CLI Reference" href="/guides/cli-reference">
+    Command line tools and options
+  </Card>
+  <Card title="AI Assistant Guide" href="/guides/ai-assistant-guide">
+    How AI assistants use Basic Memory
+  </Card>
+</CardGroup>
