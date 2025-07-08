@@ -1,6 +1,7 @@
 ---
 import ThemeToggle from './ThemeToggle'
 import MobileMenu from './MobileMenu'
+import Search from './Search.astro'
 import { navConfig } from '@/config/navigation'
 ---
 
@@ -26,14 +27,17 @@ import { navConfig } from '@/config/navigation'
       <!-- Desktop navigation -->
       <div class="hidden md:flex flex-1 items-center justify-between px-6">
         <div class="flex-1 max-w-md mx-auto">
-          <button class="inline-flex items-center whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 relative w-full justify-start text-sm text-muted-foreground">
-          <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
-          </svg>
-          <span>Search...</span>
-          <kbd class="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-            <span class="text-xs">⌘K</span>
-          </kbd>
+          <button 
+            data-search-trigger
+            class="inline-flex items-center whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 relative w-full justify-start text-sm text-muted-foreground"
+          >
+            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
+            </svg>
+            <span>Search...</span>
+            <kbd class="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+              <span class="text-xs">⌘K</span>
+            </kbd>
           </button>
         </div>
         
@@ -67,7 +71,10 @@ import { navConfig } from '@/config/navigation'
       <!-- Mobile right side buttons -->
       <div class="flex md:hidden items-center ml-auto space-x-4">
         <!-- Search icon -->
-        <button class="p-2 text-muted-foreground hover:text-foreground transition-colors">
+        <button 
+          data-search-trigger
+          class="p-2 text-muted-foreground hover:text-foreground transition-colors"
+        >
           <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
           </svg>
@@ -116,6 +123,8 @@ import { navConfig } from '@/config/navigation'
     </div>
   </div>
 </header>
+
+<Search />
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

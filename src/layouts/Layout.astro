@@ -58,6 +58,40 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
           icon?.classList.toggle('rotate-180')
         })
         
+        // Code tabs functionality
+        const codeTabs = document.querySelectorAll('.code-tabs')
+        
+        codeTabs.forEach(tabContainer => {
+          const buttons = tabContainer.querySelectorAll('.tab-button')
+          const contents = tabContainer.querySelectorAll('.tab-content')
+          
+          buttons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+              // Update button states
+              buttons.forEach((btn, btnIndex) => {
+                if (btnIndex === index) {
+                  btn.classList.add('border-b-2', 'border-primary', 'bg-white', 'dark:bg-gray-900', 'text-gray-900', 'dark:text-gray-100')
+                  btn.classList.remove('text-gray-600', 'dark:text-gray-400')
+                } else {
+                  btn.classList.remove('border-b-2', 'border-primary', 'bg-white', 'dark:bg-gray-900', 'text-gray-900', 'dark:text-gray-100')
+                  btn.classList.add('text-gray-600', 'dark:text-gray-400')
+                }
+              })
+              
+              // Update content visibility
+              contents.forEach((content, contentIndex) => {
+                if (contentIndex === index) {
+                  content.classList.remove('hidden')
+                  content.classList.add('block')
+                } else {
+                  content.classList.add('hidden')
+                  content.classList.remove('block')
+                }
+              })
+            })
+          })
+        })
+        
         // Add copy buttons to code blocks
         const codeBlocks = document.querySelectorAll('pre')
         codeBlocks.forEach(pre => {

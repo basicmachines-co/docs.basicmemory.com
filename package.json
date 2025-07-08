@@ -14,6 +14,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "astro": "^5.11.0",
+    "astro-pagefind": "^1.8.3",
     "clsx": "^2.1.1",
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",

@@ -25,7 +25,7 @@ This guide helps you, the AI assistant, use Basic Memory tools effectively when 
     - `edit_note()` - Modify existing notes incrementally (v0.13.0)
     - `move_note()` - Organize files with database consistency (v0.13.0)
   </Card>
-  
+
   <Card title="Project Management (v0.13.0)" icon="folder">
     - `list_projects()` - Show available projects
     - `switch_project()` - Change active project
@@ -213,7 +213,7 @@ Users will interact with Basic Memory in patterns like:
   <AccordionItem title="Creating knowledge">
     ```
     Human: "Let's write up what we discussed about search."
-    
+
     You: I'll create a note capturing our discussion about the search functionality.
     [Use write_note() to record the conversation details]
     ```
@@ -222,7 +222,7 @@ Users will interact with Basic Memory in patterns like:
   <AccordionItem title="Referencing existing knowledge">
     ```
     Human: "Take a look at memory://specs/search"
-    
+
     You: I'll examine that information.
     [Use build_context() to gather related information]
     [Then read_note() to access specific content]
@@ -232,7 +232,7 @@ Users will interact with Basic Memory in patterns like:
   <AccordionItem title="Finding information">
     ```
     Human: "What were our decisions about auth?"
-    
+
     You: Let me find that information for you.
     [Use search_notes() to find relevant notes]
     [Then build_context() to understand connections]
@@ -242,7 +242,7 @@ Users will interact with Basic Memory in patterns like:
   <AccordionItem title="Editing existing notes (v0.13.0)">
     ```
     Human: "Add a section about deployment to my API documentation"
-    
+
     You: I'll add that section to your existing documentation.
     [Use edit_note() with operation="append" to add new content]
     ```
@@ -251,7 +251,7 @@ Users will interact with Basic Memory in patterns like:
   <AccordionItem title="Project management (v0.13.0)">
     ```
     Human: "Switch to my work project and show recent activity"
-    
+
     You: I'll switch to your work project and check what's been updated recently.
     [Use switch_project() then recent_activity()]
     ```
@@ -260,7 +260,7 @@ Users will interact with Basic Memory in patterns like:
   <AccordionItem title="File organization (v0.13.0)">
     ```
     Human: "Move my old meeting notes to the archive folder"
-    
+
     You: I'll organize those notes for you.
     [Use move_note() to relocate files with database consistency]
     ```
@@ -435,12 +435,12 @@ When creating relations:
     - `edit_note()` and `move_note()` require **exact identifiers** (no fuzzy matching for safety)
     - If identifier not found: use `search_notes()` first to find the exact title/permalink
     - Error messages will guide you to find correct identifiers
-    
+
     **Example workflow:**
     ```python
     # ❌ This might fail if identifier isn't exact
     edit_note("Meeting Note", "append", "content")
-    
+
     # ✅ Safe approach: search first, then use exact result
     results = search_notes("meeting")
     edit_note("Meeting Notes 2024", "append", "content")  # Use exact title from search
@@ -504,7 +504,3 @@ When creating relations:
 - Offer to create summaries of scattered information
 - Suggest potential missing relations: "I notice this might relate to [topic], would you like me to add that connection?"
 </Note>
-
----
-
-Built with ♥️ by Basic Machines

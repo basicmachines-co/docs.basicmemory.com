@@ -8,7 +8,7 @@ interface StepsProps {
 
 export function Steps({ children, className }: StepsProps) {
   return (
-    <div className={cn('space-y-4 steps-container', className)}>
+    <div className={cn('space-y-4 steps-container my-8', className)}>
       {children}
     </div>
   )

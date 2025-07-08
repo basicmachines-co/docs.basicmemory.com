@@ -130,7 +130,8 @@ You can pipe content from another command into `write_note`:
 
 ```bash
 # Pipe output of a command into a new note
-echo "# My Note\n\nThis is a test note" | basic-memory tool write-note --title "Test Note" --folder "notes"
+echo "# My Note\n\nThis is a test note" | basic-memory tool write-note \
+--title "Test Note" --folder "notes"
 
 # Pipe output of a file into a new note
 cat README.md | basic-memory tool write-note --title "Project README" --folder "documentation"
