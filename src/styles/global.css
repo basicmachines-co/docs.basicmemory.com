@@ -82,8 +82,7 @@
   }
 
   p {
-    @apply leading-7 [&:not(:first-child)]:mt-6;
-    color: #3e3e3e;
+    @apply leading-7 [&:not(:first-child)]:mt-6 text-gray-700 dark:text-gray-300;
     font-size: 16px;
   }
 
@@ -100,7 +99,7 @@
   }
 
   li {
-    color: #3e3e3e;
+    @apply text-gray-700 dark:text-gray-300;
   }
 
   code {
@@ -169,6 +168,42 @@
   /* Markdown code */
   pre code .token.code {
     @apply bg-gray-200 dark:bg-gray-800 px-1 rounded;
+  }
+
+  /* Override inline styles for Shiki code blocks in dark mode */
+  .dark pre.astro-code {
+    background-color: rgb(17 24 39) !important; /* dark:bg-gray-900 */
+  }
+  
+  .dark pre.astro-code,
+  .dark pre.astro-code span {
+    color: rgb(243 244 246) !important; /* dark:text-gray-100 */
+  }
+  
+  /* Preserve token colors in dark mode */
+  .dark pre.astro-code .token.keyword {
+    color: rgb(147 197 253) !important; /* blue-300 */
+  }
+  
+  .dark pre.astro-code .token.string {
+    color: rgb(134 239 172) !important; /* green-300 */
+  }
+  
+  .dark pre.astro-code .token.comment {
+    color: rgb(156 163 175) !important; /* gray-400 */
+  }
+  
+  .dark pre.astro-code .token.function {
+    color: rgb(252 211 77) !important; /* yellow-300 */
+  }
+  
+  .dark pre.astro-code .token.number {
+    color: rgb(251 146 60) !important; /* orange-400 */
+  }
+  
+  .dark pre.astro-code .token.operator,
+  .dark pre.astro-code .token.punctuation {
+    color: rgb(209 213 219) !important; /* gray-300 */
   }
 
   a {
@@ -268,4 +303,30 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Prevent Tailwind dark mode styles from affecting Mermaid diagrams */
+  .mermaid p {
+    color: inherit !important;
+  }
+
+  /* Mermaid line colors for light and dark modes */
+  .mermaid .flowchart-link {
+    stroke: #333333 !important;
+  }
+
+  .dark .mermaid .flowchart-link {
+    stroke: #cccccc !important;
+  }
+
+  /* Mermaid arrow markers for light and dark modes */
+  .mermaid marker path {
+    fill: #333333 !important;
+    stroke: #333333 !important;
+  }
+
+  .dark .mermaid marker path {
+    fill: #cccccc !important;
+    stroke: #cccccc !important;
+  }
+
 }
