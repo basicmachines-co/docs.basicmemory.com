@@ -31,5 +31,6 @@ export default defineConfig({
       },
       wrap: false
     }
-  }
+  },
+  site: 'https://docs.basicmemory.com'
 });
