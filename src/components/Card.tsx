@@ -28,7 +28,7 @@ export default function Card({ title, icon, href, children, className }: CardPro
           </div>
         )}
         <div className="flex-1">
-          <h3 className="mb-2 text-lg font-medium leading-none tracking-tight">
+          <h3 className="mb-2 text-lg font-medium leading-none tracking-tight text-gray-900 dark:text-gray-100">
             {title}
           </h3>
           {children && (

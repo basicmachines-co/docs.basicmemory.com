@@ -8,11 +8,27 @@ import mermaid from 'astro-mermaid';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), react(), pagefind(), mermaid()],
+  integrations: [mdx(), react(), pagefind(), mermaid({
+    themes: {
+      light: 'default',
+      dark: 'base'
+    },
+    mermaidConfig: {
+      themeVariables: {
+        darkMode: true,
+        primaryTextColor: '#f3f4f6',
+        secondaryTextColor: '#e5e7eb',
+        tertiaryTextColor: '#d1d5db'
+      }
+    }
+  })],
   markdown: {
     syntaxHighlight: 'shiki',
     shikiConfig: {
-      theme: 'github-light',
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark'
+      },
       wrap: false
     }
   }
