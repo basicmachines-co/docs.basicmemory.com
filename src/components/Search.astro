@@ -76,7 +76,7 @@
     font-size: 1rem !important;
     background: hsl(var(--background)) !important;
     background-color: hsl(var(--background)) !important;
-    border: 2px solid hsl(214.3 31.8% 91.4%) !important;
+    border: 2px solid hsl(var(--border)) !important;
     border-radius: 0.375rem !important;
     outline: none !important;
     transition: border-color 0.2s !important;
@@ -88,11 +88,6 @@
     border: 2px solid hsl(var(--foreground)) !important;
     outline: none !important;
     box-shadow: none !important;
-  }
-
-  /* Dark mode border color */
-  .dark .pagefind-custom .pagefind-ui__search-input {
-    border-color: hsl(217.2 32.6% 17.5%) !important;
   }
 
   .pagefind-custom .pagefind-ui__search-input::placeholder {
@@ -138,6 +133,11 @@
     margin-bottom: calc(8px * var(--pagefind-ui-scale));
     margin-left: 0;
     line-height: 1.4;
+  }
+  
+  .pagefind-custom .pagefind-ui__result-title a {
+    color: hsl(var(--muted-foreground));
+    text-decoration: none;
   }
 
   /* Style nested result titles */

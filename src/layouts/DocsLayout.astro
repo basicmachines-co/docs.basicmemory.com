@@ -25,7 +25,7 @@ const { title, description } = Astro.props.frontmatter || Astro.props
             <Breadcrumb />
             <h1>{title}</h1>
             {description && (
-              <p class="text-lg text-gray-600 mt-2 mb-8">{description}</p>
+              <p class="text-lg text-gray-600 dark:text-gray-400 mt-2 mb-8">{description}</p>
             )}
             <slot />
           </article>
