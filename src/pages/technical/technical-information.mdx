@@ -5,6 +5,7 @@ description: 'Technical details about Basic Memory implementation, architecture,
 ---
 
 import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step, CodeGroup, CodeTab } from '@/components'
+import SystemArchitectureTabs from '@/components/SystemArchitectureTabs'
 
 ## Architecture
 
@@ -25,7 +26,7 @@ Basic Memory consists of:
   </Card>
 </CardGroup>
 
-<Card title="Sync Service">
+<Card title="Sync Service" className="mt-6">
   Monitors file changes and updates the database
 </Card>
 
@@ -346,36 +347,7 @@ The search functionality:
 
 The Basic Memory system is built with a modular architecture:
 
-<CodeGroup>
-  <CodeTab label="File Layer">
-    **Markdown Files** serve as the source of truth:
-    - Human-readable and editable
-    - Version control friendly
-    - Standard format compatibility
-    - Complete data ownership
-  </CodeTab>
-  <CodeTab label="Processing Layer">
-    **Sync Service** processes changes:
-    - File system monitoring
-    - Markdown parsing
-    - Entity extraction
-    - Database updates
-  </CodeTab>
-  <CodeTab label="Storage Layer">
-    **SQLite Database** provides:
-    - Fast querying capabilities
-    - Full-text search indexing
-    - Relationship mapping
-    - Metadata storage
-  </CodeTab>
-  <CodeTab label="Interface Layer">
-    **MCP Server** exposes:
-    - Standardized tool interface
-    - Real-time data access
-    - Secure authentication
-    - Cross-platform compatibility
-  </CodeTab>
-</CodeGroup>
+<SystemArchitectureTabs client:load />
 
 ### Performance Characteristics
 

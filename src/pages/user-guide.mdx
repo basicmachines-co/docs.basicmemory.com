@@ -58,7 +58,7 @@ Use this prompt to resume previous topics with full context:
 
 **What happens:**
 - Searches your knowledge base for relevant content
-- Builds context from related documents  
+- Builds context from related documents
 - Resumes with awareness of previous discussions
 
 ### Recent Activity
@@ -94,9 +94,9 @@ Basic Memory uses special `memory://` URLs to reference knowledge:
 ### URL Formats
 
 ```
-memory://title                    # Reference by title
+memory://title                   # Reference by title
 memory://folder/title            # Reference by folder and title
-memory://permalink               # Reference by permalink  
+memory://permalink               # Reference by permalink
 memory://path/relation_type/*    # Follow all relations of type
 memory://path/*/target           # Find entities with relations to target
 ```
@@ -149,8 +149,8 @@ Structure facts with semantic categories:
 
 ```
 ~/basic-memory/
-├── projects/           # Project-specific notes
-├── decisions/          # Decision records
+├── projects/          # Project-specific notes
+├── decisions/         # Decision records
 ├── learning/          # Learning notes and research
 ├── meetings/          # Meeting notes
 └── archive/           # Archived content
@@ -171,14 +171,10 @@ Structure facts with semantic categories:
 # Create new project
 basic-memory project add work ~/work-notes
 
-# Switch projects instantly during conversations  
-
-```
-Switch to my work project
-```
+# Switch projects instantly during conversations
+# You can say: "Switch to my work project"
 
 # List all projects
-```
 basic-memory project list
 ```
 
@@ -194,7 +190,7 @@ Claude: [Uses edit_note to append new section]
 **Smart file organization**:
 
 ```
-You: "Move my old meeting notes to the archive folder"  
+You: "Move my old meeting notes to the archive folder"
 Claude: [Uses move_note with database consistency]
 ```
 
@@ -264,7 +260,7 @@ Basic Memory files are git-friendly and work well with version control.
 Basic Memory uses standard Markdown files that work with:
 
 - VS Code with Markdown extensions
-- Typora for rich text editing  
+- Typora for rich text editing
 - Any text editor for quick edits
 - Web editors for remote access
 
