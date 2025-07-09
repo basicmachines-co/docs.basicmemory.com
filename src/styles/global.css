@@ -329,4 +329,24 @@
     stroke: #cccccc !important;
   }
 
+  /* Mobile menu blur effect - only blur specific content areas */
+  .mobile-menu-open main {
+    filter: blur(4px);
+    transition: filter 300ms ease-in-out;
+  }
+  
+  .mobile-menu-open header .flex-shrink-0 {
+    filter: blur(4px);
+    transition: filter 300ms ease-in-out;
+  }
+  
+  .mobile-menu-open header .hidden.md\\:flex {
+    filter: blur(4px);
+    transition: filter 300ms ease-in-out;
+  }
+  
+  .mobile-menu-open body {
+    overflow: hidden;
+  }
+
 }
