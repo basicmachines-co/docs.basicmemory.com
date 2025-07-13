@@ -12,25 +12,25 @@ const calloutStyles = {
     container: 'border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950/20',
     icon: 'text-blue-600 dark:text-blue-400',
     title: 'text-blue-900 dark:text-blue-300',
-    content: '!text-blue-600 dark:!text-blue-400 [&_p]:!text-blue-600 dark:[&_p]:!text-blue-400 [&_li]:!text-blue-600 dark:[&_li]:!text-blue-400 [&_strong]:!text-blue-700 dark:[&_strong]:!text-blue-300 [&_code]:!text-blue-700 dark:[&_code]:!text-blue-300'
+    content: '!text-blue-600 dark:!text-blue-400 [&_p]:!text-blue-600 dark:[&_p]:!text-blue-400 [&_li]:!text-blue-600 dark:[&_li]:!text-blue-400 [&_strong]:!text-blue-700 dark:[&_strong]:!text-blue-300 [&_code]:!text-blue-700 dark:[&_code]:!text-blue-300 [&_a]:!text-blue-700 dark:[&_a]:!text-blue-300 [&_a]:!underline [&_a]:!underline-offset-2 hover:[&_a]:!text-blue-800 dark:hover:[&_a]:!text-blue-200'
   },
   warning: {
     container: 'border-yellow-200 bg-yellow-50 dark:border-yellow-900 dark:bg-yellow-950/20',
     icon: 'text-yellow-600 dark:text-yellow-400',
     title: 'text-yellow-900 dark:text-yellow-300',
-    content: '!text-yellow-600 dark:!text-yellow-400 [&_p]:!text-yellow-600 dark:[&_p]:!text-yellow-400 [&_li]:!text-yellow-600 dark:[&_li]:!text-yellow-400 [&_strong]:!text-yellow-700 dark:[&_strong]:!text-yellow-300 [&_code]:!text-yellow-700 dark:[&_code]:!text-yellow-300'
+    content: '!text-yellow-600 dark:!text-yellow-400 [&_p]:!text-yellow-600 dark:[&_p]:!text-yellow-400 [&_li]:!text-yellow-600 dark:[&_li]:!text-yellow-400 [&_strong]:!text-yellow-700 dark:[&_strong]:!text-yellow-300 [&_code]:!text-yellow-700 dark:[&_code]:!text-yellow-300 [&_a]:!text-yellow-700 dark:[&_a]:!text-yellow-300 [&_a]:!underline [&_a]:!underline-offset-2 hover:[&_a]:!text-yellow-800 dark:hover:[&_a]:!text-yellow-200'
   },
   note: {
     container: 'border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-950/20',
     icon: 'text-gray-600 dark:text-gray-400',
     title: 'text-gray-900 dark:text-gray-300',
-    content: '!text-gray-600 dark:!text-gray-400 [&_p]:!text-gray-600 dark:[&_p]:!text-gray-400 [&_li]:!text-gray-600 dark:[&_li]:!text-gray-400 [&_strong]:!text-gray-700 dark:[&_strong]:!text-gray-300 [&_code]:!text-gray-700 dark:[&_code]:!text-gray-300'
+    content: '!text-gray-600 dark:!text-gray-400 [&_p]:!text-gray-600 dark:[&_p]:!text-gray-400 [&_li]:!text-gray-600 dark:[&_li]:!text-gray-400 [&_strong]:!text-gray-700 dark:[&_strong]:!text-gray-300 [&_code]:!text-gray-700 dark:[&_code]:!text-gray-300 [&_a]:!text-gray-700 dark:[&_a]:!text-gray-300 [&_a]:!underline [&_a]:!underline-offset-2 hover:[&_a]:!text-gray-800 dark:hover:[&_a]:!text-gray-200'
   },
   tip: {
     container: 'border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950/20',
     icon: 'text-green-600 dark:text-green-400',
     title: 'text-green-900 dark:text-green-300',
-    content: '!text-green-600 dark:!text-green-400 [&_p]:!text-green-600 dark:[&_p]:!text-green-400 [&_li]:!text-green-600 dark:[&_li]:!text-green-400 [&_strong]:!text-green-700 dark:[&_strong]:!text-green-300 [&_code]:!text-green-700 dark:[&_code]:!text-green-300'
+    content: '!text-green-600 dark:!text-green-400 [&_p]:!text-green-600 dark:[&_p]:!text-green-400 [&_li]:!text-green-600 dark:[&_li]:!text-green-400 [&_strong]:!text-green-700 dark:[&_strong]:!text-green-300 [&_code]:!text-green-700 dark:[&_code]:!text-green-300 [&_a]:!text-green-700 dark:[&_a]:!text-green-300 [&_a]:!underline [&_a]:!underline-offset-2 hover:[&_a]:!text-green-800 dark:hover:[&_a]:!text-green-200'
   }
 }
 
