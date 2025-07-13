@@ -180,6 +180,11 @@ basic-memory project add work ~/work-notes
 # List all projects
 basic-memory project list
 ```
+<Warning>
+Moving notes from one project to another is not currently supported. The easiest
+thing to do is to either move the note yourself or write a new note, then delete
+the old note.
+</Warning>
 
 ### Enhanced Editing
 
@@ -215,18 +220,6 @@ Tags are searchable: `"Find my brewing notes"` will find this document.
 ### Real-time Sync (Default)
 
 Basic Memory automatically syncs file changes in real-time. No manual sync needed.
-
-### Manual Sync
-
-If you prefer manual control:
-
-```bash
-# Sync once
-basic-memory sync
-
-# Disable auto-sync and sync manually
-basic-memory sync --no-watch
-```
 
 ### Checking Status
 
@@ -273,8 +266,8 @@ Basic Memory uses standard Markdown files that work with:
 
 **Changes not syncing:**
 - Check `basic-memory status` for sync status
-- Restart sync with `basic-memory sync --watch`
 - Verify file permissions
+- Reset the database with `basic-memory reset`
 
 **Claude can't find knowledge:**
 - Confirm files are in the correct project directory
@@ -287,6 +280,9 @@ Basic Memory uses standard Markdown files that work with:
 - Consider archiving old content
 
 ### Getting Help
+Live help is available on our [Discord server](https://discord.gg/tyvKNccgqN) in
+the #help channel. You can also find past conversations of people who may have
+encountered a problem similar to yours.
 
 ```bash
 # View all available commands
@@ -297,23 +293,26 @@ basic-memory sync --help
 basic-memory project --help
 ```
 
+
 ## Best Practices
 
 ### Knowledge Creation
 
+1. **Create Relations** - Link related concepts
+1. **Make Observations** - Structure facts with semantic categories
+1. **Create an AI Assistant Guide** - AI assistants can be guided through a reference note
 1. **Be descriptive** - Use clear titles and rich content
-2. **Add context** - Include background and reasoning
-3. **Create connections** - Link related concepts
-4. **Use categories** - Structure observations semantically
-5. **Review and refine** - Edit AI-generated content for accuracy
+1. **Add context** - Include background and reasoning
+1. **Use categories** - Structure observations semantically
+1. **Review and refine** - Edit AI-generated content for accuracy
 
 ### Workflow
 
-1. **Start conversations contextually** - Use special prompts
-2. **Build incrementally** - Add to existing notes rather than creating duplicates
-3. **Organize regularly** - Move old content to appropriate folders
-4. **Cross-reference** - Link new content to existing knowledge
-5. **Switch projects** - Use different projects for different contexts
+1. **Use Special Prompts** - Start conversations contextually
+1. **Build incrementally** - Add to existing notes rather than creating duplicates
+1. **Organize regularly** - Move old content to appropriate folders
+1. **Cross-reference** - Link new content to existing knowledge
+1. **Switch projects** - Use different projects for different contexts and to create boundaries
 
 ### Long-term Maintenance
 
@@ -321,7 +320,6 @@ basic-memory project --help
 2. **Refactor connections** - Update relations as knowledge evolves
 3. **Regular reviews** - Periodically review and update key documents
 4. **Backup regularly** - Use git or other backup solutions
-5. **Share appropriately** - Use git for collaboration when needed
 
 ## Next Steps
 
