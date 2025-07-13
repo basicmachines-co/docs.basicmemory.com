@@ -7,6 +7,44 @@ description: 'Basic Memory is updated frequently, below are notable recent chang
 import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
+---
+## [v0.14.2](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.14.2) — 2025-07-03
+
+- **#211**: Fix deprecation warnings in output
+  ([`e738037`](https://github.com/basicmachines-co/basic-memory/pull/211))
+  - Replace deprecated datetime.utcnow() with timezone-aware alternatives and suppress SQLAlchemy warnings
+
+- **#212**: MCP Error with MCP-Hub:
+  ([`518d57c`](https://github.com/basicmachines-co/basic-memory/pull/212))
+  - The MCP Tools spec calls for accepting empty parameter objects, which these two tools did not
+  - Verified by testing the container locally
+
+---
+## [v0.14.1](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.14.1) — 2025-07-02
+
+### Bug Fixes
+
+- **#203**: Pin FastMCP to prevent v2.10.0 breaking change
+  ([`3a2e8c3`](https://github.com/basicmachines-co/basic-memory/pull/203))
+  - FastMCP v2.10.0 introduced decorative ASCII box drawing characters in stdout output
+  - This breaks JSON-based MCP protocol communication, preventing MCP servers from functioning
+  - Constrained dependency to `fastmcp<2.10.0` until upstream issue is resolved
+  - Critical fix: without this, Basic Memory MCP server fails to start with Claude Desktop and other MCP clients
+
+- **#190**: Fix MCP integration issues
+  ([`bd4f551`](https://github.com/basicmachines-co/basic-memory/commit/bd4f551))
+  - Fixed problems with Model Context Protocol integration that affected tool functionality
+  - Ensures stable communication between Basic Memory and AI tools like MCP Hub
+
+- **#200**: Add Cursor IDE support
+  ([`5360005`](https://github.com/basicmachines-co/basic-memory/commit/5360005))
+  - Added an "Add to Cursor" button for easier integration with Cursor IDE
+  - Provides developers with seamless setup for their preferred AI-powered development environment
+
+### Documentation
+
+- Updated README.md with clearer installation instructions and troubleshooting guides
+  ([`39f811f`](https://github.com/basicmachines-co/basic-memory/commit/39f811f))
 
 ---
 ## [v0.14.0](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.14.0) — 2025-06-26
