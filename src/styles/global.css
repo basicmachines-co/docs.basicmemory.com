@@ -206,13 +206,16 @@
     color: rgb(209 213 219) !important; /* gray-300 */
   }
 
+  /* Default link styles for content */
   a {
     @apply font-medium text-primary hover:text-primary/80;
   }
   
-  /* Underline links in article content */
-  article a {
-    @apply underline underline-offset-2;
+  /* Article content links with proper dark mode colors */
+  article a,
+  main p a,
+  main li a {
+    @apply font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 underline underline-offset-2;
   }
   
   /* Remove underlines from specific areas */
