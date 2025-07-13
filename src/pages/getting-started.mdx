@@ -14,7 +14,7 @@ Basic Memory works through the Model Context Protocol (MCP) to connect with AI a
 
 You can install Basic Memory using `uv`, an extremely fast Python package and project manager, written in Rust.
 
-You can install `uv` from [astral's website](https://docs.astral.sh/uv/getting-started/installation/)
+You can install `uv` from [astral's website](https://docs.astral.sh/uv/getting-started/installation/). After installing `uv` you can install Basic Memory with the command:
 
 ```bash
 uv tool install basic-memory
@@ -79,7 +79,7 @@ By default, Basic Memory saves notes in a project called `main` in `~/basic-memo
 
 #### Use Your Existing Notes Folder
 
-The easiest way is to ask Claude directly in your conversation:
+The easiest way is to ask Claude directly in your conversation. For example:
 
 ```
 Create a new project called "my project" in the "/Users/yourname/Documents/Notes" directory
@@ -155,7 +155,7 @@ Set the default project used at startup.
    ```
 
 4. **Confirm note creation**:
-   Claude will confirm when the note has been created and where it's stored.
+   Claude will confirm when the note has been created and where it is stored.
 
 5. **View the created file** in your `~/basic-memory` directory using any text editor or Obsidian.
    The file structure will look similar to:
@@ -273,7 +273,7 @@ Claude: [Switches projects and shows work-specific content]
 
 ## Importing Existing Conversations
 
-Import your existing AI conversations using the cli commands:
+Import your existing AI conversations using the CLI commands:
 
 ```bash
 # From Claude
@@ -313,9 +313,6 @@ After getting started, explore these areas:
   </Card>
   <Card title="CLI Reference" href="/guides/cli-reference">
     Command line tools
-  </Card>
-  <Card title="OAuth Authentication" href="/integrations/oauth-setup">
-    Secure remote access (v0.13.5+)
   </Card>
 </CardGroup>
 
@@ -363,7 +360,7 @@ Open Terminal and run:
 which uvx
 ```
 
-This will show you the full path (e.g., `/Users/yourusername/.cargo/bin/uvx`).
+This will show you the full path (e.g., `/Users/yourusername/.local/bin/uvx`).
 
 **Step 2: Edit Claude Desktop Configuration**
 
@@ -373,7 +370,7 @@ Edit the Claude Desktop config:
 {
   "mcpServers": {
     "basic-memory": {
-      "command": "/absolute/path/to/uvx",
+      "command": "/Users/yourusername/.local/bin/uvx",
       "args": [
         "basic-memory",
         "mcp"
@@ -383,7 +380,11 @@ Edit the Claude Desktop config:
 }
 ```
 
-Replace `/absolute/path/to/uvx` with the actual path you found in Step 1.
+Replace `/Users/yourusername/.local/bin/uvx` with the actual path you found in Step 1.
+
+<Tip>
+If you need to find your username you can type `whoami` in the terminal.
+</Tip>
 
 **Step 3: Restart Claude Desktop**
 
