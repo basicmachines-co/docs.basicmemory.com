@@ -21,10 +21,23 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{!title || title === 'Basic Memory' ? 'Basic Memory' : `${title} - Basic Memory`}</title>
+
+    <!-- Theme initialization script - prevents flash of light mode -->
+    <script is:inline>
+      (function() {
+        // Get theme from localStorage with fallback to system preference
+        const savedTheme = localStorage.getItem('basic-memory-theme') || 'system';
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const initialTheme = savedTheme === 'system' ? systemTheme : savedTheme;
+
+        // Apply theme immediately to prevent flashing
+        document.documentElement.className = initialTheme;
+      })();
+    </script>
   </head>
   <body>
     <slot />
-    
+
     <script>
       // Preserve sidebar scroll position
       document.addEventListener('click', (e) => {
@@ -48,23 +61,23 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
         document.addEventListener('click', (e) => {
           const trigger = (e.target as HTMLElement).closest('.accordion-trigger')
           if (!trigger) return
-          
+
           const content = trigger.nextElementSibling as HTMLElement
           const icon = trigger.querySelector('.accordion-icon')
           const isOpen = trigger.getAttribute('data-state') === 'open'
-          
+
           trigger.setAttribute('data-state', isOpen ? 'closed' : 'open')
           content.classList.toggle('hidden')
           icon?.classList.toggle('rotate-180')
         })
-        
+
         // Code tabs functionality
         const codeTabs = document.querySelectorAll('.code-tabs')
-        
+
         codeTabs.forEach(tabContainer => {
           const buttons = tabContainer.querySelectorAll('.tab-button')
           const contents = tabContainer.querySelectorAll('.tab-content')
-          
+
           buttons.forEach((button, index) => {
             button.addEventListener('click', () => {
               // Update button states
@@ -77,7 +90,7 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
                   btn.classList.add('text-gray-600', 'dark:text-gray-400')
                 }
               })
-              
+
               // Update content visibility
               contents.forEach((content, contentIndex) => {
                 if (contentIndex === index) {
@@ -91,17 +104,17 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
             })
           })
         })
-        
+
         // Add copy buttons to code blocks
         const codeBlocks = document.querySelectorAll('pre')
         codeBlocks.forEach(pre => {
           // Skip if already wrapped
           if (pre.parentElement?.classList.contains('code-block-wrapper')) return
-          
+
           // Create wrapper
           const wrapper = document.createElement('div')
           wrapper.className = 'code-block-wrapper relative'
-          
+
           // Create copy button
           const button = document.createElement('button')
           button.className = 'copy-button'
@@ -112,17 +125,17 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
             </svg>
           `
           button.setAttribute('aria-label', 'Copy code')
-          
+
           // Wrap the pre element
           pre.parentNode?.insertBefore(wrapper, pre)
           wrapper.appendChild(pre)
           wrapper.appendChild(button)
-          
+
           // Handle copy
           button.addEventListener('click', async () => {
             const code = pre.querySelector('code')
             const text = code?.textContent || ''
-            
+
             try {
               await navigator.clipboard.writeText(text)
               button.classList.add('copied')
@@ -131,7 +144,7 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
               `
-              
+
               setTimeout(() => {
                 button.classList.remove('copied')
                 button.innerHTML = `
@@ -147,7 +160,7 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
           })
         })
       })
-      
+
       // Full screen image viewer
       const createImageViewer = () => {
         // Create viewer element
@@ -163,30 +176,30 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
           </div>
         `
         document.body.appendChild(viewer)
-        
+
         const viewerImg = viewer.querySelector('img')
         const closeBtn = viewer.querySelector('.image-viewer-close')
-        
+
         // Close on click outside image or close button
         viewer.addEventListener('click', (e) => {
           if (e.target === viewer || e.target === closeBtn || closeBtn.contains(e.target)) {
             viewer.classList.remove('active')
           }
         })
-        
+
         // Close on escape key
         document.addEventListener('keydown', (e) => {
           if (e.key === 'Escape' && viewer.classList.contains('active')) {
             viewer.classList.remove('active')
           }
         })
-        
+
         return { viewer, viewerImg }
       }
-      
+
       // Initialize image viewer
       const { viewer, viewerImg } = createImageViewer()
-      
+
       // Add click handlers to all images
       const images = document.querySelectorAll('article img')
       images.forEach(img => {

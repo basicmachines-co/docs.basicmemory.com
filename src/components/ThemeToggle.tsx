@@ -4,17 +4,23 @@ export default function ThemeToggle() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-    const initialTheme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    // Get theme from server-rendered class or localStorage
+    const serverTheme = document.documentElement.className as 'light' | 'dark' | ''
+    const storedTheme = localStorage.getItem('basic-memory-theme') as 'light' | 'dark' | null
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    
+    const initialTheme = serverTheme || storedTheme || systemTheme
     setTheme(initialTheme)
-    document.documentElement.classList.toggle('dark', initialTheme === 'dark')
+    
+    // Ensure the class is applied
+    document.documentElement.className = initialTheme
   }, [])
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
     setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
-    document.documentElement.classList.toggle('dark', newTheme === 'dark')
+    localStorage.setItem('basic-memory-theme', newTheme)
+    document.documentElement.className = newTheme
   }
 
   return (
