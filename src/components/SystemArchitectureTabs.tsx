@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
+import Tabs, { type Tab } from './Tabs'
 
 export default function SystemArchitectureTabs() {
-  const [activeTab, setActiveTab] = useState(0)
-  
-  const tabs = [
+  const tabs: Tab[] = [
     {
       label: "File Layer",
       content: (
@@ -62,26 +61,5 @@ export default function SystemArchitectureTabs() {
     }
   ]
   
-  return (
-    <div className="my-6 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
-      <div className="flex border-b border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-950">
-        {tabs.map((tab, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveTab(index)}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === index
-                ? 'border-b-2 border-primary bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-      <div className="bg-white dark:bg-gray-900 p-6">
-        {tabs[activeTab].content}
-      </div>
-    </div>
-  )
+  return <Tabs tabs={tabs} />
 }
