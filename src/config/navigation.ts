@@ -15,7 +15,7 @@ export const navConfig = {
     { title: 'GitHub', href: 'https://github.com/basicmachines-co/basic-memory', external: true },
   ],
   sidebarTopLinks: [
-    { title: 'Basic Machines', href: 'https://basicmachines.co', external: true, icon: 'website' },
+    { title: 'Basic Memory', href: 'https://basicmemory.com', external: true, icon: 'website' },
     { title: 'GitHub', href: 'https://github.com/basicmachines-co/basic-memory', external: true, icon: 'github' },
     { title: 'Discord', href: 'https://discord.gg/tyvKNccgqN', external: true, icon: 'discord' },
     { title: 'Reddit', href: 'https://www.reddit.com/r/basicmemory', external: true, icon: 'reddit' },
@@ -25,7 +25,7 @@ export const navConfig = {
     {
       title: 'Get Started',
       items: [
-        { title: 'Basic Memory', href: '/' },
+        { title: 'About Basic Memory', href: '/' },
         { title: 'Getting Started', href: '/getting-started' },
         { title: 'User Guide', href: '/user-guide' },
       ],
