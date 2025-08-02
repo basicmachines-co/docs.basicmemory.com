@@ -8,6 +8,43 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
 ---
+## [v0.14.3](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.14.3) — 2025-08-02
+
+### Bug Fixes & Stability Improvements
+
+- **Enhanced character conflict detection and error handling for sync operations** ([`fb1350b`](https://github.com/basicmachines-co/basic-memory/commit/fb1350b))
+  - Improved file path conflict detection for case-insensitive file systems
+  - Better handling of character encoding differences and Unicode normalization
+  - Enhanced error messages for sync conflicts
+
+- **Replace recursive _traverse_messages with iterative approach** ([`7585a29`](https://github.com/basicmachines-co/basic-memory/commit/7585a29))
+  - Fixed stack overflow issues when handling deep conversation threads
+  - Improved performance for ChatGPT import with large conversation histories
+  - Better memory usage for processing complex conversation structures
+
+- **Handle missing 'name' key in memory JSON import** ([`a4a3b1b`](https://github.com/basicmachines-co/basic-memory/commit/a4a3b1b))
+  - Fixed crashes when importing memory JSON files with incomplete data
+  - Improved error handling and validation for legacy import formats
+  - Better backward compatibility with older memory export formats
+
+- **Fix: basic memory home env var not respected when project path is changed** ([`6361574`](https://github.com/basicmachines-co/basic-memory/commit/6361574))
+  - Fixed environment variable handling for custom project locations
+  - Improved cross-platform path resolution
+  - Better support for relative and absolute path configurations
+
+- **Fix: path traversal security vulnerability in mcp tools** ([`a0cf623`](https://github.com/basicmachines-co/basic-memory/commit/a0cf623))
+  - Secured MCP tool file operations against path traversal attacks
+  - Enhanced input validation for file paths and operations
+  - Improved security posture for file system interactions
+
+### Testing & Quality
+
+- **Make case sensitivity test platform-aware** ([`7460a93`](https://github.com/basicmachines-co/basic-memory/commit/7460a93))
+  - Fixed test failures on case-insensitive file systems (macOS, Windows)
+  - Added platform detection for appropriate test behavior
+  - Improved test reliability across different operating systems
+
+---
 ## [v0.14.2](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.14.2) — 2025-07-03
 
 - **#211**: Fix deprecation warnings in output
