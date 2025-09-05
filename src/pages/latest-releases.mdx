@@ -8,6 +8,94 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
 ---
+## [v0.14.4](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.14.4) — 2025-09-04
+
+### Critical Bug Fixes
+
+- **Critical search index bug - prevent note disappearing on edit** ([#257](https://github.com/basicmachines-co/basic-memory/pull/257))
+  - Fixed critical issue where notes would disappear during editing operations
+  - Improved search index stability and consistency
+
+### Database & Project Management
+
+- **Add missing foreign key constraints for project removal** ([#258](https://github.com/basicmachines-co/basic-memory/pull/258))
+  - Enhanced database integrity with proper foreign key constraints
+  - Improved project deletion handling and data consistency
+
+- **Add project isolation to ContextService.find_related() method** ([#262](https://github.com/basicmachines-co/basic-memory/pull/262))
+  - Fixed cross-project data leakage in context search operations
+  - Strengthened project boundary enforcement
+
+- **Complete project management special character support** ([#279](https://github.com/basicmachines-co/basic-memory/pull/279))
+  - Enhanced support for special characters in project names and paths
+  - Improved cross-platform compatibility for project management
+
+### Platform Compatibility
+
+- **Windows platform compatibility improvements** ([#252](https://github.com/basicmachines-co/basic-memory/pull/252))
+  - Addressed multiple Windows-specific issues and compatibility problems
+  - Enhanced cross-platform file handling and path resolution
+
+- **Fix Windows test failures and add Windows CI support** ([#273](https://github.com/basicmachines-co/basic-memory/pull/273))
+  - Added Windows continuous integration support
+  - Fixed platform-specific test failures
+
+### File Handling & Synchronization
+
+- **Handle vim atomic write DELETE events without ADD** ([#249](https://github.com/basicmachines-co/basic-memory/pull/249))
+  - Improved handling of vim's atomic write operations
+  - Better file synchronization with external editors
+
+- **Sanitize filenames and allow optional kebab case** ([#260](https://github.com/basicmachines-co/basic-memory/pull/260))
+  - Enhanced filename sanitization for cross-platform compatibility
+  - Added support for kebab-case filename formatting
+
+### MCP & API Improvements
+
+- **Enable string-to-integer conversion for build_context depth parameter** ([#259](https://github.com/basicmachines-co/basic-memory/pull/259))
+  - Improved parameter handling in MCP build_context operations
+  - Enhanced API flexibility and error handling
+
+- **Use discriminated unions for MCP schema validation in build_context** ([#266](https://github.com/basicmachines-co/basic-memory/pull/266))
+  - Strengthened MCP schema validation with discriminated unions
+  - Improved type safety and error detection
+
+- **Add ISO datetime serialization to MCP schema models** ([#270](https://github.com/basicmachines-co/basic-memory/pull/270))
+  - Enhanced datetime handling in MCP operations
+  - Improved API consistency and standard compliance
+
+### Logging & Configuration
+
+- **Respect BASIC_MEMORY_LOG_LEVEL and BASIC_MEMORY_CONSOLE_LOGGING environment variables** ([#264](https://github.com/basicmachines-co/basic-memory/pull/264))
+  - Proper handling of logging configuration environment variables
+  - Enhanced debugging and troubleshooting capabilities
+
+### Content Processing
+
+- **Ensure all datetime operations return timezone-aware objects** ([#268](https://github.com/basicmachines-co/basic-memory/pull/268))
+  - Fixed timezone handling inconsistencies
+  - Improved datetime processing reliability
+
+- **Fix observation parsing to exclude markdown and wiki links** ([#269](https://github.com/basicmachines-co/basic-memory/pull/269))
+  - Enhanced content parsing to properly handle markdown and wiki link formats
+  - Improved observation extraction accuracy
+
+- **Update YAML frontmatter tag formatting for Obsidian compatibility** ([#280](https://github.com/basicmachines-co/basic-memory/pull/280))
+  - Enhanced Obsidian plugin compatibility with improved YAML frontmatter handling
+  - Better integration with Obsidian's tagging system
+
+### Infrastructure
+
+- **Implement non-root Docker container to fix file ownership issues** ([#277](https://github.com/basicmachines-co/basic-memory/pull/277))
+  - Enhanced Docker container security by running as non-root user
+  - Fixed file ownership and permission issues in containerized environments
+
+### New Contributors
+
+- [@manuelbliemel](https://github.com/manuelbliemel) made their first contribution
+- [@bdmayes](https://github.com/bdmayes) made their first contribution
+
+---
 ## [v0.14.3](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.14.3) — 2025-08-02
 
 ### Bug Fixes & Stability Improvements
