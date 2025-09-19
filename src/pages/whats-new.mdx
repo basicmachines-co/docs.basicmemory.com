@@ -1,85 +1,134 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
-title: "What's New in v0.14.0"
-description: 'Major release introducing multi-project management, advanced note editing, and enhanced AI collaboration workflows'
+title: "What's New - v0.15.0"
+description: 'New project modes'
 ---
 
 import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
 
-Basic Memory v0.14.0 is a **major release** that transforms Basic Memory into a true remote MCP Server and is ready for your advanced agentic workflows.
+# v0.15.0
 
-This also improves the multi-project knowledge management system's fluid project switching, advanced note editing capabilities, and robust file management with numerous bug fixes.
+Basic Memory v0.15.0 introduces new project modes to improve project management.
 
-## 🐳 Docker Support
+## Project Modes
 
-**Run Basic Memory in Docker Desktop or your own container runtime:**
+<Warning>
+**Note**: The `switch_project()` and `get_current_project()` tools have been removed.
+</Warning>
 
-Update the docker-compose.yml to set the path to your knowledge folder and then:
-```
-$ docker-compose up
-```
+### Multi-Project Mode
+**Default behavior** (same as previous versions)
 
-Basic Memory now supports SSE and can be used with [n8n ↗️](https://n8n.io) workflows.
+- AI discovers projects using `list_memory_projects()`
+- User specifies which project to work with
+- Content tool use the `project` parameter
+- For users with multiple knowledge bases
+- AI remembers which project you are currently using
 
-## 🎯 Multi-Project Management
-
-**Switch between different knowledge bases instantly during conversations:**
-
-### Project Switching in Action
-
+**Example:**
 ```
 You: "What projects do I have?"
+Claude: [Uses list_memory_projects()]
+Available projects: main, work-notes, creative-writing
 
-Claude: Available projects:
-• main (current, default) - 127 entities, 340 observations
-• work-notes - 89 entities, 245 observations
-• creative-writing - 34 entities, 156 observations
-• research-papers - 67 entities, 189 observations
-
-You: "Switch to creative-writing"
-
-Claude: ✓ Switched to creative-writing project
-
-Project Summary:
-• 34 entities (characters, plots, themes)
-• 156 observations
-• 23 relations
-• Last updated: 2 hours ago
-
-You: "What have I been working on in this project?"
-
-Claude: [Shows recent activity from creative-writing project only]
-Recent updates to your novel planning:
-- Updated character development for Sarah Chen
-- Added new plot twist in Chapter 12
-- Research notes on neural implant technology
+You: "Create a character profile in creative-writing"
+Claude: [Uses write_note(title="Protagonist", project="creative-writing")]
+✓ Created character profile in creative-writing project
 ```
 
-### Real-World Project Organization
+### Default Project Mode
 
-**Professional Developer Setup:**
+Configure Basic Memory to use only a single default project for all notes.
+
+**Simplified single-project usage** (new)
+- Tools automatically use default project
+- No project parameter needed
+- For users with one primary knowledge base
+
+**Configuration:**
+
+Set
+```json
+{
+  "default_project": "main",
+  "default_project_mode": true
+}
 ```
-You: "Create a new project for the client work"
+in ~/.basic-memory/config.json
 
-Claude: [Creates new project structure]
-✓ Created project: client-webapp
-Location: ~/knowledge/client-webapp/
-Folders: architecture/, decisions/, api/, frontend/, deployment/
+**Example:**
+```
+You: "Create a note about today's meeting"
+Claude: [Uses write_note(title="Meeting", content="...", project=auto)]
+✓ Created in main project (default)
 
-You: "Switch to client-webapp and document today's architecture meeting"
-
-Claude: [Switches context and creates meeting notes with relevant technical context]
+You: "Search for project planning"
+Claude: [Uses search_notes(query="project planning", project=auto)]
+Found 5 notes in main project
 ```
 
-**Personal Knowledge Management:**
-```
-You: "Switch to my personal project and add today's reflections"
+### Constrained Project Mode
 
-Claude: [Switches to personal knowledge base]
-✓ Now in personal project
-I can see your previous reflections, goal tracking, and habit notes.
-What insights would you like to add from today?
+Specify a particular project to use for the MCP session.
+
+**Locked to specific project**
+- Start with `--project project-name`
+- All operations locked to specified project
+- Prevents accidental cross-project operations
+- For automation and focused work sessions
+
+Started with `basic-memory mcp --project work-notes`:
+
 ```
+You: "Document the new API architecture"
+Claude: [Uses write_note(title="API Architecture", project=constrained)]
+✓ Created in work-notes project
+
+You: "Find database documentation"
+Claude: [Uses search_notes(query="database", project=constrained)]
+Found 3 database notes in work-notes project
+```
+
+### Project Resolution Hierarchy
+
+1. **Projct CLI arg** (highest priority) - `--project` parameter
+2. **Explicit Parameter** (medium priority) - `project` parameter in tool call
+3. **Default Project Mode** (lowest priority) - Automatic default when enabled
+
+### Details
+
+**What changed:**
+
+- ❌ **Removed**: `switch_project()` and `get_current_project()` tools
+- ✓ **Added**: Explicit `project` parameter to all content tools
+- ✓ **Added**: Three project modes for different workflows
+- ✓ **Added**: `list_memory_projects()` with session guidance
+- ✓ **Enhanced**: `recent_activity()` with discovery mode
+
+**Before:**
+```python
+switch_project("work-notes")
+write_note("My Note", "Content")
+search_notes("query")
+```
+
+**After:**
+```python
+# Multi-project mode
+list_memory_projects()  # Discover projects
+write_note("My Note", "Content", project="work-notes")
+search_notes("query", project="work-notes")
+
+# Default project mode (config: default_project_mode=true)
+write_note("My Note", "Content")  # Uses default project automatically
+search_notes("query")  # Searches default project
+
+# Constrained mode (CLI: --project work-notes)
+write_note("My Note", "Content")  # Uses constrained project
+search_notes("query")  # Searches constrained project
+```
+
+# v0.14.0
 
 ## ✏️ Advanced Note Editing
 
@@ -144,7 +193,18 @@ You: "Update the deployment section in our API docs with the new Docker setup"
 Claude: [Replaces specific section under ## Deployment header]
 ✓ Updated "API Documentation" → ## Deployment section:
 
-## Deployment
+
+## 🐳 Docker Support
+
+**Run Basic Memory in Docker Desktop or your own container runtime:**
+
+Update the docker-compose.yml to set the path to your knowledge folder and then:
+```
+$ docker-compose up
+```
+
+Basic Memory now supports SSE and can be used with [n8n ↗️](https://n8n.io) workflows.
+
 
 ### Docker Setup (Updated)
 # Build the application
@@ -244,7 +304,7 @@ Claude: [Uses view_note tool to display formatted artifact]
 - Proper heading hierarchy
 - Syntax-highlighted code blocks
 - Organized sections and subsections
-- Clean typography and spacing
+- Typography and spacing
 - Clickable links and references
 
 ### Creative Writing Projects
@@ -255,7 +315,7 @@ You: "Display my character development notes as an artifact"
 Claude: [Creates formatted view of character notes]
 ```
 
-*Result: Clean, readable format showing:*
+*Result: Readable format showing:*
 - Character profiles with clear sections
 - Relationship maps and connections
 - Story arc progression
@@ -266,10 +326,10 @@ Claude: [Creates formatted view of character notes]
 ```
 You: "View my climate research compilation as an artifact"
 
-Claude: [Formats comprehensive research note]
+Claude: [Formats research note]
 ```
 
-*Displays: Professional research document with:*
+*Displays: Research document with:*
 - Executive summary
 - Organized findings by category
 - Source citations and links
@@ -409,13 +469,16 @@ Found 3 client-related notes in work-notes:
 list_projects()
 → Shows: main (default, current), work-notes, personal-journal
 
-# Switch project context
-switch_project("work-notes")
-→ Changes active project for all subsequent operations
+# Project discovery and management
+list_memory_projects()
+→ Shows all projects with guidance for session management
 
-# Get current project info
-get_current_project()
-→ Returns: project name, stats, last updated
+# Project-specific operations (stateless architecture)
+write_note("My Note", "Content", "folder", project="work-notes")
+→ Creates note in specified project
+
+search_notes("query", project="work-notes")
+→ Searches within specified project only
 
 # Check sync status
 sync_status()
@@ -446,7 +509,7 @@ move_note("old-location.md", "new-folder/better-name.md")
 
 # View formatted artifacts
 view_note("important-document")
-→ Displays note as beautifully formatted artifact in Claude Desktop
+→ Displays note as formatted artifact in Claude Desktop
 ```
 
 ## Real-World Workflows
@@ -494,7 +557,7 @@ Claude: [Switches to research context]
 
 You: "Create detailed notes on the transformer architecture paper"
 
-Claude: [Creates comprehensive research note]
+Claude: [Creates research note]
 ✓ Created "Attention Is All You Need - Paper Analysis"
 
 ## Key Contributions
@@ -538,7 +601,7 @@ Claude: [Uses append to add to existing character note]
 ## New Backstory Details
 - [background] Lost younger brother in early neural implant experiment #trauma
 - [motivation] Brother's death drives her investigation into NeuroLink Corp #personal-stakes
-- [skill] Developed advanced hacking abilities after brother's accident #character-development
+- [skill] Developed hacking abilities after brother's accident #character-development
 - [relationship] Estranged from father who worked for competing tech company #family-conflict
 
 ## Character Arc Implications
@@ -552,7 +615,7 @@ Relations updated:
 
 You: "View the character profile as a formatted artifact"
 
-Claude: [Displays beautiful character sheet]
+Claude: [Displays character sheet]
 [Shows organized character profile with clear sections, relationship maps, and story connections]
 ```
 
@@ -597,26 +660,4 @@ Claude: [Organizes personal history]
 ✓ Updated personal development timeline
 ```
 
-## Getting Started with v0.13.0
-
-### Installation
-
-```bash
-# Install the latest release
-uv tool install basic-memory
-```
-
-### Upgrading from Previous Versions
-
-```bash
-# Upgrade existing installation
-uv tool upgrade basic-memory
-
-# Check version
-basic-memory --version
-```
-<Note>
-**Automatic Migration**: The first run will automatically migrate your existing data to the new unified database structure. No manual action required - all your notes and projects are preserved exactly as they were.
-</Note>
-
-**Ready to experience the next evolution of AI-human collaboration?** [Get started with Basic Memory v0.13.0 →](/getting-started)
+[Get started with Basic Memory →](/getting-started)

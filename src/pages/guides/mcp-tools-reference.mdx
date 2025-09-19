@@ -82,26 +82,108 @@ Basic Memory provides a comprehensive suite of MCP (Model Context Protocol) tool
 
 ### Project Management Tools
 
+## Project Modes
+
+Basic Memory supports three different project modes to accommodate different workflows:
+
+### Multi-Project Mode (Default)
+
+The standard mode for users with multiple knowledge bases:
+
+- **How it works**: AI assistants discover projects using `list_memory_projects()` and `recent_activity()`
+- **Project selection**: Users specify which project to work with during conversations
+- **Benefits**: Full flexibility to work across multiple projects in one session
+- **Best for**: Users managing separate work, personal, and research knowledge bases
+
+**Example workflow:**
+```
+Assistant: I'll check what projects you have available.
+[Calls list_memory_projects()]
+
+Assistant: I see you have 'work', 'personal', and 'research' projects. Which would you like to use?
+
+User: Let's work with the research project
+
+Assistant: Perfect! I'll use the 'research' project for our work.
+[Uses project="research" in all subsequent tool calls]
+```
+
+### Default Project Mode
+
+Simplified mode for single-project users:
+
+- **How it works**: Set `default_project_mode=true` in configuration
+- **Automatic selection**: Tools automatically use the default project when no project is specified
+- **Benefits**: Seamless experience without repetitive project specification
+- **Best for**: Users with primarily one knowledge base
+
+**Configuration:**
+```json
+{
+  "default_project": "main",
+  "default_project_mode": true
+}
+```
+
+**Example workflow:**
+```
+User: Create a note about today's meeting
+
+Assistant: I'll create a meeting note for you.
+[Automatically uses default project 'main' - no project parameter needed]
+
+User: Search for notes about project planning
+
+Assistant: I'll search your knowledge base for project planning content.
+[Automatically searches in default project 'main']
+```
+
+### Constrained Project Mode
+
+Locked mode for specific workflows:
+
+- **How it works**: Start MCP server with `--project project-name` parameter
+- **Locked operation**: All tools operate within the specified project only
+- **Benefits**: Prevents accidental cross-project operations
+- **Best for**: Automation, and focused work sessions
+
+**Usage:**
+```bash
+# Start MCP server constrained to specific project
+basic-memory mcp --project work-project
+```
+
+**Example workflow:**
+```
+User: Create documentation for the new API
+
+Assistant: I'll create API documentation in the work-project.
+[All operations automatically constrained to 'work-project']
+
+User: Search for existing architecture notes
+
+Assistant: I'll search for architecture notes in the work-project.
+[Search automatically limited to constrained project]
+```
+
+### Project Resolution Hierarchy
+
+When multiple project specifications exist, Basic Memory uses this priority order:
+
+1. **CLI Constraint** (highest priority) - `--project` parameter
+2. **Explicit Parameter** (medium priority) - `project` parameter in tool call
+3. **Default Project Mode** (lowest priority) - Automatic default when enabled
+
+This ensures predictable behavior and allows explicit override when needed.
+
 <CardGroup cols={2}>
-  <Card title="list_projects" icon="layers">
+  <Card title="list_memory_projects" icon="layers">
     **Show all available projects**
     - Displays project status and statistics
-    - Shows current and default projects
+    - Provides session guidance for project selection
     - [Detailed examples →](/whats-new#multi-project-management)
   </Card>
-  <Card title="switch_project" icon="shuffle">
-    **Change active project context**
-    - Instant project switching during conversations
-    - Maintains session context
-    - [Detailed examples →](/whats-new#project-switching-in-action)
-  </Card>
-  <Card title="get_current_project" icon="info">
-    **Show current project information**
-    - Project name and statistics
-    - Last updated information
-    - Entity and relation counts
-  </Card>
-  <Card title="create_project" icon="plus">
+  <Card title="create_memory_project" icon="plus">
     **Create new knowledge projects**
     - Parameters: project_name, project_path, set_default
     - Initialize new knowledge bases
@@ -113,11 +195,11 @@ Basic Memory provides a comprehensive suite of MCP (Model Context Protocol) tool
     - Does not delete actual files
     - Clean up unused project references
   </Card>
-  <Card title="set_default_project" icon="star">
-    **Set default project for new sessions**
-    - Updates configuration file
-    - Requires restart to take effect
-    - Sets startup project context
+  <Card title="sync_status" icon="refresh-cw">
+    **Check file synchronization status**
+    - Show sync progress and background operations
+    - Identify any sync issues or conflicts
+    - [Detailed examples →](/whats-new#automatic-migration)
   </Card>
 </CardGroup>
 
@@ -135,12 +217,6 @@ Basic Memory provides a comprehensive suite of MCP (Model Context Protocol) tool
     - Parameters: nodes, edges, title, folder
     - Generate knowledge graph visualizations
     - [Detailed examples →](/guides/canvas)
-  </Card>
-  <Card title="sync_status" icon="refresh-cw">
-    **Check file synchronization status**
-    - Show sync progress and background operations
-    - Identify any sync issues or conflicts
-    - [Detailed examples →](/whats-new#automatic-migration)
   </Card>
 </CardGroup>
 
@@ -243,11 +319,11 @@ Claude: I'll create a comprehensive note that synthesizes your database optimiza
 ```
 </details>
 
-**Project Management Flow:**
+**Project Discovery Flow:**
 ```
-list_projects → switch_project → recent_activity → get_current_project
+list_memory_projects → recent_activity (discovery mode) → project selection
 ```
-*Discover projects, switch context, check status, confirm active project*
+*Discover projects, view cross-project activity, choose working project*
 
 <details>
 <summary>Example conversation</summary>
@@ -255,19 +331,19 @@ list_projects → switch_project → recent_activity → get_current_project
 ```
 You: "What projects do I have available?"
 Claude: Here are all your Basic Memory projects with their current status.
-[Uses list_projects to show available projects]
+[Uses list_memory_projects to show available projects]
 
-You: "Switch to my work project"
-Claude: I've switched to your work project context.
-[Uses switch_project to change active project]
+You: "Show me recent activity across all projects"
+Claude: Here's recent activity across all your projects to help you choose which to work with.
+[Uses recent_activity without project parameter for discovery mode]
+
+You: "I want to work with my research project"
+Claude: I'll use the 'research' project for our work. All subsequent operations will specify this project.
+[Remembers project choice for conversation context]
 
 You: "What have I been working on recently in this project?"
-Claude: Here's your recent activity in the work project.
-[Uses recent_activity to show recent changes]
-
-You: "Confirm I'm in the right project"
-Claude: You're currently in the 'work' project with 145 notes and 28 recent updates.
-[Uses get_current_project to verify active context]
+Claude: Here's your recent activity in the research project.
+[Uses recent_activity with project="research" parameter]
 ```
 </details>
 
@@ -315,11 +391,11 @@ Claude: [Uses view_note tool to display artifact]
 
 **In Development Workflows:**
 ```
-You: "Switch to my work project and document today's architecture decisions"
-Claude: [Uses switch_project, then write_note with technical context]
+You: "Document today's architecture decisions in my work project"
+Claude: [Uses write_note with project="work" parameter and technical context]
 
-You: "Find all my API documentation and update the authentication section"
-Claude: [Uses search_notes, then edit_note with section replacement]
+You: "Find all my API documentation in the work project and update the authentication section"
+Claude: [Uses search_notes with project="work", then edit_note with section replacement]
 ```
 
 ## Error Handling and Best Practices
@@ -337,10 +413,10 @@ Claude: [Uses search_notes, then edit_note with section replacement]
 - `"3 months ago"`, `"yesterday"`
 - Standard formats: `"7d"`, `"24h"`
 
-**Project Context**: All tools respect current project context:
-- Operations stay within active project boundaries
-- Project switching affects all subsequent tool calls
-- Use `get_current_project()` to verify context
+**Project Parameters**: All content tools require explicit project specification:
+- Each tool call includes a `project` parameter
+- Operations stay within specified project boundaries
+- Session guidance helps you choose the right project
 
 ## Advanced Features
 
@@ -354,20 +430,32 @@ memory://architecture/*           # Load all architecture notes
 memory://decisions/database-choice # Load specific decision document
 ```
 
-### Cross-Project Operations
+### Project Management vs Content Tools
 
-Some operations work across project boundaries:
+Basic Memory tools fall into two categories:
 
+**Project Management Tools** (work globally):
+- `list_memory_projects()` - Shows all projects
+- `create_memory_project()` - Creates new project
+- `delete_project()` - Removes project configuration
+- `sync_status()` - Shows status across all projects
+
+**Content Tools** (require project parameter):
+- `write_note(project="...")` - Creates note in specified project
+- `search_notes(project="...")` - Searches specified project only
+- `edit_note(project="...")` - Edits note in specified project
+- `recent_activity()` - Discovery mode (no project) or project-specific
+
+**Example:**
 ```python
-# Project management tools work globally
-list_projects()           # Shows all projects
-create_project(...)      # Creates new project
-set_default_project(...)  # Updates global default
+# Global operations
+list_memory_projects()                    # Shows all projects
+create_memory_project("new-project", ...) # Creates new project
 
-# Other tools respect current project context
-search_notes(...)        # Searches current project only
-write_note(...)          # Creates note in current project
-write_note(..., project="other")   # Creates note in another project
+# Project-specific operations
+write_note("My Note", "Content", "folder", project="work")
+search_notes("api documentation", project="work")
+edit_note("My Note", "append", "More content", project="work")
 ```
 
 ## Resources and Examples
@@ -375,7 +463,7 @@ write_note(..., project="other")   # Creates note in another project
 ### Where to Find More
 
 - **Real workflows**: [How you can use Basic Memory](/how-to/project-documentation) section
-- **New features**: [What's New in v0.13.0](/whats-new) with detailed examples
+- **New features**: [What's New](/whats-new) with detailed examples
 - **Setup guides**: [Integrations](/integrations/claude-desktop) for platform-specific usage
 - **User perspective**: [User Guide](/user-guide) for comprehensive workflows
 - **AI perspective**: [AI Assistant Guide](/guides/ai-assistant-guide) for best practices
@@ -384,9 +472,9 @@ write_note(..., project="other")   # Creates note in another project
 
 **Most Common Tools:**
 - `write_note` - Create knowledge
-- `search_notes` - Find information  
+- `search_notes` - Find information
 - `edit_note` - Update incrementally
-- `switch_project` - Change context
+- `list_memory_projects` - Discover projects
 - `recent_activity` - Check progress
 
 **Most Useful Prompts:**
