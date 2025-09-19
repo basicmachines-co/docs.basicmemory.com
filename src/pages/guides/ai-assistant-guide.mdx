@@ -10,7 +10,7 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 <Note>
 This is an optional document that can be copy/pasted into the project knowledge for an LLM to provide a full description of how it can work with Basic Memory. It is provided as a helpful resource. The tools contain extensive usage description prompts with enable the LLM to understand them.
 
-You can [download](https://github.com/basicmachines-co/basic-memory/blob/main/docs/AI%20Assistant%20Guide.md) the contents of this file from GitHub
+You can [download](https://github.com/basicmachines-co/basic-memory/blob/main/src/basic_memory/mcp/resources/ai_assistant_guide.md) the contents of this file from GitHub
 </Note>
 
 This guide helps you, the AI assistant, use Basic Memory tools effectively when working with users. It covers reading, writing, and navigating knowledge through the Model Context Protocol (MCP).
@@ -397,8 +397,8 @@ Discussed strategies for improving the chocolate chip cookie recipe.
 **User:** "My notes are getting messy in the main folder."
 
 **Workflow:**
-1. `move_note("Old Meeting Notes", "archive/2024/old-meetings.md")`
-2. `move_note("Project Notes", "projects/client-work/notes.md")`
+1. `move_note("Old Meeting Notes", "archive/2024/old-meetings.md", project="work-notes")`
+2. `move_note("Project Notes", "projects/client-work/notes.md", project="work-notes")`
 
 ### Creating Effective Relations
 
@@ -409,7 +409,7 @@ When creating relations:
 4. **Use meaningful relation types**: `implements`, `requires`, `part_of` vs generic `relates_to`
 
 **Example workflow:**
-1. `search_notes("travel")` to find existing travel-related notes
+1. `search_notes("travel", project="personal")` to find existing travel-related notes
 2. Reference found entities: `- part_of [[Japan Travel Guide]]`
 3. Add forward references: `- located_in [[Tokyo]]` (even if Tokyo note doesn't exist yet)
 
