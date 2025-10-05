@@ -8,6 +8,10 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 Basic Memory works through the Model Context Protocol (MCP) to connect with AI assistants like Claude Desktop, Claude Code, and Gemini CLI. Here's how to set it up.
 
+<Info>
+**New in v0.15.0:** [Basic Memory Cloud](/guides/cloud-cli) provides hosted cloud sync for multi-device workflows. Currently in invite-only beta. [Sign up for Early Access on basicmemory.com](https://basicmemory.com).
+</Info>
+
 import InstallationTabs from '../components/InstallationTabs'
 
 ## Installation
@@ -117,28 +121,48 @@ If you change default projects from the command line new notes will be saved in 
 
 ### Multi-Project Setup
 
-You can also work with multiple projects and switch between them using tools via the LLM.
+Basic Memory supports multiple projects for organizing different knowledge bases (work, personal, research, etc.).
 
+**How it works in v0.15.0:**
+
+When you start a conversation, the AI will:
+1. Check your available projects
+2. Suggest the most active project based on recent activity
+3. Ask which project to use for this conversation
+4. Remember your choice throughout the session
+
+**Example:**
 ```
-What is the default project?
+You: "Let's work on documentation"
+
+Claude: I see you have 3 projects: main, work-notes, personal
+Your most active project is work-notes
+Should I use work-notes for this task?
+
+You: "Yes, let's use work-notes"
 ```
 
-![projects](/attachments/projects.png)
+**Creating projects:**
+```bash
+# Command line
+basic-memory project add "work-notes" ~/Documents/work
 
+# Or ask Claude
+You: "Create a new project called 'work-notes' in ~/Documents/work"
 ```
-create a new project "work notes"
-```
-Will create a note in the "work notes" project, while leaving the current project active.
 
-```
-switch to the "recipies" project
-```
-Switch to a project and make it active.
+**Single project users:**
 
+If you only use one project, you can skip the project selection prompt. Add this to `~/.basic-memory/config.json`:
+
+```json
+{
+  "default_project": "main",
+  "default_project_mode": true
+}
 ```
-set the default project to "work notes"
-```
-Set the default project used at startup.
+
+With this enabled, the AI uses your default project automatically without asking.
 
 ## Creating Your First Knowledge Note
 
@@ -265,12 +289,6 @@ Claude: [Uses edit_note to append new section]
 ```
 You: "Move my old meeting notes to an archive folder"
 Claude: [Uses move_note with database consistency]
-```
-
-**Project Switching:**
-```
-You: "Switch to my work project and show recent activity"
-Claude: [Switches projects and shows work-specific content]
 ```
 
 ## Importing Existing Conversations

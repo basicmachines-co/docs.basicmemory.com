@@ -12,82 +12,198 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 Manage cloud authentication and synchronization. Requires active subscription.
 
+#### Authentication Commands
+
+##### cloud login
+
+Authenticate with Basic Memory Cloud using OAuth 2.1 flow.
+
 ```bash
 # Authenticate with cloud service
 basic-memory cloud login
+```
 
+Opens browser for authentication, validates subscription, and stores JWT token in `~/.basic-memory/cloud_auth.json`.
+
+**What happens:**
+- Opens OAuth authorization in browser
+- Validates active subscription
+- Stores JWT token locally
+- Auto-refreshes token when needed
+
+**Error cases:**
+- No subscription: Shows subscribe URL
+- Network error: Retries with exponential backoff
+- Invalid credentials: Prompts to try again
+
+##### cloud logout
+
+Clear authentication session and credentials.
+
+```bash
 # Logout and clear credentials
 basic-memory cloud logout
+```
 
-# Bidirectional sync with cloud
-basic-memory cloud sync
+Removes stored credentials from `~/.basic-memory/cloud_auth.json`. Requires re-authentication for cloud commands.
 
-# Verify cloud storage integrity
-basic-memory cloud check
+##### cloud status
 
-# Mount cloud storage locally
+Check authentication, subscription, and sync status.
+
+```bash
+# View cloud status
+basic-memory cloud status
+```
+
+**Shows:**
+- Authentication status (logged in/out)
+- Subscription status (active/expired)
+- Last sync time
+- Mount status (if mounted)
+- Cloud project count
+- Tenant information
+
+#### Sync Commands
+
+##### cloud bisync-setup
+
+One-time setup for bidirectional cloud synchronization.
+
+```bash
+# Setup with default directory
+basic-memory cloud bisync-setup
+
+# Custom sync directory
+basic-memory cloud bisync-setup --dir ~/my-sync-folder
+```
+
+**What happens:**
+1. Checks for/installs rclone
+2. Generates scoped S3 credentials
+3. Configures rclone remote
+4. Creates local sync directory
+5. Performs initial baseline sync
+
+**Configuration saved to:**
+- `~/.basic-memory/config.json` - sync_dir path
+- `~/.config/rclone/rclone.conf` - remote credentials
+- `~/.basic-memory/bisync-state/{tenant_id}/` - sync state
+
+##### cloud bisync
+
+Bidirectional synchronization with cloud storage.
+
+```bash
+# Basic sync (uses 'balanced' profile)
+basic-memory cloud bisync
+
+# Choose sync profile
+basic-memory cloud bisync --profile safe      # Keep both versions on conflict
+basic-memory cloud bisync --profile balanced  # Use newer file (default)
+basic-memory cloud bisync --profile fast      # Optimized for speed
+
+# Dry run (preview changes)
+basic-memory cloud bisync --dry-run
+
+# Force resync (rebuild baseline)
+basic-memory cloud bisync --resync
+
+# Verbose output
+basic-memory cloud bisync --verbose
+```
+
+**Sync Profiles:**
+
+| Profile | Conflicts | Max Deletes | Use Case |
+|---------|-----------|-------------|----------|
+| safe | Keep both versions | 10 | Preserve all changes, manual resolution |
+| balanced | Use newer file | 25 | Default - auto-resolve most conflicts |
+| fast | Use newer file | 50 | Rapid iteration, trust newer versions |
+
+Automatically discovers and registers new local projects with cloud before syncing.
+
+<Note>
+Default sync directory: `~/basic-memory-cloud-sync`
+This must be different from mount directory (`~/basic-memory-cloud`)
+</Note>
+
+#### Mount Commands
+
+##### cloud mount
+
+Mount cloud storage as local filesystem using rclone.
+
+```bash
+# Basic mount (default: ~/basic-memory-cloud)
 basic-memory cloud mount
 
-# Unmount cloud storage
+# Custom mount point
+basic-memory cloud mount --mount-point ~/my-cloud-mount
+
+# Background mode
+basic-memory cloud mount --daemon
+
+# Read-only mount
+basic-memory cloud mount --read-only
+
+# With verbose logging
+basic-memory cloud mount --verbose
+```
+
+Provides direct access to cloud files without local sync. Network connection required.
+
+**What happens:**
+1. Authenticates with cloud
+2. Generates scoped S3 credentials
+3. Configures rclone remote
+4. Mounts cloud bucket via FUSE
+5. Makes files accessible at mount point
+
+**Platform requirements:**
+- macOS: macFUSE (`brew install --cask macfuse`)
+- Linux: FUSE (usually pre-installed)
+- Windows: WinFsp (https://winfsp.dev/)
+
+##### cloud unmount
+
+Unmount cloud storage.
+
+```bash
+# Unmount default location
 basic-memory cloud unmount
+
+# Unmount custom location
+basic-memory cloud unmount --mount-point ~/my-cloud-mount
+
+# Force unmount (if busy)
+basic-memory cloud unmount --force
 ```
 
-#### Cloud Login
+Flushes pending writes and cleanly unmounts the FUSE filesystem.
 
-Authenticate with cloud service using JWT tokens:
+#### Integrity Commands
 
-```bash
-basic-memory cloud login
-```
+##### cloud check
 
-Opens browser for authentication. Stores credentials in `~/.basic-memory/cloud_auth.json`.
-
-#### Cloud Sync
-
-Synchronize local files with cloud storage using rclone bisync:
-
-```bash
-# Sync current project
-basic-memory cloud sync
-
-# Sync specific project
-basic-memory --project=work cloud sync
-```
-
-Performs bidirectional synchronization with conflict detection.
-
-#### Cloud Mount
-
-Mount cloud storage as local filesystem:
-
-```bash
-# Mount with default (balanced) profile
-basic-memory cloud mount
-
-# Mount with specific performance profile
-basic-memory cloud mount --profile fast
-basic-memory cloud mount --profile balanced
-basic-memory cloud mount --profile safe
-```
-
-Performance profiles:
-- `fast`: 5s cache, optimized for speed
-- `balanced`: 10-15s cache (default)
-- `safe`: 15s+ cache, optimized for data integrity
-
-#### Cloud Check
-
-Verify integrity of cloud storage:
+Verify integrity of cloud storage.
 
 ```bash
 basic-memory cloud check
 ```
 
-Validates checksums and file consistency between local and cloud.
+Validates checksums and file consistency between local and cloud, detecting:
+- Corrupted files
+- Missing files
+- Sync drift
 
 <Warning>
 Cloud commands require an active subscription. Use `basic-memory cloud login` to authenticate.
 </Warning>
+
+<Info>
+For detailed cloud setup and workflows, see the [Cloud CLI Guide](/guides/cloud-cli).
+</Info>
 
 ### import
 
