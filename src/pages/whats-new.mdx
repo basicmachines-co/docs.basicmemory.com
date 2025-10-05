@@ -1,91 +1,175 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
-title: "What's New in v0.14.0"
-description: 'Major release introducing multi-project management, advanced note editing, and enhanced AI collaboration workflows'
+title: "What's New - v0.15.0"
+description: 'Cloud sync, performance improvements, and Python 3.13 support'
 ---
 
 import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
 
-Basic Memory v0.14.0 is a **major release** that transforms Basic Memory into a true remote MCP Server and is ready for your advanced agentic workflows.
+## v0.15.0
 
-This also improves the multi-project knowledge management system's fluid project switching, advanced note editing capabilities, and robust file management with numerous bug fixes.
+Basic Memory v0.15.0 introduces cloud sync, multi-project conversation improvements, performance optimizations, and Python 3.13 support.
 
-## 🐳 Docker Support
 
-**Run Basic Memory in Docker Desktop or your own container runtime:**
+### Basic Memory Cloud
 
-Update the docker-compose.yml to set the path to your knowledge folder and then:
+<Info>
+Basic Memory Cloud is currently in invite-only beta. Sign up for Early Access on [basicmemory.com](https://basicmemory.com).
+</Info>
+
+Work with your knowledge base across multiple devices using cloud sync and storage.
+
+#### Learn More
+
+See the [Cloud Guide](/guides/cloud-cli) for complete documentation including:
+- Conflict resolution strategies
+- File filtering with `.bmignore`
+- Multi-device workflows
+- Troubleshooting and performance tips
+
+### Multi-Project Conversations
+
+AI assistants now ask which project to use at the start of conversations.
+
+#### What You'll Experience
+
+When starting a new conversation, the AI will:
+
+1. Check for available projects
+2. Suggest the most active project based on recent activity
+3. Ask which project to use
+4. Remember your choice throughout the conversation
+
+**Example conversation:**
 ```
-$ docker-compose up
-```
+You: "Let's work on documentation"
 
-Basic Memory now supports SSE and can be used with [n8n ↗️](https://n8n.io) workflows.
+Claude: I see you have 3 projects: main, work-docs, creative-writing
+Your most active project is work-docs (15 recent updates)
+Should I use work-docs for this task?
 
-## 🎯 Multi-Project Management
+You: "Yes"
 
-**Switch between different knowledge bases instantly during conversations:**
-
-### Project Switching in Action
-
-```
-You: "What projects do I have?"
-
-Claude: Available projects:
-• main (current, default) - 127 entities, 340 observations
-• work-notes - 89 entities, 245 observations
-• creative-writing - 34 entities, 156 observations
-• research-papers - 67 entities, 189 observations
-
-You: "Switch to creative-writing"
-
-Claude: ✓ Switched to creative-writing project
-
-Project Summary:
-• 34 entities (characters, plots, themes)
-• 156 observations
-• 23 relations
-• Last updated: 2 hours ago
-
-You: "What have I been working on in this project?"
-
-Claude: [Shows recent activity from creative-writing project only]
-Recent updates to your novel planning:
-- Updated character development for Sarah Chen
-- Added new plot twist in Chapter 12
-- Research notes on neural implant technology
-```
-
-### Real-World Project Organization
-
-**Professional Developer Setup:**
-```
-You: "Create a new project for the client work"
-
-Claude: [Creates new project structure]
-✓ Created project: client-webapp
-Location: ~/knowledge/client-webapp/
-Folders: architecture/, decisions/, api/, frontend/, deployment/
-
-You: "Switch to client-webapp and document today's architecture meeting"
-
-Claude: [Switches context and creates meeting notes with relevant technical context]
+Claude: I'll use work-docs for this session.
+[All subsequent operations use work-docs project]
 ```
 
-**Personal Knowledge Management:**
-```
-You: "Switch to my personal project and add today's reflections"
+#### Default Project Setup
 
-Claude: [Switches to personal knowledge base]
-✓ Now in personal project
-I can see your previous reflections, goal tracking, and habit notes.
-What insights would you like to add from today?
+If you only use one project, enable automatic project selection:
+
+**Configuration** (`~/.basic-memory/config.json`):
+```json
+{
+  "default_project": "main",
+  "default_project_mode": true
+}
 ```
 
-## ✏️ Advanced Note Editing
+With this enabled:
+- AI uses your default project automatically
+- No project selection prompt
+- Suitable for single knowledge base workflows
+
+#### Single Project Mode
+
+Lock an MCP session to a specific project using the `--project` flag:
+
+```bash
+basic-memory mcp --project work-notes
+```
+
+All operations in this session use the specified project. Useful for automation and focused work sessions.
+
+#### What Changed from v0.14.x
+
+**Removed tools:**
+- `switch_project()` - no longer available
+- `get_current_project()` - no longer available
+
+**New behavior:**
+- AI asks which project to use at conversation start
+- Project selection remembered throughout session
+- `list_memory_projects()` shows available projects with activity suggestions
+- `recent_activity()` provides cross-project discovery
+
+All MCP tools now accept an explicit `project` parameter. See [Technical Information](/technical/technical-information) for architecture details.
+
+### Performance Improvements
+
+v0.15.0 includes significant performance optimizations across API operations, database queries, and startup processes.
+
+#### API Optimizations
+
+API response times improved 3-4x through query optimization and batch loading. The `read_note` endpoint now completes in 75ms instead of 250ms, while `build_context` operations with depth=2 run in 320ms instead of 1200ms.
+
+**What changed:**
+- Single optimized queries replace multiple separate database calls
+- Batch loading eliminates N+1 query problems
+- Eager loading strategies reduce round trips
+
+Database queries for typical MCP tool calls dropped from 15-20 queries to 3-5 queries (75% reduction).
+
+#### Startup Performance
+
+The MCP server now starts instantly (&lt;1 second) regardless of knowledge base size.
+Previously, large knowledge bases with 1000+ entities could have slow startup times.
+
+**Background relation resolution:**
+- Entity relations resolve in background threads
+- Server accepts requests immediately on startup
+- Relations complete asynchronously without blocking operations
+
+#### Database Performance
+
+SQLite now uses Write-Ahead Logging (WAL) mode by default, enabling concurrent reads and writes. This feature is particularly relevant to Windows users.
+
+**Performance gains:**
+- 2-3x faster write operations
+- Readers don't block writers (and vice versa)
+- Bulk operations complete in seconds instead of minutes
+
+### Platform Support
+
+#### Python 3.13
+
+Basic Memory now supports Python 3.13. All dependencies have been verified compatible, and Python 3.13 is included in the CI test matrix.
+
+**Supported versions:** Python 3.10, 3.11, 3.12, 3.13
+
+#### .gitignore Support
+
+The sync process now respects `.gitignore` patterns, automatically skipping files during synchronization.
+
+**What you'll notice:**
+- Sensitive files (`.env`, credentials) excluded from sync
+- Build artifacts (`node_modules/`, `__pycache__/`) not indexed
+- OS and editor files (`.DS_Store`, `.vscode/`) ignored
+
+Create a `.gitignore` in your project root to control which files are synced.
+See [Controlling What gets synced](user-guide#controlling-what-gets-synced) in the user guide.
+
+### Bug Fixes
+
+**v0.15.0** resolves numerous bugs related to entity conflicts, URL handling, file operations, and platform compatibility.
+
+**Key fixes:**
+- Entity upsert conflicts resolved through database-level conflict handling
+- `memory://` URLs with underscores now properly normalized to hyphens
+- `move_note` automatically handles file extensions (works with or without `.md`)
+- `.env` file auto-loading removed for compatibility with code repos using env files
+- Minimum timeframe enforcement prevents timezone edge cases
+- DateTime fields include proper JSON schema format for MCP validation
+
+See the [complete changelog](https://github.com/basicmachines-co/basic-memory/blob/main/CHANGELOG.md) or the [full v0.15.0 release notes](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.15.0).
+
+## v0.14.0
+
+### Advanced Note Editing
 
 **Edit notes incrementally without rewriting entire documents:**
 
-### Append Operations
+#### Append Operations
 
 **Adding to existing meeting notes:**
 ```
@@ -118,7 +202,7 @@ Claude: [Appends new research section]
 Relations automatically updated to connect with existing energy and policy notes.
 ```
 
-### Prepend Operations
+#### Prepend Operations
 
 **Adding timestamps to journals:**
 ```
@@ -135,7 +219,7 @@ Claude: [Uses prepend to add newest entry at top]
 [New entry added above previous entries, maintaining chronological order]
 ```
 
-### Section Replacement
+#### Section Replacement
 
 **Updating specific documentation sections:**
 ```
@@ -144,7 +228,18 @@ You: "Update the deployment section in our API docs with the new Docker setup"
 Claude: [Replaces specific section under ## Deployment header]
 ✓ Updated "API Documentation" → ## Deployment section:
 
-## Deployment
+
+## 🐳 Docker Support
+
+**Run Basic Memory in Docker Desktop or your own container runtime:**
+
+Update the docker-compose.yml to set the path to your knowledge folder and then:
+```
+$ docker-compose up
+```
+
+Basic Memory now supports SSE and can be used with [n8n ↗️](https://n8n.io) workflows.
+
 
 ### Docker Setup (Updated)
 # Build the application
@@ -165,7 +260,7 @@ docker run -d \
 [Only the deployment section was updated, rest of documentation unchanged]
 ```
 
-### Find and Replace
+#### Find and Replace
 
 **Version updates across documentation:**
 ```
@@ -181,11 +276,11 @@ Changes made:
 - Line 67: Example configuration updated
 ```
 
-## 📁 Smart File Management
+### Smart File Management
 
 **Move and organize notes with full database consistency:**
 
-### Organizing Project Documentation
+#### Organizing Project Documentation
 
 **Moving notes to appropriate folders:**
 ```
@@ -215,7 +310,7 @@ Claude: [Creates folder structure and moves files]
 Search functionality maintained, all relations preserved.
 ```
 
-### Renaming and Restructuring
+#### Renaming and Restructuring
 
 **Renaming notes for clarity:**
 ```
@@ -228,11 +323,11 @@ Claude: [Renames file and updates all references]
 ✓ All internal links automatically updated
 ```
 
-## 📖 View Notes as Formatted Artifacts
+### View Notes as Formatted Artifacts
 
 **Display notes as html formatted artifacts in Claude Desktop:**
 
-### Technical Documentation
+#### Technical Documentation
 
 ```
 You: "Show me the API documentation as a formatted artifact"
@@ -244,10 +339,10 @@ Claude: [Uses view_note tool to display formatted artifact]
 - Proper heading hierarchy
 - Syntax-highlighted code blocks
 - Organized sections and subsections
-- Clean typography and spacing
+- Typography and spacing
 - Clickable links and references
 
-### Creative Writing Projects
+#### Creative Writing Projects
 
 ```
 You: "Display my character development notes as an artifact"
@@ -255,31 +350,31 @@ You: "Display my character development notes as an artifact"
 Claude: [Creates formatted view of character notes]
 ```
 
-*Result: Clean, readable format showing:*
+*Result: Readable format showing:*
 - Character profiles with clear sections
 - Relationship maps and connections
 - Story arc progression
 - Research and background details
 
-### Research Summaries
+#### Research Summaries
 
 ```
 You: "View my climate research compilation as an artifact"
 
-Claude: [Formats comprehensive research note]
+Claude: [Formats research note]
 ```
 
-*Displays: Professional research document with:*
+*Displays: Research document with:*
 - Executive summary
 - Organized findings by category
 - Source citations and links
 - Visual hierarchy of information
 
-## 🔍 Enhanced Search & Discovery
+### Enhanced Search & Discovery
 
 **Find content more easily with frontmatter tag search:**
 
-### Searchable Frontmatter Tags
+#### Searchable Frontmatter Tags
 
 **Before v0.13.0** - Only content was searchable:
 ```markdown
@@ -305,7 +400,7 @@ Found 4 notes mentioning 'chemex':
 • Weekend Coffee Experiments (content match)
 ```
 
-### Better Content Discovery
+#### Better Content Discovery
 
 **Topic-based discovery:**
 ```
@@ -339,11 +434,11 @@ Found 6 authentication-related notes in work-notes project:
 • Two-Factor Authentication Setup
 ```
 
-## 🗄️ Unified Database Architecture
+### Unified Database Architecture
 
 **Single app-level database for better performance and project management:**
 
-### Automatic Migration
+#### Automatic Migration
 
 **Seamless upgrade from v0.12.x:**
 
@@ -382,7 +477,7 @@ This typically takes 1-3 minutes depending on the amount of content.
 You don't need to manually switch projects - Basic Memory handles this for you.
 ```
 
-### Better Project Isolation
+#### Better Project Isolation
 
 **Secure project boundaries:**
 ```
@@ -399,9 +494,9 @@ Found 3 client-related notes in work-notes:
 [Personal project notes remain completely isolated]
 ```
 
-## 🛠️ Complete MCP Tool Suite
+### Complete MCP Tool Suite
 
-### New Project Management Tools
+#### New Project Management Tools
 
 **Discover and manage projects:**
 ```python
@@ -409,20 +504,23 @@ Found 3 client-related notes in work-notes:
 list_projects()
 → Shows: main (default, current), work-notes, personal-journal
 
-# Switch project context
-switch_project("work-notes")
-→ Changes active project for all subsequent operations
+# Project discovery and management
+list_memory_projects()
+→ Shows all projects with guidance for session management
 
-# Get current project info
-get_current_project()
-→ Returns: project name, stats, last updated
+# Project-specific operations (stateless architecture)
+write_note("My Note", "Content", "folder", project="work-notes")
+→ Creates note in specified project
+
+search_notes("query", project="work-notes")
+→ Searches within specified project only
 
 # Check sync status
 sync_status()
 → Shows: file sync status, background operations, any issues
 ```
 
-### Enhanced Note Operations
+#### Enhanced Note Operations
 
 **Incremental editing tools:**
 ```python
@@ -446,12 +544,12 @@ move_note("old-location.md", "new-folder/better-name.md")
 
 # View formatted artifacts
 view_note("important-document")
-→ Displays note as beautifully formatted artifact in Claude Desktop
+→ Displays note as formatted artifact in Claude Desktop
 ```
 
-## Real-World Workflows
+### Real-World Workflows
 
-### Software Development Team
+#### Software Development Team
 
 **Morning standup routine:**
 ```
@@ -483,7 +581,7 @@ Claude: [Creates structured standup note]
 [Automatically linked to previous standup notes and relevant project documentation]
 ```
 
-### Academic Researcher
+#### Academic Researcher
 
 **Research session workflow:**
 ```
@@ -494,7 +592,7 @@ Claude: [Switches to research context]
 
 You: "Create detailed notes on the transformer architecture paper"
 
-Claude: [Creates comprehensive research note]
+Claude: [Creates research note]
 ✓ Created "Attention Is All You Need - Paper Analysis"
 
 ## Key Contributions
@@ -521,7 +619,7 @@ Claude: [Organizes research]
 ✓ Updated research index and cross-references
 ```
 
-### Creative Writer
+#### Creative Writer
 
 **Novel planning session:**
 ```
@@ -538,7 +636,7 @@ Claude: [Uses append to add to existing character note]
 ## New Backstory Details
 - [background] Lost younger brother in early neural implant experiment #trauma
 - [motivation] Brother's death drives her investigation into NeuroLink Corp #personal-stakes
-- [skill] Developed advanced hacking abilities after brother's accident #character-development
+- [skill] Developed hacking abilities after brother's accident #character-development
 - [relationship] Estranged from father who worked for competing tech company #family-conflict
 
 ## Character Arc Implications
@@ -552,11 +650,11 @@ Relations updated:
 
 You: "View the character profile as a formatted artifact"
 
-Claude: [Displays beautiful character sheet]
+Claude: [Displays character sheet]
 [Shows organized character profile with clear sections, relationship maps, and story connections]
 ```
 
-### Personal Knowledge Management
+#### Personal Knowledge Management
 
 **Weekly life review:**
 ```
@@ -597,26 +695,4 @@ Claude: [Organizes personal history]
 ✓ Updated personal development timeline
 ```
 
-## Getting Started with v0.13.0
-
-### Installation
-
-```bash
-# Install the latest release
-uv tool install basic-memory
-```
-
-### Upgrading from Previous Versions
-
-```bash
-# Upgrade existing installation
-uv tool upgrade basic-memory
-
-# Check version
-basic-memory --version
-```
-<Note>
-**Automatic Migration**: The first run will automatically migrate your existing data to the new unified database structure. No manual action required - all your notes and projects are preserved exactly as they were.
-</Note>
-
-**Ready to experience the next evolution of AI-human collaboration?** [Get started with Basic Memory v0.13.0 →](/getting-started)
+[Get started with Basic Memory →](/getting-started)

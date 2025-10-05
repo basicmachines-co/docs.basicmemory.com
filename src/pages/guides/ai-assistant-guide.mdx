@@ -1,509 +1,802 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
 title: 'AI Assistant Guide'
-description: 'A comprehensive guide for AI assistants to effectively use Basic Memory tools through the Model Context Protocol (MCP)'
+description: 'Guide for AI assistants using Basic Memory through the Model Context Protocol (MCP)'
 icon: 'brain'
 ---
 
-import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step, CodeGroup, CodeTab } from '@/components'
+import { Info, Warning, Note, Tip } from '@/components'
 
 <Note>
-This is an optional document that can be copy/pasted into the project knowledge for an LLM to provide a full description of how it can work with Basic Memory. It is provided as a helpful resource. The tools contain extensive usage description prompts with enable the LLM to understand them.
-
-You can [download](https://github.com/basicmachines-co/basic-memory/blob/main/docs/AI%20Assistant%20Guide.md) the contents of this file from GitHub
+This guide is for AI assistants using Basic Memory tools through MCP. For setup instructions, see [Getting Started](/getting-started).
+Download this [AI Assistant Guide](https://github.com/basicmachines-co/basic-memory/blob/main/docs/ai-assistant-guide-extended.md) and customize it to your own workflow.
+A [condensed version](https://github.com/basicmachines-co/basic-memory/blob/main/src/basic_memory/mcp/resources/ai_assistant_guide.md) of this guide is available as an MCP Resource in Basic Memory.
 </Note>
 
-This guide helps you, the AI assistant, use Basic Memory tools effectively when working with users. It covers reading, writing, and navigating knowledge through the Model Context Protocol (MCP).
-
-## Quick Reference
-
-<CardGroup cols={2}>
-  <Card title="Essential Tools" icon="hammer">
-    - `write_note()` - Create/update notes (primary tool)
-    - `read_note()` - Read existing content
-    - `search_notes()` - Find information
-    - `edit_note()` - Modify existing notes incrementally (v0.13.0)
-    - `move_note()` - Organize files with database consistency (v0.13.0)
-  </Card>
-
-  <Card title="Project Management (v0.13.0)" icon="folder">
-    - `list_projects()` - Show available projects
-    - `switch_project()` - Change active project
-    - `get_current_project()` - Current project info
-  </Card>
-</CardGroup>
-
-<Info>
-**Key Principles:**
-1. **Build connections** - Rich knowledge graphs > isolated notes
-2. **Ask permission** - "Would you like me to record this?"
-3. **Use exact titles** - For accurate `[[WikiLinks]]`
-4. **Leverage v0.13.0** - Edit incrementally, organize proactively, switch projects contextually
-</Info>
+This guide explains how to use Basic Memory tools effectively when working with users through the Model Context Protocol.
 
 ## Overview
 
-Basic Memory allows you and users to record context in local Markdown files, building a rich knowledge base through natural conversations. The system automatically creates a semantic knowledge graph from simple text patterns.
+Basic Memory creates a semantic knowledge graph from markdown files stored locally on the user's computer. Knowledge persists across sessions, enabling continuity in conversations and collaborative development.
 
-- **Local-First**: All data is stored in plain text files on the user's computer
-- **Real-Time**: Users see content updates immediately
-- **Bi-Directional**: Both you and users can read and edit notes
-- **Semantic**: Simple patterns create a structured knowledge graph
-- **Persistent**: Knowledge persists across sessions and conversations
+**Architecture:**
+- **Local-First**: Plain text markdown files as source of truth
+- **SQLite Index**: Fast search and navigation
+- **MCP Integration**: 17 tools for AI interaction
+- **Semantic Graph**: Observations and relations create connections
 
-## The Importance of the Knowledge Graph
+**Your role:** Help users build structured knowledge that outlasts any particular AI model or session. Focus on creating observations and relations that provide lasting value. These markdown files are artifacts worth keeping.
 
-Basic Memory's value comes from connections between notes, not just the notes themselves. When writing notes, your primary goal should be creating a rich, interconnected knowledge graph.
+## Project Management
 
-<Warning>
-Remember that a knowledge graph with 10 heavily connected notes is more valuable than 20 isolated notes. Your job is to help build these connections.
-</Warning>
+All tools require explicit project specification. No implicit project context is maintained between calls.
 
-When creating content, focus on:
+### Discovery and Selection
 
-1. **Increasing Semantic Density**: Add multiple observations and relations to each note
-2. **Using Accurate References**: Aim to reference existing entities by their exact titles
-3. **Creating Forward References**: Feel free to reference entities that don't exist yet - Basic Memory will resolve these when they're created later
-4. **Creating Bidirectional Links**: When appropriate, connect entities from both directions
-5. **Using Meaningful Categories**: Add semantic context with appropriate observation categories
-6. **Choosing Precise Relations**: Use specific relation types that convey meaning
+Start conversations by discovering available projects:
 
-## Core Tools Reference
-
-### Essential Content Management
-
-**Writing knowledge** (most important tool):
 ```python
-write_note(
-    title="Search Design",
-    content="# Search Design\n...",
-    folder="specs",                     # Optional
-    tags=["search", "design"],          # v0.13.0: now searchable!
-    project="work-notes"                # v0.13.0: target specific project
+# List all projects
+projects = await list_memory_projects()
+
+# Response includes:
+# - name
+# - path
+# - is_default
+# - note_count
+# - last_synced
+```
+
+**Recommended workflow:**
+
+1. Call `list_memory_projects()` at conversation start
+2. Identify active project from metadata
+3. Ask user which project to use
+4. Store choice for the session
+5. Pass project parameter to all tool calls
+
+### Cross-Project Operations
+
+Some tools work across all projects when project parameter is omitted:
+
+```python
+# Recent activity across all projects
+activity = await recent_activity(timeframe="7d")
+
+# Recent activity for specific project
+activity = await recent_activity(timeframe="7d", project="main")
+```
+
+Tools supporting cross-project mode:
+- `recent_activity()`
+- `list_memory_projects()`
+- `sync_status()`
+
+## Knowledge Graph Structure
+
+The knowledge graph consists of three core elements: entities, observations, and relations.
+
+### Entities
+
+Each markdown file represents an entity with:
+
+- **Title**: Unique identifier
+- **Permalink**: Auto-generated from title
+- **Frontmatter**: YAML metadata (tags, type, dates)
+- **Observations**: Categorized facts
+- **Relations**: Links to other entities
+
+**Entity types:**
+- `note` - General knowledge (default)
+- `person` - People and contacts
+- `project` - Projects and initiatives
+- `meeting` - Meeting notes
+- `decision` - Documented decisions
+- `spec` - Technical specifications
+
+### Observations
+
+Observations are categorized facts with optional tags.
+
+**Syntax:** `- [category] content #tag1 #tag2`
+
+**Common categories:**
+- `[fact]` - Objective information
+- `[idea]` - Thoughts and concepts
+- `[decision]` - Choices made
+- `[technique]` - Methods and approaches
+- `[requirement]` - Needs and constraints
+- `[problem]` - Issues identified
+- `[solution]` - Resolutions
+- `[insight]` - Key realizations
+
+**Examples:**
+
+```markdown
+## Observations
+- [decision] Use JWT tokens for authentication #security
+- [technique] Hash passwords with bcrypt before storage #best-practice
+- [requirement] Support OAuth 2.0 providers #auth
+- [fact] Session timeout set to 24 hours #configuration
+```
+
+### Relations
+
+Relations are directional links between entities.
+
+**Syntax:** `- relation_type [[Target Entity]]`
+
+**Common relation types:**
+- `relates_to` - General connection
+- `implements` - Implementation relationship
+- `requires` - Dependency
+- `extends` - Enhancement
+- `part_of` - Hierarchical membership
+- `contrasts_with` - Alternative approach
+- `leads_to` - Sequential relationship
+- `caused_by` - Causal relationship
+
+**Examples:**
+
+```markdown
+## Relations
+- implements [[Authentication Spec v2]]
+- requires [[User Database Schema]]
+- extends [[Base Security Model]]
+- part_of [[API Backend Services]]
+- contrasts_with [[API Key Authentication]]
+```
+
+### Forward References
+
+Reference entities that don't exist yet - relations resolve automatically when targets are created:
+
+```python
+# Create note with forward reference
+await write_note(
+    title="API Implementation",
+    content="## Relations\n- implements [[API Specification]]",
+    folder="api",
+    project="main"
+)
+# Forward reference created
+
+# Later, create referenced entity
+await write_note(
+    title="API Specification",
+    content="# API Specification\n...",
+    folder="specs",
+    project="main"
+)
+# Forward reference automatically resolved
+```
+
+## Core Tools
+
+### Writing Knowledge
+
+Create or update notes:
+
+```python
+await write_note(
+    title="Topic",
+    content="# Topic\n## Observations\n- [category] fact\n## Relations\n- relates_to [[Other]]",
+    folder="notes",
+    project="main"
 )
 ```
 
-**Reading knowledge:**
+**Parameters:**
+- `title` (required) - Note title
+- `content` (required) - Markdown content
+- `folder` (required) - Destination folder
+- `tags` (optional) - List of tags
+- `entity_type` (optional) - Entity type
+- `project` (required unless default_project_mode) - Target project
+
+### Reading Knowledge
+
+Read notes with knowledge graph context:
+
 ```python
-read_note("Search Design")              # By title
-read_note("specs/search-design")        # By path
-read_note("memory://specs/search")      # By memory URL
+# By title
+note = await read_note("Topic", project="main")
+
+# By folder and title
+note = await read_note("specs/Authentication System", project="main")
+
+# By memory:// URL
+note = await read_note("memory://specs/auth", project="main")
 ```
 
-**Viewing notes as formatted artifacts (Claude Desktop):**
-```python
-view_note("Search Design")              # Creates readable artifact
-view_note("specs/search-design")        # By permalink
-view_note("memory://specs/search")      # By memory URL
-```
+**Response includes:**
+- Content
+- Observations (categorized)
+- Relations (typed, with targets)
+- Metadata (dates, tags, type)
 
-**Incremental editing** (v0.13.0):
+### Searching
+
+Find notes across the knowledge base:
+
 ```python
-edit_note(
-    identifier="Search Design",         # Must be EXACT title/permalink (strict matching)
-    operation="append",                 # append, prepend, find_replace, replace_section
-    content="\n## New Section\nContent here..."
+results = await search_notes(
+    query="authentication",
+    project="main",
+    page_size=10
 )
 ```
 
-<Warning>
-**Important:** `edit_note` requires exact identifiers (no fuzzy matching). Use `search_notes()` first if uncertain.
-</Warning>
+**Advanced filtering:**
 
-**File organization** (v0.13.0):
 ```python
-move_note(
-    identifier="Old Note",              # Must be EXACT title/permalink (strict matching)
-    destination="archive/old-note.md"   # Folders created automatically
+# Filter by entity type
+specs = await search_notes(
+    query="authentication",
+    types=["spec"],
+    project="main"
+)
+
+# Filter by date
+recent = await search_notes(
+    query="api",
+    after_date="2025-01-01",
+    project="main"
 )
 ```
 
-<Warning>
-**Important:** `move_note` requires exact identifiers (no fuzzy matching). Use `search_notes()` first if uncertain.
-</Warning>
+### Building Context
 
-### Project Management (v0.13.0)
+Navigate the knowledge graph:
 
 ```python
-list_projects()                         # Show available projects
-switch_project("work-notes")            # Change active project
-get_current_project()                   # Current project info
+context = await build_context(
+    url="memory://specs/auth",
+    project="main",
+    depth=2,
+    timeframe="1 week"
+)
 ```
 
-### Search & Discovery
+**Parameters:**
+- `url` (required) - memory:// URL
+- `depth` (optional) - Traversal depth (default: 1)
+- `timeframe` (optional) - Time window (e.g., "7d", "1 week")
+- `project` (required unless default_project_mode) - Target project
+
+**Response includes:**
+- Root entity
+- Related entities (with distance and relation types)
+- Connection paths
+- Summary statistics
+
+**Depth control:**
+- `depth=1` - Immediate connections only
+- `depth=2` - Two levels of relations
+- `depth=3+` - Comprehensive (may be slow)
+
+### Editing Notes
+
+Edit existing notes incrementally:
 
 ```python
-search_notes("authentication system")   # v0.13.0: includes frontmatter tags
-build_context("memory://specs/search")  # Follow knowledge graph connections
-recent_activity(timeframe="1 week")     # Check what's been updated
+# Append content
+await edit_note(
+    identifier="Topic",
+    operation="append",
+    content="\n## New Section\nContent here",
+    project="main"
+)
+
+# Prepend content
+await edit_note(
+    identifier="Topic",
+    operation="prepend",
+    content="## Update\nImportant note\n\n",
+    project="main"
+)
+
+# Find and replace
+await edit_note(
+    identifier="Topic",
+    operation="find_replace",
+    find_text="old text",
+    content="new text",
+    expected_replacements=1,
+    project="main"
+)
+
+# Replace section
+await edit_note(
+    identifier="Topic",
+    operation="replace_section",
+    section="## Status",
+    content="## Status\nUpdated status here",
+    project="main"
+)
 ```
 
-## memory:// URLs Explained
+**Operations:**
+- `append` - Add to end
+- `prepend` - Add to beginning
+- `find_replace` - Replace specific text
+- `replace_section` - Replace markdown section
 
-Basic Memory uses a special URL format to reference entities in the knowledge graph:
+### Moving Notes
 
-### URL Formats
+Organize notes by moving them between folders:
 
-**By Title:**
-```text
+```python
+await move_note(
+    identifier="Note Title",
+    destination_path="archive/note-title.md",
+    project="main"
+)
+```
+
+**Behavior:**
+- Folders created automatically
+- Database updated automatically
+- Relations preserved
+- Both `.md` extension and without work
+
+## memory:// URL Format
+
+Basic Memory uses special URLs to reference entities:
+
+**By title:**
+```
 memory://title
 ```
 
-**By Folder and Title:**
-```text
+**By folder and title:**
+```
 memory://folder/title
 ```
 
-**By Permalink:**
-```text
+**By permalink:**
+```
 memory://permalink
 ```
 
-**Follow Relations:**
-```text
-memory://path/relation_type/*
+**All in folder:**
+```
+memory://folder/*
+```
+- Underscores converted to hyphens automatically
+- `memory://my_note` finds entity with permalink `my-note`
+
+## Recording Conversations
+
+Capture conversations to enable long-term context and knowledge accumulation.
+
+### Permission and Transparency
+
+**Always ask before recording:**
+
+```
+AI: "Would you like me to save our discussion about API authentication
+     to Basic Memory? This helps us continue this conversation later."
+
+User: "Yes, please"
+
+AI: [Saves to Basic Memory]
+    "I've saved our discussion as 'API Authentication Discussion'."
 ```
 
-**Find Relations to Target:**
-```text
-memory://path/*/target
-```
+**Principles:**
+- Ask permission before saving
+- Confirm after saving
+- Explain what was saved
+- Describe how it helps future conversations
 
-## Semantic Markdown Format
+### What to Record
 
-Knowledge is encoded in standard markdown using simple patterns:
+**Good candidates:**
 
-Facts about an entity:
-```markdown
-- [category] This is an observation #tag1 #tag2 (optional context)
-```
-
-Links between entities:
-```markdown
-- relation_type [[Target Entity]] (optional context)
-```
-
-**Common Categories & Relation Types:**
-- **Categories**: `[idea]`, `[decision]`, `[question]`, `[fact]`, `[requirement]`, `[technique]`, `[recipe]`, `[preference]`
-- **Relations**: `relates_to`, `implements`, `requires`, `extends`, `part_of`, `pairs_with`, `inspired_by`, `originated_from`
-
-## When to Record Context
-
-<Card title="Always consider recording context when" icon="lightbulb">
-1. Users make decisions or reach conclusions
-2. Important information emerges during conversation
-3. Multiple related topics are discussed
-4. The conversation contains information that might be useful later
-5. Plans, tasks, or action items are mentioned
-</Card>
-
-**Protocol for recording context**:
-
-1. Identify valuable information in the conversation
-2. Ask the user: "Would you like me to record our discussion about [topic] in Basic Memory?"
-3. If they agree, use `write_note` to capture the information
-4. If they decline, continue without recording
-5. Let the user know when information has been recorded: "I've saved our discussion about [topic] to Basic Memory."
-
-## Understanding User Interactions
-
-Users will interact with Basic Memory in patterns like:
-
-<Accordion>
-  <AccordionItem title="Creating knowledge">
-    ```
-    Human: "Let's write up what we discussed about search."
-
-    You: I'll create a note capturing our discussion about the search functionality.
-    [Use write_note() to record the conversation details]
-    ```
-  </AccordionItem>
-
-  <AccordionItem title="Referencing existing knowledge">
-    ```
-    Human: "Take a look at memory://specs/search"
-
-    You: I'll examine that information.
-    [Use build_context() to gather related information]
-    [Then read_note() to access specific content]
-    ```
-  </AccordionItem>
-
-  <AccordionItem title="Finding information">
-    ```
-    Human: "What were our decisions about auth?"
-
-    You: Let me find that information for you.
-    [Use search_notes() to find relevant notes]
-    [Then build_context() to understand connections]
-    ```
-  </AccordionItem>
-
-  <AccordionItem title="Editing existing notes (v0.13.0)">
-    ```
-    Human: "Add a section about deployment to my API documentation"
-
-    You: I'll add that section to your existing documentation.
-    [Use edit_note() with operation="append" to add new content]
-    ```
-  </AccordionItem>
-
-  <AccordionItem title="Project management (v0.13.0)">
-    ```
-    Human: "Switch to my work project and show recent activity"
-
-    You: I'll switch to your work project and check what's been updated recently.
-    [Use switch_project() then recent_activity()]
-    ```
-  </AccordionItem>
-
-  <AccordionItem title="File organization (v0.13.0)">
-    ```
-    Human: "Move my old meeting notes to the archive folder"
-
-    You: I'll organize those notes for you.
-    [Use move_note() to relocate files with database consistency]
-    ```
-  </AccordionItem>
-</Accordion>
-
-## Key Things to Remember
-
-<CardGroup cols={2}>
-  <Card title="Files are Truth" icon="file">
-    - All knowledge lives in local files on the user's computer
-    - Users can edit files outside your interaction
-    - Changes need to be synced by the user (usually automatic)
-    - Always verify information is current with `recent_activity()`
-  </Card>
-
-  <Card title="Building Context Effectively" icon="network">
-    - Start with specific entities
-    - Follow meaningful relations
-    - Check recent changes
-    - Build context incrementally
-    - Combine related information
-  </Card>
-
-  <Card title="Writing Knowledge Wisely" icon="pencil">
-    - Same title+folder overwrites existing notes
-    - Structure with clear headings and semantic markup
-    - Use tags for searchability (v0.13.0: frontmatter tags indexed)
-    - Keep files organized in logical folders
-  </Card>
-
-  <Card title="Leverage v0.13.0 Features" icon="star">
-    - **Edit incrementally**: Use `edit_note()` for small changes vs rewriting
-    - **Switch projects**: Change context when user mentions different work areas
-    - **Organize proactively**: Move old content to archive folders
-    - **Cross-project operations**: Create notes in specific projects while maintaining context
-  </Card>
-</CardGroup>
-
-## Common Knowledge Patterns
-
-### Capturing Decisions
-
-```markdown
----
-title: Coffee Brewing Methods
-tags: [coffee, brewing, pour-over, techniques]  # v0.13.0: Now searchable!
----
-
-# Coffee Brewing Methods
+1. **Decisions and Rationales**
+```python
+await write_note(
+    title="Decision: GraphQL vs REST",
+    content="""# Decision: GraphQL vs REST
 
 ## Context
-I've experimented with various brewing methods including French press, pour over, and espresso.
+User asked about API architecture choice.
 
 ## Decision
-Pour over is my preferred method for light to medium roasts because it highlights subtle flavors and offers more control over the extraction.
+Chose GraphQL for new features, maintain REST for legacy.
 
 ## Observations
-- [technique] Blooming the coffee grounds for 30 seconds improves extraction #brewing
-- [preference] Water temperature between 195-205°F works best #temperature
-- [equipment] Gooseneck kettle provides better control of water flow #tools
-- [timing] Total brew time of 3-4 minutes produces optimal extraction #process
+- [decision] GraphQL for flexibility and performance #api
+- [requirement] Mobile app needs efficient data loading #mobile
+- [fact] REST API has 50K existing clients #legacy
 
 ## Relations
-- pairs_with [[Light Roast Beans]]
-- contrasts_with [[French Press Method]]
-- requires [[Proper Grinding Technique]]
-- part_of [[Morning Coffee Routine]]
+- implements [[API Modernization Plan]]
+- affects [[Mobile Development]]
+""",
+    folder="decisions",
+    project="main"
+)
 ```
 
-### Recording Project Structure
+2. **Important Discoveries**
+3. **Action Items and Plans**
+4. **Connected Topics**
 
-```markdown
-# Garden Planning
+### Recording Patterns
 
-## Overview
-This document outlines the garden layout and planting strategy for this season.
+**Conversation summary:**
 
-## Observations
-- [structure] Raised beds in south corner for sun exposure #layout
-- [structure] Drip irrigation system installed for efficiency #watering
-- [pattern] Companion planting used to deter pests naturally #technique
+```python
+await write_note(
+    title=f"Conversation: {topic} - {date}",
+    content=f"""# Conversation: {topic}
 
-## Relations
-- contains [[Vegetable Section]]
-- contains [[Herb Garden]]
-- implements [[Organic Gardening Principles]]
-```
-
-### Technical Discussions
-
-```markdown
-# Recipe Improvement Discussion
+## Summary
+{brief_summary}
 
 ## Key Points
-Discussed strategies for improving the chocolate chip cookie recipe.
+{key_points}
 
 ## Observations
-- [issue] Cookies spread too thin when baked at 350°F #texture
-- [solution] Chilling dough for 24 hours improves flavor and reduces spreading #technique
-- [decision] Will use brown butter instead of regular butter #flavor
+{categorized_observations}
 
 ## Relations
-- improves [[Basic Cookie Recipe]]
-- inspired_by [[Bakery-Style Cookies]]
-- pairs_with [[Homemade Ice Cream]]
+{relevant_relations}
+""",
+    folder="conversations",
+    tags=["conversation", topic_tags],
+    project="main"
+)
 ```
 
-## v0.13.0 Workflow Examples
+**Decision record:**
 
-### Multi-Project Conversations
+```python
+await write_note(
+    title=f"Decision: {decision_title}",
+    content=f"""# Decision: {decision_title}
 
-**User:** "I need to update my work documentation and also add a personal recipe note."
+## Context
+{why_decision_needed}
 
-**Workflow:**
-1. `list_projects()` - Check available projects
-2. `write_note(title="Sprint Planning", project="work-notes")` - Work content
-3. `write_note(title="Weekend Recipes", project="personal")` - Personal content
+## Decision
+{what_was_decided}
 
-### Incremental Note Building
+## Observations
+{categorized_observations}
 
-**User:** "Add a troubleshooting section to my setup guide."
+## Rationale
+{reasoning}
 
-**Workflow:**
-1. `edit_note(identifier="Setup Guide", operation="append", content="\n## Troubleshooting\n...")`
+## Relations
+{related_entities}
+""",
+    folder="decisions",
+    entity_type="decision",
+    project="main"
+)
+```
 
-**User:** "Update the authentication section in my API docs."
+### Building on Past Conversations
 
-**Workflow:**
-1. `edit_note(identifier="API Documentation", operation="replace_section", section="## Authentication")`
+Reference previous discussions:
 
-### Smart File Organization
+```python
+# Search for related past conversations
+past = await search_notes(
+    query="API authentication",
+    types=["conversation", "decision"],
+    project="main"
+)
 
-**User:** "My notes are getting messy in the main folder."
+# Build context
+context = await build_context(
+    url=f"memory://{past['results'][0]['permalink']}",
+    depth=2,
+    timeframe="30d",
+    project="main"
+)
 
-**Workflow:**
-1. `move_note("Old Meeting Notes", "archive/2024/old-meetings.md")`
-2. `move_note("Project Notes", "projects/client-work/notes.md")`
+# Reference in new conversation
+# "Building on our previous discussion about JWT authentication..."
 
-### Creating Effective Relations
+# Link new note to previous
+await write_note(
+    title="Refresh Token Implementation",
+    content="""# Refresh Token Implementation
 
-When creating relations:
-1. **Reference existing entities** by their exact title: `[[Exact Title]]`
-2. **Create forward references** to entities that don't exist yet - they'll be linked automatically when created
-3. **Search first** to find existing entities to reference
-4. **Use meaningful relation types**: `implements`, `requires`, `part_of` vs generic `relates_to`
-
-**Example workflow:**
-1. `search_notes("travel")` to find existing travel-related notes
-2. Reference found entities: `- part_of [[Japan Travel Guide]]`
-3. Add forward references: `- located_in [[Tokyo]]` (even if Tokyo note doesn't exist yet)
-
-## Common Issues & Solutions
-
-<Accordion>
-  <AccordionItem title="Missing Content">
-    - Try `search_notes()` with broader terms if `read_note()` fails
-    - Use fuzzy matching: search for partial titles
-  </AccordionItem>
-
-  <AccordionItem title="Forward References">
-    - These are normal! Basic Memory links them automatically when target notes are created
-    - Inform users: "I've created forward references that will be linked when you create those notes"
-  </AccordionItem>
-
-  <AccordionItem title="Sync Issues">
-    - If information seems outdated and you know it should be there, try `basic-memory reset`
-    - Clears out the memory metadata cache and starts fresh
-    - Use when you need to reset your project synchronization
-    - Does not harm your files, everything is kept safe
-    - The metadata cache is automatically restored
-  </AccordionItem>
-
-  <AccordionItem title="Strict Mode for Edit/Move Operations">
-    - `edit_note()` and `move_note()` require **exact identifiers** (no fuzzy matching for safety)
-    - If identifier not found: use `search_notes()` first to find the exact title/permalink
-    - Error messages will guide you to find correct identifiers
-
-    **Example workflow:**
-    ```python
-    # ❌ This might fail if identifier isn't exact
-    edit_note("Meeting Note", "append", "content")
-
-    # ✅ Safe approach: search first, then use exact result
-    results = search_notes("meeting")
-    edit_note("Meeting Notes 2024", "append", "content")  # Use exact title from search
-    ```
-  </AccordionItem>
-</Accordion>
+## Relations
+- builds_on [[Conversation: API Authentication]]
+- implements [[JWT Authentication Decision]]
+""",
+    folder="implementation",
+    project="main"
+)
+```
 
 ## Best Practices
 
-### 1. Proactively Record Context
+### 1. Project Discovery
 
-<Steps>
-  <Step title="Offer to capture important discussions">
-    Record decisions, rationales, and conclusions
-  </Step>
-  <Step title="Link to related topics">
-    Ask for permission first: "Would you like me to save our discussion about [topic]?"
-  </Step>
-  <Step title="Confirm completion">
-    "I've saved our discussion to Basic Memory"
-  </Step>
-</Steps>
+Always start with discovery:
 
-### 2. Create a Rich Semantic Graph
+```python
+# First action in conversation
+projects = await list_memory_projects()
 
-<Card title="Graph Building Guidelines" icon="share-nodes">
-- **Add meaningful observations**: Include at least 3-5 categorized observations in each note
-- **Create deliberate relations**: Connect each note to at least 2-3 related entities
-- **Use existing entities**: Before creating a new relation, search for existing entities
-- **Verify wikilinks**: When referencing `[[Entity]]`, use exact titles of existing notes
-- **Check accuracy**: Use `search_notes()` or `recent_activity()` to confirm entity titles
-- **Use precise relation types**: Choose specific relation types that convey meaning (e.g., "implements" instead of "relates_to")
-- **Consider bidirectional relations**: When appropriate, create inverse relations in both entities
-</Card>
+# Ask user which to use
+# Store for session
+# Use consistently
+```
 
-### 3. Structure Content Thoughtfully
+### 2. Rich Knowledge Graphs
 
-<Tip>
-- Use clear, descriptive titles
-- Organize with logical sections (Context, Decision, Implementation, etc.)
-- Include relevant context and background
-- Add semantic observations with appropriate categories
-- Use a consistent format for similar types of notes
-- Balance detail with conciseness
-</Tip>
+**Every note should have:**
+- Clear, descriptive title
+- 3-5 observations minimum
+- 2-3 relations minimum
+- Appropriate categories and tags
 
-### 4. Navigate Knowledge Effectively
+**Good structure:**
 
-- Start with specific searches
-- Follow relation paths
-- Combine information from multiple sources
-- Verify information is current
-- Build a complete picture before responding
+```markdown
+---
+title: Clear Descriptive Title
+tags: [relevant, tags]
+type: note
+---
 
-### 5. Help Users Maintain Their Knowledge
+# Title
 
-<Note>
-- Suggest organizing related topics
-- Identify potential duplicates
-- Recommend adding relations between topics
-- Offer to create summaries of scattered information
-- Suggest potential missing relations: "I notice this might relate to [topic], would you like me to add that connection?"
-</Note>
+## Context
+Brief background
+
+## Observations
+- [category] Specific fact #tag1 #tag2
+- [category] Another fact #tag3
+- [category] Third fact #tag4
+
+## Relations
+- relation_type [[Related Entity 1]]
+- relation_type [[Related Entity 2]]
+```
+
+### 3. Search Before Creating
+
+Always search first to avoid duplicates:
+
+```python
+# Before writing new note
+existing = await search_notes(
+    query="topic name",
+    project="main"
+)
+
+if existing["total"] > 0:
+    # Update existing
+    await edit_note(
+        identifier=existing["results"][0]["permalink"],
+        operation="append",
+        content=new_information,
+        project="main"
+    )
+else:
+    # Create new
+    await write_note(...)
+```
+
+### 4. Exact Entity Titles in Relations
+
+Use exact titles when creating relations:
+
+```python
+# Search for exact title
+results = await search_notes(query="Authentication System", project="main")
+exact_title = results["results"][0]["title"]
+
+# Use in relation
+content = f"## Relations\n- relates_to [[{exact_title}]]"
+```
+
+### 5. Meaningful Categories and Relations
+
+**Use semantic categories:**
+- `[decision]` for choices made
+- `[fact]` for objective information
+- `[technique]` for methods
+- `[requirement]` for needs
+- `[insight]` for realizations
+
+**Use specific relation types:**
+- `implements` for implementation
+- `requires` for dependencies
+- `part_of` for hierarchy
+- `extends` for enhancement
+- `contrasts_with` for alternatives
+
+**Not generic:**
+- Avoid overusing `relates_to`
+- Be specific about relationships
+
+### 6. Progressive Elaboration
+
+Build knowledge over time:
+
+```python
+# Session 1: Create foundation
+await write_note(
+    title="Topic",
+    content="Basic structure with initial observations",
+    folder="notes",
+    project="main"
+)
+
+# Session 2: Add details
+await edit_note(
+    identifier="Topic",
+    operation="append",
+    content="Additional observations",
+    project="main"
+)
+
+# Session 3: Add relations
+await edit_note(
+    identifier="Topic",
+    operation="append",
+    content="Relations to related topics",
+    project="main"
+)
+```
+
+### 7. Consistent Organization
+
+**Folder structure:**
+- `specs/` - Specifications
+- `decisions/` - Decision records
+- `meetings/` - Meeting notes
+- `conversations/` - AI conversations
+- `implementations/` - Code/implementations
+- `docs/` - Documentation
+
+**File naming:**
+- Use descriptive titles
+- Consistent format
+- Avoid special characters
+
+## Error Handling
+
+### Missing Project Parameter
+
+**Error:** Tool called without project parameter
+
+**Solution:**
+
+```python
+try:
+    results = await search_notes(query="test")
+except:
+    # Show available projects
+    projects = await list_memory_projects()
+
+    # Ask user which to use
+    # Retry with project
+    results = await search_notes(query="test", project="main")
+```
+
+### Entity Not Found
+
+**Error:** Note doesn't exist
+
+**Solution:**
+
+```python
+try:
+    note = await read_note("Nonexistent Note", project="main")
+except:
+    # Search for similar
+    results = await search_notes(query="Note", project="main")
+
+    # Suggest alternatives
+    # Show similar results to user
+```
+
+### Forward References
+
+**Not an error:** Forward references resolve automatically when targets are created. No action needed.
+
+### Sync Status Issues
+
+**Error:** Data not found, sync in progress
+
+**Solution:**
+
+```python
+# Check sync status
+status = await sync_status(project="main")
+
+if status["sync_in_progress"]:
+    # Inform user: "Knowledge base is syncing, please wait..."
+    # Or proceed with available data
+else:
+    # Sync complete, proceed normally
+    results = await search_notes(query="topic", project="main")
+```
+
+## Tool Reference
+
+### Content Management
+
+**write_note(title, content, folder, tags, entity_type, project)**
+- Create or update markdown notes
+- Returns: Entity with permalink
+
+**read_note(identifier, page, page_size, project)**
+- Read notes with knowledge graph context
+- Returns: Entity with content, observations, relations
+
+**edit_note(identifier, operation, content, find_text, section, expected_replacements, project)**
+- Edit notes incrementally
+- Operations: append, prepend, find_replace, replace_section
+- Returns: Updated entity
+
+**move_note(identifier, destination_path, project)**
+- Move notes to new locations
+- Returns: Updated entity with new path
+
+**delete_note(identifier, project)**
+- Delete notes from knowledge base
+- Returns: Deletion confirmation
+
+**read_content(path, project)**
+- Read raw file content
+- Returns: Raw file content (text or base64)
+
+**view_note(identifier, page, page_size, project)**
+- View notes as formatted artifacts
+- Returns: Formatted markdown for display
+
+### Knowledge Graph Navigation
+
+**build_context(url, depth, timeframe, max_related, page, page_size, project)**
+- Navigate knowledge graph
+- Returns: Root entity, related entities, paths
+
+**recent_activity(type, depth, timeframe, project)**
+- Get recent changes
+- Returns: Recently updated entities
+
+**list_directory(dir_name, depth, file_name_glob, project)**
+- Browse directory contents
+- Returns: Files and subdirectories
+
+### Search & Discovery
+
+**search_notes(query, page, page_size, search_type, types, entity_types, after_date, project)**
+- Search across knowledge base
+- Returns: Matching entities with scores
+
+### Project Management
+
+**list_memory_projects()**
+- List all available projects
+- Returns: Projects with metadata
+
+**create_memory_project(project_name, project_path, set_default)**
+- Create new project
+- Returns: Created project details
+
+**delete_project(project_name)**
+- Delete project from configuration
+- Returns: Deletion confirmation
+
+**sync_status(project)**
+- Check synchronization status
+- Returns: Sync progress and status
+
+### Visualization
+
+**canvas(nodes, edges, title, folder, project)**
+- Create Obsidian canvas
+- Returns: Created canvas file

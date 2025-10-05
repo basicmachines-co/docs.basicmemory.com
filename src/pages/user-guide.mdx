@@ -166,6 +166,43 @@ Structure facts with semantic categories:
 - Include dates in time-sensitive notes
 - Archive old content regularly
 
+### Controlling What Gets Indexed
+
+**New in v0.15.0:** Basic Memory respects `.gitignore` patterns to automatically skip sensitive files and skip indexing files if needed.
+
+**How it works:**
+
+Basic Memory combines ignore patterns from two sources:
+
+1. **Global patterns**: `~/.basic-memory/.bmignore` (applied to all projects)
+2. **Project patterns**: `{project}/.gitignore` (applied to specific project)
+
+**Example `.gitignore`:**
+```gitignore
+# Sensitive files
+.env
+.env.*
+*.key
+credentials.json
+
+# Build artifacts
+node_modules/
+__pycache__/
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+```
+
+**Benefits:**
+- **Security**: Prevents indexing sensitive files like `.env` or API keys
+- **Performance**: Skips unnecessary files like `node_modules/` or build outputs
+- **Cleaner knowledge base**: Ignores OS and editor files
+
+Files matching these patterns are automatically skipped during index sync and never indexed in your knowledge base.
+
 ## Multi-Project Features
 
 ### Project Management
@@ -174,12 +211,61 @@ Structure facts with semantic categories:
 # Create new project
 basic-memory project add work ~/work-notes
 
-# Switch projects instantly during conversations
-# You can say: "Switch to my work project"
-
 # List all projects
 basic-memory project list
 ```
+
+### Project Selection Workflow
+
+**New in v0.15.0:** At the start of each conversation, the AI will:
+1. Check your available projects
+2. Suggest the most active project based on recent activity
+3. Ask which project to use for this conversation
+4. Remember your choice throughout the session
+
+**Example conversation:**
+```
+You: "Let's work on documentation"
+
+Claude: I see you have 3 projects: main, work-notes, personal
+Your most active project is work-notes
+Should I use work-notes for this task?
+
+You: "Yes, let's use work-notes"
+```
+
+**For single-project users:**
+
+If you only use one project, you can skip the selection prompt. Add this to `~/.basic-memory/config.json`:
+
+```json
+{
+  "default_project": "main",
+  "default_project_mode": true
+}
+```
+
+With this enabled, the AI uses your default project automatically without asking.
+
+### Constrained Project Mode
+
+For focused work sessions or automation, you can lock the MCP server to a specific project:
+
+```bash
+# Start MCP server constrained to specific project
+basic-memory mcp --project work-notes
+```
+
+**When to use:**
+- Automation workflows that should only access one project
+- Focused work sessions where you want to prevent accidental cross-project operations
+- Team environments with project-specific access
+
+**Benefits:**
+- All tools automatically operate within the specified project
+- No risk of accidentally modifying the wrong project
+- Simplified workflow for single-project tasks
+
 <Warning>
 Moving notes from one project to another is not currently supported. The easiest
 thing to do is to either move the note yourself or write a new note, then delete
@@ -259,6 +345,205 @@ Basic Memory uses standard Markdown files that work with:
 - Typora for rich text editing
 - Any text editor for quick edits
 - Web editors for remote access
+
+## Configuration
+
+Basic Memory can be configured through `~/.basic-memory/config.json` or environment variables. Environment variables take precedence over config file settings.
+
+### Configuration File Location
+
+**Config file:** `~/.basic-memory/config.json`
+
+**Example configuration:**
+```json
+{
+  "default_project": "main",
+  "default_project_mode": true,
+  "log_level": "INFO",
+  "sync_delay": 1000,
+  "kebab_filenames": false,
+  "disable_permalinks": false,
+  "sync_changes": true
+}
+```
+
+### Project Settings
+
+**`projects`** - Mapping of project names to filesystem paths
+- Type: Dictionary
+- Default: `{"main": "~/basic-memory"}`
+- Example: `{"work": "~/work-notes", "personal": "~/personal-notes"}`
+
+**`default_project`** - Name of the default project
+- Type: String
+- Default: `"main"`
+- Used when no project is specified
+
+**`default_project_mode`** - Automatic project selection for single-project users
+- Type: Boolean
+- Default: `false`
+- When `true`, AI assistants automatically use default project without asking
+- Environment variable: `BASIC_MEMORY_DEFAULT_PROJECT_MODE`
+
+**`project_root`** - Constrain all projects under a root directory
+- Type: String (optional)
+- Default: `null` (projects can be created anywhere)
+- When set, all project paths must be within this directory
+- Environment variable: `BASIC_MEMORY_PROJECT_ROOT`
+
+### Sync Settings
+
+**`sync_changes`** - Enable/disable real-time synchronization
+- Type: Boolean
+- Default: `true`
+- When `false`, changes are not automatically synced
+- Environment variable: `BASIC_MEMORY_SYNC_CHANGES`
+
+**`sync_delay`** - Milliseconds to wait after changes before syncing
+- Type: Integer
+- Default: `1000` (1 second)
+- Prevents excessive sync operations during rapid edits
+- Environment variable: `BASIC_MEMORY_SYNC_DELAY`
+
+**`sync_thread_pool_size`** - Thread pool size for file I/O operations
+- Type: Integer
+- Default: `4`
+- Higher values may improve performance with many files
+- Environment variable: `BASIC_MEMORY_SYNC_THREAD_POOL_SIZE`
+
+**`skip_initialization_sync`** - Skip expensive initialization sync
+- Type: Boolean
+- Default: `false`
+- Useful for cloud/stateless deployments
+- Environment variable: `BASIC_MEMORY_SKIP_INITIALIZATION_SYNC`
+
+**`watch_project_reload_interval`** - Seconds between reloading project list
+- Type: Integer
+- Default: `30`
+- Used in watch service to detect new projects
+- Environment variable: `BASIC_MEMORY_WATCH_PROJECT_RELOAD_INTERVAL`
+
+### File Management
+
+**`kebab_filenames`** - Filename format for generated files
+- Type: Boolean
+- Default: `false`
+- `false`: Preserves spaces and special characters
+- `true`: Converts to kebab-case (consistent with permalinks)
+- Environment variable: `BASIC_MEMORY_KEBAB_FILENAMES`
+
+**`update_permalinks_on_move`** - Update permalinks when files are moved
+- Type: Boolean
+- Default: `false`
+- When `true`, permalinks are updated to reflect new file location
+- Environment variable: `BASIC_MEMORY_UPDATE_PERMALINKS_ON_MOVE`
+
+**`disable_permalinks`** - Disable automatic permalink generation
+- Type: Boolean
+- Default: `false`
+- When `true`, new notes won't have permalinks added
+- Existing permalinks still work for reading
+- Environment variable: `BASIC_MEMORY_DISABLE_PERMALINKS`
+
+### Logging
+
+**`log_level`** - Logging verbosity
+- Type: String
+- Default: `"INFO"`
+- Options: `"DEBUG"`, `"INFO"`, `"WARNING"`, `"ERROR"`
+- Environment variable: `BASIC_MEMORY_LOG_LEVEL`
+
+**Console logging** - Enable logging to console
+- Environment variable only: `BASIC_MEMORY_CONSOLE_LOGGING`
+- Values: `true`, `false`, `1`, `0`, `yes`, `no`
+- Default: `false` (logs to file only)
+
+**Log file location:** `~/.basic-memory/basic-memory-{process}.log`
+
+### Environment Variables
+
+All configuration can be overridden with environment variables using the `BASIC_MEMORY_` prefix:
+
+```bash
+# Set default project mode
+export BASIC_MEMORY_DEFAULT_PROJECT_MODE=true
+
+# Change log level
+export BASIC_MEMORY_LOG_LEVEL=DEBUG
+
+# Enable console logging
+export BASIC_MEMORY_CONSOLE_LOGGING=true
+
+# Set custom sync delay
+export BASIC_MEMORY_SYNC_DELAY=2000
+```
+
+**Special environment variables:**
+
+`BASIC_MEMORY_HOME` - Override default project location
+- Default: `~/basic-memory`
+- Used when creating the `main` project
+
+`BASIC_MEMORY_PROJECT_ROOT` - Constrain project paths
+- Optional
+- All projects must be created within this directory
+
+`BASIC_MEMORY_CLOUD_MODE` - Enable cloud mode
+- Values: `true`, `false`
+- See [Cloud Guide](/guides/cloud) for details
+
+
+### Configuration Priority
+
+Settings are applied in this order (highest to lowest priority):
+
+1. **Environment variables** (e.g., `BASIC_MEMORY_LOG_LEVEL`)
+2. **Config file** (`~/.basic-memory/config.json`)
+3. **Default values** (hardcoded in application)
+
+Example:
+```bash
+# Config file has: "log_level": "INFO"
+# Environment has: BASIC_MEMORY_LOG_LEVEL=DEBUG
+# Result: DEBUG is used (environment wins)
+```
+
+### Editing Configuration
+
+**Via config file:**
+```bash
+# Edit configuration
+vim ~/.basic-memory/config.json
+
+# Restart MCP server for changes to take effect
+# (Claude Desktop, VS Code, etc.)
+```
+
+**Via CLI:**
+```bash
+# Set default project
+basic-memory project default work
+
+# View all projects
+basic-memory project list
+
+# Check current configuration
+cat ~/.basic-memory/config.json
+```
+
+**Via environment:**
+```bash
+# Temporary (current session)
+export BASIC_MEMORY_LOG_LEVEL=DEBUG
+basic-memory status
+
+# Permanent (add to ~/.bashrc or ~/.zshrc)
+echo 'export BASIC_MEMORY_DEFAULT_PROJECT_MODE=true' >> ~/.bashrc
+```
+
+<Note>
+After changing configuration, restart your MCP client (Claude Desktop, VS Code, etc.) for changes to take effect.
+</Note>
 
 ## Troubleshooting
 
