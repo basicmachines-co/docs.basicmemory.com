@@ -8,6 +8,87 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 ## Core Commands
 
+### cloud
+
+Manage cloud authentication and synchronization. Requires active subscription.
+
+```bash
+# Authenticate with cloud service
+basic-memory cloud login
+
+# Logout and clear credentials
+basic-memory cloud logout
+
+# Bidirectional sync with cloud
+basic-memory cloud sync
+
+# Verify cloud storage integrity
+basic-memory cloud check
+
+# Mount cloud storage locally
+basic-memory cloud mount
+
+# Unmount cloud storage
+basic-memory cloud unmount
+```
+
+#### Cloud Login
+
+Authenticate with cloud service using JWT tokens:
+
+```bash
+basic-memory cloud login
+```
+
+Opens browser for authentication. Stores credentials in `~/.basic-memory/cloud_auth.json`.
+
+#### Cloud Sync
+
+Synchronize local files with cloud storage using rclone bisync:
+
+```bash
+# Sync current project
+basic-memory cloud sync
+
+# Sync specific project
+basic-memory --project=work cloud sync
+```
+
+Performs bidirectional synchronization with conflict detection.
+
+#### Cloud Mount
+
+Mount cloud storage as local filesystem:
+
+```bash
+# Mount with default (balanced) profile
+basic-memory cloud mount
+
+# Mount with specific performance profile
+basic-memory cloud mount --profile fast
+basic-memory cloud mount --profile balanced
+basic-memory cloud mount --profile safe
+```
+
+Performance profiles:
+- `fast`: 5s cache, optimized for speed
+- `balanced`: 10-15s cache (default)
+- `safe`: 15s+ cache, optimized for data integrity
+
+#### Cloud Check
+
+Verify integrity of cloud storage:
+
+```bash
+basic-memory cloud check
+```
+
+Validates checksums and file consistency between local and cloud.
+
+<Warning>
+Cloud commands require an active subscription. Use `basic-memory cloud login` to authenticate.
+</Warning>
+
 ### import
 
 Imports external knowledge sources with support for project targeting:

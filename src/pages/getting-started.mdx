@@ -22,6 +22,8 @@ The fastest way to get started with Basic Memory:
 
 You can install Basic Memory using `uv`, an extremely fast Python package and project manager, written in Rust.
 
+**Requirements**: Python 3.13 or higher
+
 You can install `uv` from [astral's website ↗️](https://docs.astral.sh/uv/getting-started/installation/). After installing `uv` you can install Basic Memory with the command:
 
 ```bash
@@ -29,6 +31,7 @@ uv tool install basic-memory
 ```
 <Warning>
 - **`uv` must be installed and available in your system PATH**. Claude Desktop runs in its own isolated environment and needs `uv` to manage dependencies.
+- **Python 3.13+ required**. Check your version with `python --version`.
 </Warning>
 
 ### Homebrew Installation (macOS)
@@ -71,15 +74,6 @@ Edit your Claude Desktop config, located at:
 
 ![tools-menu](/attachments/claude-tools-menu.png)
 
-### Install Basic Memory Pre-releases (For Daring Adventurers)
-
-```bash
-# Beta releases (new features, testing)
-pip install basic-memory --pre
-
-# Development builds (latest changes)
-pip install basic-memory --pre --force-reinstall
-```
 
 ### Choosing Where Your Notes Are Saved
 

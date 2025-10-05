@@ -44,6 +44,7 @@ export const navConfig = {
         { title: 'MCP Tools Reference', href: '/guides/mcp-tools-reference' },
         { title: 'Canvas', href: '/guides/canvas' },
         { title: 'CLI Reference', href: '/guides/cli-reference' },
+        { title: 'Cloud CLI', href: '/guides/cloud-cli' },
         { title: 'AI Assistant Guide', href: '/guides/ai-assistant-guide' },
       ],
     },

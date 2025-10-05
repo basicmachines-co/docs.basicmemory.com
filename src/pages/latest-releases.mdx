@@ -8,6 +8,101 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
 ---
+## [v0.15.0](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.15.0) — 2025-10-04
+
+### Cloud Features
+
+- **#327**: CLI subscription validation ([#327](https://github.com/basicmachines-co/basic-memory/pull/327))
+  - Implements subscription validation for CLI operations
+  - JWT-based authentication with token refresh
+
+- **#322**: Cloud sync via rclone bisync ([#322](https://github.com/basicmachines-co/basic-memory/pull/322))
+  - Bidirectional cloud synchronization using rclone
+  - Conflict detection and resolution
+
+- **#306**: Cloud mount CLI commands ([#306](https://github.com/basicmachines-co/basic-memory/pull/306))
+  - Mount cloud files locally for real-time editing
+  - Three performance profiles: fast (5s), balanced (10-15s), safe (15s+)
+  - Cross-platform rclone installer
+
+- **#296**: Cloud file upload ([#296](https://github.com/basicmachines-co/basic-memory/pull/296))
+  - File upload capabilities for cloud storage
+
+- **#291**: Cloud authentication ([#291](https://github.com/basicmachines-co/basic-memory/pull/291))
+  - JWT-based authentication system
+  - Session management with token refresh
+
+### Performance Improvements
+
+- **#315**: API performance optimizations ([#315](https://github.com/basicmachines-co/basic-memory/pull/315))
+  - Implements SPEC-11 performance improvements
+  - Optimized database queries and response times
+
+- **#320**: Lifecycle management optimization ([#320](https://github.com/basicmachines-co/basic-memory/pull/320))
+  - Enhanced application lifecycle management
+
+- **#319**: Background relation resolution ([#319](https://github.com/basicmachines-co/basic-memory/pull/319))
+  - Non-blocking startup with background processing
+  - Prevents cold start delays
+
+- **#309**: Non-blocking sync operations ([#309](https://github.com/basicmachines-co/basic-memory/pull/309))
+  - Thread pool for sync operations
+  - Improved responsiveness
+
+### Security Enhancements
+
+- **#330**: Remove .env file loading ([#330](https://github.com/basicmachines-co/basic-memory/pull/330))
+  - Eliminates unintended environment variable loading
+  - Improved configuration security
+
+- **#314**: .gitignore integration ([#314](https://github.com/basicmachines-co/basic-memory/pull/314))
+  - Respects .gitignore patterns during sync
+  - Prevents syncing build artifacts and temporary files
+
+### Platform Support
+
+- **Python 3.13 support**
+  - Full compatibility with Python 3.13
+  - Updated dependencies and CI testing
+
+- **#305**: ChatGPT tools integration ([#305](https://github.com/basicmachines-co/basic-memory/pull/305))
+  - ChatGPT-specific search and fetch tools
+
+### Bug Fixes
+
+- **Permalink collision prevention** ([`2a050ed`](https://github.com/basicmachines-co/basic-memory/commit/2a050ed))
+  - Prevents data loss from fuzzy search matching similar file paths
+  - Strict link resolution during entity creation
+
+- **#329**: Normalize underscores in memory:// URLs ([#329](https://github.com/basicmachines-co/basic-memory/pull/329))
+  - Consistent URL handling for knowledge graph navigation
+
+- **#328**: Simplify entity upsert ([#328](https://github.com/basicmachines-co/basic-memory/pull/328))
+  - Database-level conflict resolution
+  - Reduced application complexity
+
+- **#318**: Minimum timeframe enforcement ([#318](https://github.com/basicmachines-co/basic-memory/pull/318))
+  - Enforced minimum timeframe for operations
+
+- **#312**: DateTime JSON schema format ([#312](https://github.com/basicmachines-co/basic-memory/pull/312))
+  - Proper datetime format annotations for MCP validation
+
+- **#310**: Remove obsolete project management code ([#310](https://github.com/basicmachines-co/basic-memory/pull/310))
+  - Cleanup of deprecated functionality
+
+- **#281**: Fix move_note without file extension ([#281](https://github.com/basicmachines-co/basic-memory/pull/281))
+  - Allow moving notes by title alone
+
+### Architecture
+
+- **#313**: Disable permalinks config flag ([#313](https://github.com/basicmachines-co/basic-memory/pull/313))
+  - Optional permalink generation
+
+- **#298**: SPEC-6 stateless architecture ([#298](https://github.com/basicmachines-co/basic-memory/pull/298))
+  - Stateless MCP tools design
+  - Improved cloud deployment scalability
+
+---
 ## [v0.14.4](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.14.4) — 2025-09-04
 
 ### Critical Bug Fixes
