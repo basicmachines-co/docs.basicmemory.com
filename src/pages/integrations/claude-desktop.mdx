@@ -74,7 +74,7 @@ After saving the config, restart Claude Desktop. You should see Basic Memory too
     Load context from previous conversations using memory:// URLs
   </Card>
   <Card title="Project Management">
-    Switch between different knowledge projects instantly
+    Work with multiple knowledge projects in each conversation
   </Card>
   <Card title="Visual Note Display">
     View notes as formatted artifacts for better readability
@@ -138,17 +138,28 @@ Claude: [Shows recently modified notes and offers to continue discussions]
 
 ### Project Management
 
-**Switch contexts:**
+**New in v0.15.0:** Projects are selected at the start of each conversation. Claude will suggest your most active project and ask which one to use.
+
+**Starting a conversation:**
 ```
-You: "Switch to my personal project and show recent notes"
-Claude: [Switches active project and shows personal knowledge]
+You: "Let's organize my personal notes"
+
+Claude: I see you have 3 projects: main, work-notes, personal
+Your most active project is personal
+Should I use personal for this task?
+
+You: "Yes"
 ```
 
-**Create targeted content:**
+**For single-project users**, add this to `~/.basic-memory/config.json`:
+```json
+{
+  "default_project": "main",
+  "default_project_mode": true
+}
 ```
-You: "Create a note about weekend recipes in my personal project"
-Claude: [Creates note in specified project while maintaining conversation context]
-```
+
+This skips project selection and uses your default project automatically.
 
 ## Advanced Usage
 
@@ -235,7 +246,7 @@ basic-memory --help
 
 1. **Reference existing knowledge** - Use memory:// URLs
 2. **Build incrementally** - Add to existing notes
-3. **Switch projects** - Use different contexts
+3. **Use multiple projects** - Organize knowledge by context (work, personal, etc.)
 4. **Use special prompts** - Leverage built-in behaviors
 5. **Organize regularly** - Keep knowledge base clean
 
