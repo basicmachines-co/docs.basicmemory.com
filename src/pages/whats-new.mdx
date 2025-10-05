@@ -1,14 +1,163 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
 title: "What's New - v0.15.0"
-description: 'New project modes'
+description: 'Cloud sync, performance improvements, and Python 3.13 support'
 ---
 
 import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
 
 # v0.15.0
 
-Basic Memory v0.15.0 introduces new project modes to improve project management.
+Basic Memory v0.15.0 introduces cloud synchronization, performance improvements, security enhancements, and Python 3.13 support.
+
+## Cloud Features
+
+<Warning>
+Cloud features require an active subscription. Visit [basicmemory.com](https://basicmemory.com) for subscription options.
+</Warning>
+
+### Cloud Authentication
+
+JWT-based authentication with automatic token refresh:
+
+```bash
+# Login
+basic-memory cloud login
+
+# Logout
+basic-memory cloud logout
+```
+
+Credentials stored in `~/.basic-memory/cloud_auth.json`. Tokens auto-refresh for 24-hour sessions.
+
+### Bidirectional Sync
+
+Sync local files with cloud using rclone bisync:
+
+```bash
+# Sync current project
+basic-memory cloud sync
+
+# Sync specific project
+basic-memory --project=work cloud sync
+```
+
+**Features:**
+- Bidirectional synchronization
+- Conflict detection and resolution
+- .gitignore pattern support
+- Checksum validation
+
+### Cloud Mount
+
+Mount cloud storage as local filesystem:
+
+```bash
+# Mount with default profile
+basic-memory cloud mount
+
+# Mount with specific profile
+basic-memory cloud mount --profile fast
+basic-memory cloud mount --profile safe
+```
+
+**Performance profiles:**
+- `fast`: 5s cache, optimized for speed
+- `balanced`: 10-15s cache (default)
+- `safe`: 15s+ cache, optimized for integrity
+
+See [Cloud CLI Guide](/guides/cloud-cli) for complete documentation.
+
+## Performance Improvements
+
+### API Optimizations
+
+SPEC-11 performance improvements:
+- Optimized database queries
+- Reduced response times
+- Background processing for relations
+
+### Background Relation Resolution
+
+Non-blocking startup with background processing:
+- Application starts immediately
+- Relations resolved in background
+- No cold start delays
+
+### Non-Blocking Sync
+
+Thread pool for sync operations:
+- Improved responsiveness
+- No blocking during file synchronization
+- Faster overall performance
+
+## Security Enhancements
+
+### Configuration Security
+
+Removed .env file loading:
+- Eliminates unintended environment variable loading
+- Improved configuration isolation
+- Better security posture
+
+### .gitignore Integration
+
+Sync respects .gitignore patterns:
+- Build artifacts excluded automatically
+- Temporary files not synced
+- Reduced sync overhead
+
+## Platform Support
+
+### Python 3.13
+
+Full compatibility with Python 3.13:
+- Updated dependencies
+- CI testing on Python 3.13
+- Performance improvements from newer Python version
+
+### ChatGPT Tools
+
+ChatGPT-specific tools for search and fetch operations.
+
+## Architecture
+
+### Stateless MCP Tools
+
+SPEC-6 stateless architecture implementation:
+- Improved cloud deployment scalability
+- Stateless tool design
+- Better multi-instance support
+
+### Optional Permalinks
+
+Configuration flag to disable permalink generation:
+
+```json
+{
+  "disable_permalinks": true
+}
+```
+
+Useful for workflows that don't require permalink-based navigation.
+
+## Bug Fixes
+
+### Permalink Collision Prevention
+
+Strict link resolution during entity creation prevents data loss from fuzzy matching similar file paths.
+
+### Memory URL Normalization
+
+Consistent underscore handling in memory:// URLs for reliable knowledge graph navigation.
+
+### Database Upsert
+
+Database-level conflict resolution reduces application complexity and improves reliability.
+
+### Timeframe Enforcement
+
+Minimum timeframe validation for operations prevents edge case errors.
 
 ## Project Modes
 
