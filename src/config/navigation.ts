@@ -40,11 +40,11 @@ export const navConfig = {
     {
       title: 'Guides',
       items: [
+        { title: 'Basic Memory Cloud', href: '/guides/cloud' },
         { title: 'Knowledge Format', href: '/guides/knowledge-format' },
         { title: 'MCP Tools Reference', href: '/guides/mcp-tools-reference' },
         { title: 'Canvas', href: '/guides/canvas' },
         { title: 'CLI Reference', href: '/guides/cli-reference' },
-        { title: 'Cloud CLI', href: '/guides/cloud-cli' },
         { title: 'AI Assistant Guide', href: '/guides/ai-assistant-guide' },
       ],
     },
@@ -53,6 +53,7 @@ export const navConfig = {
       items: [
         { title: 'Claude Desktop', href: '/integrations/claude-desktop' },
         { title: 'Claude Code', href: '/integrations/claude-code' },
+        { title: 'ChatGPT', href: '/integrations/chatgpt' },
         { title: 'Cursor', href: '/integrations/cursor' },
         { title: 'VS Code', href: '/integrations/vscode' },
         { title: 'Obsidian', href: '/integrations/obsidian' },

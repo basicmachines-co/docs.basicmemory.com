@@ -6,284 +6,170 @@ description: 'Cloud sync, performance improvements, and Python 3.13 support'
 
 import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
 
-# v0.15.0
+## v0.15.0
 
-Basic Memory v0.15.0 introduces cloud synchronization, performance improvements, security enhancements, and Python 3.13 support.
+Basic Memory v0.15.0 introduces cloud sync, multi-project conversation improvements, performance optimizations, and Python 3.13 support.
 
-## Cloud Features
 
-<Warning>
-Cloud features require an active subscription. Visit [basicmemory.com](https://basicmemory.com) for subscription options.
-</Warning>
+### Basic Memory Cloud
 
-### Cloud Authentication
+<Info>
+Basic Memory Cloud is currently in invite-only beta. Sign up for Early Access on [basicmemory.com](https://basicmemory.com).
+</Info>
 
-JWT-based authentication with automatic token refresh:
+Work with your knowledge base across multiple devices using cloud sync and storage.
 
-```bash
-# Login
-basic-memory cloud login
+#### Learn More
 
-# Logout
-basic-memory cloud logout
+See the [Cloud Guide](/guides/cloud-cli) for complete documentation including:
+- Conflict resolution strategies
+- File filtering with `.bmignore`
+- Multi-device workflows
+- Troubleshooting and performance tips
+
+### Multi-Project Conversations
+
+AI assistants now ask which project to use at the start of conversations.
+
+#### What You'll Experience
+
+When starting a new conversation, the AI will:
+
+1. Check for available projects
+2. Suggest the most active project based on recent activity
+3. Ask which project to use
+4. Remember your choice throughout the conversation
+
+**Example conversation:**
+```
+You: "Let's work on documentation"
+
+Claude: I see you have 3 projects: main, work-docs, creative-writing
+Your most active project is work-docs (15 recent updates)
+Should I use work-docs for this task?
+
+You: "Yes"
+
+Claude: I'll use work-docs for this session.
+[All subsequent operations use work-docs project]
 ```
 
-Credentials stored in `~/.basic-memory/cloud_auth.json`. Tokens auto-refresh for 24-hour sessions.
+#### Default Project Setup
 
-### Bidirectional Sync
+If you only use one project, enable automatic project selection:
 
-Sync local files with cloud using rclone bisync:
-
-```bash
-# Sync current project
-basic-memory cloud sync
-
-# Sync specific project
-basic-memory --project=work cloud sync
-```
-
-**Features:**
-- Bidirectional synchronization
-- Conflict detection and resolution
-- .gitignore pattern support
-- Checksum validation
-
-### Cloud Mount
-
-Mount cloud storage as local filesystem:
-
-```bash
-# Mount with default profile
-basic-memory cloud mount
-
-# Mount with specific profile
-basic-memory cloud mount --profile fast
-basic-memory cloud mount --profile safe
-```
-
-**Performance profiles:**
-- `fast`: 5s cache, optimized for speed
-- `balanced`: 10-15s cache (default)
-- `safe`: 15s+ cache, optimized for integrity
-
-See [Cloud CLI Guide](/guides/cloud-cli) for complete documentation.
-
-## Performance Improvements
-
-### API Optimizations
-
-SPEC-11 performance improvements:
-- Optimized database queries
-- Reduced response times
-- Background processing for relations
-
-### Background Relation Resolution
-
-Non-blocking startup with background processing:
-- Application starts immediately
-- Relations resolved in background
-- No cold start delays
-
-### Non-Blocking Sync
-
-Thread pool for sync operations:
-- Improved responsiveness
-- No blocking during file synchronization
-- Faster overall performance
-
-## Security Enhancements
-
-### Configuration Security
-
-Removed .env file loading:
-- Eliminates unintended environment variable loading
-- Improved configuration isolation
-- Better security posture
-
-### .gitignore Integration
-
-Sync respects .gitignore patterns:
-- Build artifacts excluded automatically
-- Temporary files not synced
-- Reduced sync overhead
-
-## Platform Support
-
-### Python 3.13
-
-Full compatibility with Python 3.13:
-- Updated dependencies
-- CI testing on Python 3.13
-- Performance improvements from newer Python version
-
-### ChatGPT Tools
-
-ChatGPT-specific tools for search and fetch operations.
-
-## Architecture
-
-### Stateless MCP Tools
-
-SPEC-6 stateless architecture implementation:
-- Improved cloud deployment scalability
-- Stateless tool design
-- Better multi-instance support
-
-### Optional Permalinks
-
-Configuration flag to disable permalink generation:
-
-```json
-{
-  "disable_permalinks": true
-}
-```
-
-Useful for workflows that don't require permalink-based navigation.
-
-## Bug Fixes
-
-### Permalink Collision Prevention
-
-Strict link resolution during entity creation prevents data loss from fuzzy matching similar file paths.
-
-### Memory URL Normalization
-
-Consistent underscore handling in memory:// URLs for reliable knowledge graph navigation.
-
-### Database Upsert
-
-Database-level conflict resolution reduces application complexity and improves reliability.
-
-### Timeframe Enforcement
-
-Minimum timeframe validation for operations prevents edge case errors.
-
-## Project Modes
-
-<Warning>
-**Note**: The `switch_project()` and `get_current_project()` tools have been removed.
-</Warning>
-
-### Multi-Project Mode
-**Default behavior** (same as previous versions)
-
-- AI discovers projects using `list_memory_projects()`
-- User specifies which project to work with
-- Content tool use the `project` parameter
-- For users with multiple knowledge bases
-- AI remembers which project you are currently using
-
-**Example:**
-```
-You: "What projects do I have?"
-Claude: [Uses list_memory_projects()]
-Available projects: main, work-notes, creative-writing
-
-You: "Create a character profile in creative-writing"
-Claude: [Uses write_note(title="Protagonist", project="creative-writing")]
-✓ Created character profile in creative-writing project
-```
-
-### Default Project Mode
-
-Configure Basic Memory to use only a single default project for all notes.
-
-**Simplified single-project usage** (new)
-- Tools automatically use default project
-- No project parameter needed
-- For users with one primary knowledge base
-
-**Configuration:**
-
-Set
+**Configuration** (`~/.basic-memory/config.json`):
 ```json
 {
   "default_project": "main",
   "default_project_mode": true
 }
 ```
-in ~/.basic-memory/config.json
 
-**Example:**
-```
-You: "Create a note about today's meeting"
-Claude: [Uses write_note(title="Meeting", content="...", project=auto)]
-✓ Created in main project (default)
+With this enabled:
+- AI uses your default project automatically
+- No project selection prompt
+- Suitable for single knowledge base workflows
 
-You: "Search for project planning"
-Claude: [Uses search_notes(query="project planning", project=auto)]
-Found 5 notes in main project
-```
+#### Single Project Mode
 
-### Constrained Project Mode
+Lock an MCP session to a specific project using the `--project` flag:
 
-Specify a particular project to use for the MCP session.
-
-**Locked to specific project**
-- Start with `--project project-name`
-- All operations locked to specified project
-- Prevents accidental cross-project operations
-- For automation and focused work sessions
-
-Started with `basic-memory mcp --project work-notes`:
-
-```
-You: "Document the new API architecture"
-Claude: [Uses write_note(title="API Architecture", project=constrained)]
-✓ Created in work-notes project
-
-You: "Find database documentation"
-Claude: [Uses search_notes(query="database", project=constrained)]
-Found 3 database notes in work-notes project
+```bash
+basic-memory mcp --project work-notes
 ```
 
-### Project Resolution Hierarchy
+All operations in this session use the specified project. Useful for automation and focused work sessions.
 
-1. **Projct CLI arg** (highest priority) - `--project` parameter
-2. **Explicit Parameter** (medium priority) - `project` parameter in tool call
-3. **Default Project Mode** (lowest priority) - Automatic default when enabled
+#### What Changed from v0.14.x
 
-### Details
+**Removed tools:**
+- `switch_project()` - no longer available
+- `get_current_project()` - no longer available
+
+**New behavior:**
+- AI asks which project to use at conversation start
+- Project selection remembered throughout session
+- `list_memory_projects()` shows available projects with activity suggestions
+- `recent_activity()` provides cross-project discovery
+
+All MCP tools now accept an explicit `project` parameter. See [Technical Information](/technical/technical-information) for architecture details.
+
+### Performance Improvements
+
+v0.15.0 includes significant performance optimizations across API operations, database queries, and startup processes.
+
+#### API Optimizations
+
+API response times improved 3-4x through query optimization and batch loading. The `read_note` endpoint now completes in 75ms instead of 250ms, while `build_context` operations with depth=2 run in 320ms instead of 1200ms.
 
 **What changed:**
+- Single optimized queries replace multiple separate database calls
+- Batch loading eliminates N+1 query problems
+- Eager loading strategies reduce round trips
 
-- ❌ **Removed**: `switch_project()` and `get_current_project()` tools
-- ✓ **Added**: Explicit `project` parameter to all content tools
-- ✓ **Added**: Three project modes for different workflows
-- ✓ **Added**: `list_memory_projects()` with session guidance
-- ✓ **Enhanced**: `recent_activity()` with discovery mode
+Database queries for typical MCP tool calls dropped from 15-20 queries to 3-5 queries (75% reduction).
 
-**Before:**
-```python
-switch_project("work-notes")
-write_note("My Note", "Content")
-search_notes("query")
-```
+#### Startup Performance
 
-**After:**
-```python
-# Multi-project mode
-list_memory_projects()  # Discover projects
-write_note("My Note", "Content", project="work-notes")
-search_notes("query", project="work-notes")
+The MCP server now starts instantly (&lt;1 second) regardless of knowledge base size.
+Previously, large knowledge bases with 1000+ entities could have slow startup times.
 
-# Default project mode (config: default_project_mode=true)
-write_note("My Note", "Content")  # Uses default project automatically
-search_notes("query")  # Searches default project
+**Background relation resolution:**
+- Entity relations resolve in background threads
+- Server accepts requests immediately on startup
+- Relations complete asynchronously without blocking operations
 
-# Constrained mode (CLI: --project work-notes)
-write_note("My Note", "Content")  # Uses constrained project
-search_notes("query")  # Searches constrained project
-```
+#### Database Performance
 
-# v0.14.0
+SQLite now uses Write-Ahead Logging (WAL) mode by default, enabling concurrent reads and writes. This feature is particularly relevant to Windows users.
 
-## ✏️ Advanced Note Editing
+**Performance gains:**
+- 2-3x faster write operations
+- Readers don't block writers (and vice versa)
+- Bulk operations complete in seconds instead of minutes
+
+### Platform Support
+
+#### Python 3.13
+
+Basic Memory now supports Python 3.13. All dependencies have been verified compatible, and Python 3.13 is included in the CI test matrix.
+
+**Supported versions:** Python 3.10, 3.11, 3.12, 3.13
+
+#### .gitignore Support
+
+The sync process now respects `.gitignore` patterns, automatically skipping files during synchronization.
+
+**What you'll notice:**
+- Sensitive files (`.env`, credentials) excluded from sync
+- Build artifacts (`node_modules/`, `__pycache__/`) not indexed
+- OS and editor files (`.DS_Store`, `.vscode/`) ignored
+
+Create a `.gitignore` in your project root to control which files are synced.
+See [Controlling What gets synced](user-guide#controlling-what-gets-synced) in the user guide.
+
+### Bug Fixes
+
+**v0.15.0** resolves numerous bugs related to entity conflicts, URL handling, file operations, and platform compatibility.
+
+**Key fixes:**
+- Entity upsert conflicts resolved through database-level conflict handling
+- `memory://` URLs with underscores now properly normalized to hyphens
+- `move_note` automatically handles file extensions (works with or without `.md`)
+- `.env` file auto-loading removed for compatibility with code repos using env files
+- Minimum timeframe enforcement prevents timezone edge cases
+- DateTime fields include proper JSON schema format for MCP validation
+
+See the [complete changelog](https://github.com/basicmachines-co/basic-memory/blob/main/CHANGELOG.md) or the [full v0.15.0 release notes](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.15.0).
+
+## v0.14.0
+
+### Advanced Note Editing
 
 **Edit notes incrementally without rewriting entire documents:**
 
-### Append Operations
+#### Append Operations
 
 **Adding to existing meeting notes:**
 ```
@@ -316,7 +202,7 @@ Claude: [Appends new research section]
 Relations automatically updated to connect with existing energy and policy notes.
 ```
 
-### Prepend Operations
+#### Prepend Operations
 
 **Adding timestamps to journals:**
 ```
@@ -333,7 +219,7 @@ Claude: [Uses prepend to add newest entry at top]
 [New entry added above previous entries, maintaining chronological order]
 ```
 
-### Section Replacement
+#### Section Replacement
 
 **Updating specific documentation sections:**
 ```
@@ -374,7 +260,7 @@ docker run -d \
 [Only the deployment section was updated, rest of documentation unchanged]
 ```
 
-### Find and Replace
+#### Find and Replace
 
 **Version updates across documentation:**
 ```
@@ -390,11 +276,11 @@ Changes made:
 - Line 67: Example configuration updated
 ```
 
-## 📁 Smart File Management
+### Smart File Management
 
 **Move and organize notes with full database consistency:**
 
-### Organizing Project Documentation
+#### Organizing Project Documentation
 
 **Moving notes to appropriate folders:**
 ```
@@ -424,7 +310,7 @@ Claude: [Creates folder structure and moves files]
 Search functionality maintained, all relations preserved.
 ```
 
-### Renaming and Restructuring
+#### Renaming and Restructuring
 
 **Renaming notes for clarity:**
 ```
@@ -437,11 +323,11 @@ Claude: [Renames file and updates all references]
 ✓ All internal links automatically updated
 ```
 
-## 📖 View Notes as Formatted Artifacts
+### View Notes as Formatted Artifacts
 
 **Display notes as html formatted artifacts in Claude Desktop:**
 
-### Technical Documentation
+#### Technical Documentation
 
 ```
 You: "Show me the API documentation as a formatted artifact"
@@ -456,7 +342,7 @@ Claude: [Uses view_note tool to display formatted artifact]
 - Typography and spacing
 - Clickable links and references
 
-### Creative Writing Projects
+#### Creative Writing Projects
 
 ```
 You: "Display my character development notes as an artifact"
@@ -470,7 +356,7 @@ Claude: [Creates formatted view of character notes]
 - Story arc progression
 - Research and background details
 
-### Research Summaries
+#### Research Summaries
 
 ```
 You: "View my climate research compilation as an artifact"
@@ -484,11 +370,11 @@ Claude: [Formats research note]
 - Source citations and links
 - Visual hierarchy of information
 
-## 🔍 Enhanced Search & Discovery
+### Enhanced Search & Discovery
 
 **Find content more easily with frontmatter tag search:**
 
-### Searchable Frontmatter Tags
+#### Searchable Frontmatter Tags
 
 **Before v0.13.0** - Only content was searchable:
 ```markdown
@@ -514,7 +400,7 @@ Found 4 notes mentioning 'chemex':
 • Weekend Coffee Experiments (content match)
 ```
 
-### Better Content Discovery
+#### Better Content Discovery
 
 **Topic-based discovery:**
 ```
@@ -548,11 +434,11 @@ Found 6 authentication-related notes in work-notes project:
 • Two-Factor Authentication Setup
 ```
 
-## 🗄️ Unified Database Architecture
+### Unified Database Architecture
 
 **Single app-level database for better performance and project management:**
 
-### Automatic Migration
+#### Automatic Migration
 
 **Seamless upgrade from v0.12.x:**
 
@@ -591,7 +477,7 @@ This typically takes 1-3 minutes depending on the amount of content.
 You don't need to manually switch projects - Basic Memory handles this for you.
 ```
 
-### Better Project Isolation
+#### Better Project Isolation
 
 **Secure project boundaries:**
 ```
@@ -608,9 +494,9 @@ Found 3 client-related notes in work-notes:
 [Personal project notes remain completely isolated]
 ```
 
-## 🛠️ Complete MCP Tool Suite
+### Complete MCP Tool Suite
 
-### New Project Management Tools
+#### New Project Management Tools
 
 **Discover and manage projects:**
 ```python
@@ -634,7 +520,7 @@ sync_status()
 → Shows: file sync status, background operations, any issues
 ```
 
-### Enhanced Note Operations
+#### Enhanced Note Operations
 
 **Incremental editing tools:**
 ```python
@@ -661,9 +547,9 @@ view_note("important-document")
 → Displays note as formatted artifact in Claude Desktop
 ```
 
-## Real-World Workflows
+### Real-World Workflows
 
-### Software Development Team
+#### Software Development Team
 
 **Morning standup routine:**
 ```
@@ -695,7 +581,7 @@ Claude: [Creates structured standup note]
 [Automatically linked to previous standup notes and relevant project documentation]
 ```
 
-### Academic Researcher
+#### Academic Researcher
 
 **Research session workflow:**
 ```
@@ -733,7 +619,7 @@ Claude: [Organizes research]
 ✓ Updated research index and cross-references
 ```
 
-### Creative Writer
+#### Creative Writer
 
 **Novel planning session:**
 ```
@@ -768,7 +654,7 @@ Claude: [Displays character sheet]
 [Shows organized character profile with clear sections, relationship maps, and story connections]
 ```
 
-### Personal Knowledge Management
+#### Personal Knowledge Management
 
 **Weekly life review:**
 ```
