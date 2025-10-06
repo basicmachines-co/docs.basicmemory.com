@@ -245,9 +245,9 @@ If you only use one project, you can skip the selection prompt. Add this to `~/.
 }
 ```
 
-With this enabled, the AI uses your default project automatically without asking.
+With this enabled, the AI uses your default project automatically without asking. You can still override this by explicitly specifying a different project in tool calls.
 
-### Constrained Project Mode
+### Single Project Mode
 
 For focused work sessions or automation, you can lock the MCP server to a specific project:
 
@@ -256,15 +256,16 @@ For focused work sessions or automation, you can lock the MCP server to a specif
 basic-memory mcp --project work-notes
 ```
 
+This **locks** the entire MCP session to one project - the `project` parameter in tool calls will be ignored.
+
 **When to use:**
 - Automation workflows that should only access one project
 - Focused work sessions where you want to prevent accidental cross-project operations
 - Team environments with project-specific access
 
-**Benefits:**
-- All tools automatically operate within the specified project
-- No risk of accidentally modifying the wrong project
-- Simplified workflow for single-project tasks
+**Key difference from Default Project Mode:**
+- **Single Project Mode**: Locks session to one project, cannot switch
+- **Default Project Mode**: Uses default automatically, but can still switch projects
 
 <Warning>
 Moving notes from one project to another is not currently supported. The easiest

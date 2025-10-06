@@ -117,19 +117,69 @@ Assistant: Perfect! I'll use the 'research' project for our work.
 [Uses project="research" in all subsequent tool calls]
 ```
 
-### Project Modes
+### Default Project Mode
 
-For detailed information about project modes (default project mode, constrained mode, etc.), see the [User Guide - Multi-Project Features](/user-guide#multi-project-features).
+**For single-project users who want automatic project selection:**
+
+Enable in `~/.basic-memory/config.json`:
+```json
+{
+  "default_project_mode": true,
+  "default_project": "main"
+}
+```
+
+**Behavior:**
+- Tools automatically use your default project when no `project` parameter is specified
+- You **can still override** by explicitly passing a different project to tools
+- Best for users who primarily work in one project but occasionally need others
+
+**Example:**
+```
+# With default_project_mode enabled and default_project="main"
+write_note("My Note", "Content", "folder")  # Uses "main" project
+write_note("Work Note", "Content", "folder", project="work")  # Uses "work" project
+```
+
+### Single Project Mode
+
+**For locked, single-project sessions:**
+
+Start MCP server with `--project` flag:
+```bash
+basic-memory mcp --project work
+```
+
+**Behavior:**
+- **Locks** the entire MCP session to one project
+- The `project` parameter in tool calls is **ignored** - cannot switch projects
+- Best for automation, focused sessions, or restricted access scenarios
+
+**Example:**
+```bash
+# Start locked to "work" project
+basic-memory mcp --project work
+
+# All operations use "work" regardless of parameters
+write_note("My Note", "Content", "folder")  # Uses "work"
+write_note("Note", "Content", "folder", project="personal")  # Still uses "work"!
+```
 
 ### Project Resolution Hierarchy
 
 When multiple project specifications exist, Basic Memory uses this priority order:
 
-1. **CLI Constraint** (highest priority) - `--project` parameter
+1. **Single Project Mode** (highest priority) - `--project` CLI parameter or `BASIC_MEMORY_MCP_PROJECT` env var
 2. **Explicit Parameter** (medium priority) - `project` parameter in tool call
-3. **Default Project Mode** (lowest priority) - Automatic default when enabled
+3. **Default Project Mode** (lowest priority) - Automatic default when `default_project_mode=true`
 
-This ensures predictable behavior and allows explicit override when needed.
+**Quick Comparison:**
+
+| Mode | Can Switch Projects? | Use Case |
+|------|---------------------|----------|
+| Multi-Project (default) | Yes, via explicit parameters | Managing multiple knowledge bases |
+| Default Project Mode | Yes, can override default | Single project with occasional multi-project |
+| Single Project Mode | No, locked to one | Automation, security, focused sessions |
 
 <CardGroup cols={2}>
   <Card title="list_memory_projects" icon="layers">

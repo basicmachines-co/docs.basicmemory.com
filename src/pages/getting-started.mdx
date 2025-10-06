@@ -151,9 +151,9 @@ basic-memory project add "work-notes" ~/Documents/work
 You: "Create a new project called 'work-notes' in ~/Documents/work"
 ```
 
-**Single project users:**
+**For users who primarily work in one project:**
 
-If you only use one project, you can skip the project selection prompt. Add this to `~/.basic-memory/config.json`:
+Enable Default Project Mode to automatically use your main project. Add this to `~/.basic-memory/config.json`:
 
 ```json
 {
@@ -162,7 +162,7 @@ If you only use one project, you can skip the project selection prompt. Add this
 }
 ```
 
-With this enabled, the AI uses your default project automatically without asking.
+With this enabled, the AI uses your default project automatically when no project is specified. You can still override this by explicitly specifying a different project when needed.
 
 ## Creating Your First Knowledge Note
 

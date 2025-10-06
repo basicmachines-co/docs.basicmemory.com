@@ -67,9 +67,9 @@ If you only use one project, enable automatic project selection:
 ```
 
 With this enabled:
-- AI uses your default project automatically
-- No project selection prompt
-- Suitable for single knowledge base workflows
+- AI uses your default project automatically when no project is specified
+- You can still override by explicitly passing a different project to tools
+- Suitable for users who primarily work in one project
 
 #### Single Project Mode
 
@@ -79,7 +79,7 @@ Lock an MCP session to a specific project using the `--project` flag:
 basic-memory mcp --project work-notes
 ```
 
-All operations in this session use the specified project. Useful for automation and focused work sessions.
+**Key behavior:** All operations in this session use the specified project - the `project` parameter in tool calls is ignored. Useful for automation, security, and focused work sessions where you want to prevent accidental cross-project operations.
 
 #### What Changed from v0.14.x
 
