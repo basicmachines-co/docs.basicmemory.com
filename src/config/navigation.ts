@@ -53,7 +53,9 @@ export const navConfig = {
       items: [
         { title: 'Claude Desktop', href: '/integrations/claude-desktop' },
         { title: 'Claude Code', href: '/integrations/claude-code' },
+        { title: 'OpenAI Codex', href: '/integrations/codex' },
         { title: 'ChatGPT', href: '/integrations/chatgpt' },
+        { title: 'Google Gemini', href: '/integrations/gemini' },
         { title: 'Cursor', href: '/integrations/cursor' },
         { title: 'VS Code', href: '/integrations/vscode' },
         { title: 'Obsidian', href: '/integrations/obsidian' },

@@ -1,0 +1,162 @@
+---
+layout: '@/layouts/DocsLayout.astro'
+title: "OpenAI Codex"
+description: "Set up Basic Memory with OpenAI Codex for persistent development knowledge and enhanced coding sessions"
+---
+
+import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step, CodeGroup, CodeTab } from '@/components'
+
+OpenAI Codex provides native support for Basic Memory through the Model Context Protocol (MCP), enabling persistent context across development sessions and building comprehensive coding knowledge.
+
+## Setup
+
+### Install Basic Memory cli
+
+```bash
+# Install Basic Memory
+uv tool install basic-memory
+
+# Or with pip
+pip install basic-memory
+```
+
+### Configure Codex
+
+Basic Memory works with Codex through MCP. Install it with:
+
+```bash
+codex mcp add basic-memory bash -c "uvx basic-memory mcp"
+```
+<Tip>
+If you want to use a specific Basic Memory project, modify the command like so:
+```bash
+codex mcp add basic-memory bash -c "uvx basic-memory mcp --project your-project-name"
+```
+</Tip>
+### Verify Installation
+
+Check that Basic Memory is configured correctly:
+
+```bash
+codex mcp list
+```
+
+You should see `basic-memory` listed with the command `bash -c uvx basic-memory mcp --project main`.
+
+## Quick Start
+
+Once configured, you can immediately start using Basic Memory in your development workflow:
+
+```
+You: "Create a note about our authentication strategy for the API"
+Codex: I'll document the authentication strategy we discussed...
+[Creates structured note with technical details and rationale]
+
+You: "Switch to my personal coding project"
+Codex: [Changes context to personal project knowledge base]
+```
+
+## MCP Integration Benefits
+
+Codex's native MCP support provides:
+
+- **Automatic tool access** - No manual setup required
+- **Project-aware context** - Maintains separate knowledge bases per project
+- **Real-time sync** - Changes are immediately available
+- **Persistent memory** - Context survives between sessions
+- **Structured knowledge** - Uses Basic Memory's semantic format
+
+### Available Tools
+
+Through MCP, Codex can access all Basic Memory functionality:
+
+- **write_note** - Create and update documentation
+- **read_note** - Access existing knowledge and context
+- **search_notes** - Find relevant information across projects
+- **edit_note** - Update documentation incrementally
+- **recent_activity** - Check what you've been working on
+- **project management** - Switch between different knowledge bases
+- **build_context** - Load conversation context from memory:// URLs
+
+## Integration with Development
+
+### Project Context
+
+Basic Memory maintains separate knowledge bases for different projects:
+
+```
+You: "Switch to my work project"
+Codex: [Loads work project context and knowledge]
+
+You: "Based on our API design notes, what's the next step?"
+Codex: [References existing documentation to provide contextual guidance]
+```
+
+## Troubleshooting
+
+### Common Issues
+
+<Accordion>
+  <AccordionItem title="Codex can't access Basic Memory">
+    **Solutions:**
+    - Verify Basic Memory is installed: `basic-memory --version`
+    - Check MCP server configuration: `codex mcp list`
+    - Reinstall if needed: `codex mcp remove basic-memory` then `codex mcp add basic-memory bash -c "uvx basic-memory mcp --project main"`
+  </AccordionItem>
+
+  <AccordionItem title="Context not loading from memory:// URLs">
+    **Solutions:**
+    - Confirm files exist in current project
+    - Check memory:// URL syntax (e.g., `memory://folder/note`)
+    - Verify sync is working: `basic-memory status`
+  </AccordionItem>
+
+  <AccordionItem title="Notes not updating">
+    **Solutions:**
+    - Check file permissions in knowledge base directory
+    - Check ~/.basic-memory for logs containing error messages
+    - Report error messages to the Basic Memory team
+  </AccordionItem>
+</Accordion>
+
+### Performance Tips
+
+- **Multiple projects**: Use separate Basic Memory projects for different codebases
+- **Organized structure**: Keep consistent folder organization across projects
+- **Regular cleanup**: Archive old projects to maintain performance
+
+## Alternative Usage
+
+If MCP isn't working, you can still use Basic Memory:
+
+<CardGroup cols={2}>
+  <Card title="CLI Integration">
+    Use Basic Memory CLI tools from your terminal
+  </Card>
+  <Card title="File Editing">
+    Edit Basic Memory notes directly and sync manually
+  </Card>
+  <Card title="Manual Context">
+    Copy content from Basic Memory into conversations
+  </Card>
+  <Card title="Parallel Usage">
+    Use Claude Desktop or other MCP clients alongside Codex. With Basic Memory they can see the same notes and share context.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Project Documentation" href="/how-to/project-documentation">
+    Learn how to document your development projects
+  </Card>
+  <Card title="Research & Learning" href="/how-to/research-learning">
+    Build knowledge from your coding sessions
+  </Card>
+  <Card title="CLI Reference" href="/guides/cli-reference">
+    Master Basic Memory command line tools
+  </Card>
+  <Card title="Knowledge Format" href="/guides/knowledge-format">
+    Structure effective development documentation
+  </Card>
+</CardGroup>
