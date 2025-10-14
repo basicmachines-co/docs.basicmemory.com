@@ -1,42 +1,65 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
 title: 'Basic Memory Cloud'
-description: 'Cloud authentication, bidirectional sync, and mount commands for Basic Memory'
+description: 'Cloud authentication, setup, and mount commands for Basic Memory Cloud'
 icon: 'cloud'
 ---
 
-import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step, CodeGroup, CodeTab } from '@/components'
+import {
+    Card,
+    CardGroup,
+    Info,
+    Warning,
+    Note,
+    Tip,
+    Accordion,
+    AccordionItem,
+    Steps,
+    Step,
+    CodeGroup,
+    CodeTab
+} from '@/components'
 
 
-Basic Memory v0.15.0 provides cloud storage access through remote MCP, bidirectional sync with rclone, and FUSE filesystem mounting.
+Basic Memory Cloud provides hosted cloud sync for multi-device workflows. Currently in invite-only beta. Sign up for an invite
+at the [Basic Memory](https://basicmemory.com) website.
 
-<Note>
-Cloud features require an active Basic Memory subscription. [Subscribe here](https://basicmemory.com/subscribe)
-</Note>
+<Info>
+    Cloud features require an active Basic Memory subscription. [Subscribe here](https://basicmemory.com/subscribe).
+</Info>
+
+Basic Memory Cloud requires version v0.15.2 or later of the Basic Memory CLI tools. See the install and upgrade
+instructions on the <a href="/getting-started">Getting Started</a> page.
+
+<Tip>
+    You can use the shorter command alias `bm` instead of `basic-memory` for all CLI commands (e.g., `bm cloud login` instead of `basic-memory cloud login`).
+</Tip>
 
 ## Quick Start
 
 <Steps>
-  <Step title="Authenticate">
-    ```bash
-    bm cloud login
-    ```
-    Opens browser for OAuth 2.1 authentication and validates subscription status.
-  </Step>
+    <Step title="Authenticate">
+        ```bash
+        bm cloud login
+        ```
+        Opens browser for OAuth 2.1 authentication, then displays an authorization code.
 
-  <Step title="Set up bidirectional sync">
-    ```bash
-    bm cloud setup
-    ```
-    Installs rclone, generates S3 credentials, creates local sync directory (`~/basic-memory-cloud-sync`).
-  </Step>
+    </Step>
 
-  <Step title="Sync your files">
-    ```bash
-    bm sync
-    ```
-    Syncs local files to database, then syncs local directory with cloud storage bidirectionally.
-  </Step>
+
+    <Step title="Check Status">
+        ```bash
+        bm cloud status
+        ```
+        View your authentication status, subscription, and cloud project information.
+    </Step>
+
+    <Step title="List Projects">
+        ```bash
+        bm project list
+        ```
+        Shows all your cloud projects with their paths and default status.
+    </Step>
 </Steps>
 
 ## Authentication
@@ -55,11 +78,51 @@ bm cloud login
 1. Opens browser to OAuth authorization page
 2. Handles PKCE challenge/response automatically
 3. Validates active subscription status
-4. Stores JWT token in `~/.basic-memory/cloud-auth.json`
+4. Stores JWT token in `~/.basic-memory/basic-memory-cloud.json`
 5. Token automatically refreshed when needed
 
+**Browser Confirmation Code**
+<Card>
+    <img src="/device-activation.png" alt="Device Activation" height="200"/>
+</Card>
+
+**Terminal**
+
+In the terminal, the same code will be displayed. Confirm the codes match and press the **Confirm** button
+on the web page.
+
+```
+ bm cloud login
+Initiating authentication...
+
+🔐 Authentication Required
+
+To authenticate, please visit:
+https://eloquent-lotus-05.authkit.app/device
+
+And enter this code: XXX-XXX
+
+Or for one-click access, visit:
+https://eloquent-lotus-05.authkit.app/device?user_code=XXX-XXX
+
+Opening browser automatically...
+
+Waiting for you to complete authentication in your browser...
+```
+
+After you login and confirm via the web browser, your auth token will be saved locally.
+```
+✅ Successfully authenticated with Basic Memory Cloud!
+Verifying subscription access...
+✓ Cloud mode enabled
+All CLI commands now work against https://cloud.basicmemory.com
+✓ Tokens saved to ~/.basic-memory/basic-memory-cloud.json
+```
+
 <Info>
-**Important:** After `bm cloud login`, CLI tools access cloud endpoints instead of local MCP. Commands like `bm project list` show cloud projects, and `bm tool [name]` invokes tools in the cloud. Use the same CLI commands for both local and cloud projects.
+    **Important:** After `bm cloud login`, CLI tools access cloud endpoints instead of local MCP. Commands like `bm
+    project list` show cloud projects, and `bm tool [name]` invokes tools in the cloud. Use the same CLI commands for
+    both local and cloud projects.
 </Info>
 
 **If no subscription:**
@@ -92,702 +155,139 @@ Clear authentication session:
 bm cloud logout
 ```
 
-Removes `~/.basic-memory/cloud-auth.json` and clears cached credentials. All cloud commands will require re-authentication.
+Removes `~/.basic-memory/basic-memory-cloud.json` and clears cached credentials. All cloud commands will require re-authentication.
 
-### Token Management
+## Manage Cloud Projects from the command line
 
-**Automatic refresh:**
-- CLI automatically refreshes tokens as needed
-- No manual intervention required
+### Creating Projects
 
-**Token storage:**
-- Location: `~/.basic-memory/basic-memory-cloud.json`
-- Permissions: 600 (user read/write only)
-- Never commit this file to git
-
-**Manual revocation:**
-1. Run `bm cloud logout` to clear local token
-2. Visit account settings to revoke all sessions
-
-## Bidirectional Cloud Sync
-
-Bidirectional sync keeps your local files and cloud storage synchronized using [rclone](https://rclone.org/) [bisync](https://rclone.org/bisync/).
-Rclone is an open-source command-line tool with robust data integrity features including checksum verification and resumable transfers.
-
-### One-Time Setup
-
-Configure cloud sync (required once):
+Create a new project
 
 ```bash
-bm cloud setup
+# In cloud mode - creates cloud project
+bm project add my-new-project
 
-# Optional: Custom sync directory
-bm cloud setup --dir ~/my-sync-folder
+# Create and set as default
+bm project add my-new-project --default
 ```
 
-**Setup process:**
-1. Checks for rclone (installs if missing)
-2. Generates scoped S3 credentials from cloud API
-3. Configures rclone remote in `~/.config/rclone/rclone.conf`
-4. Creates local sync directory (default: `~/basic-memory-cloud-sync`)
-5. Performs initial baseline sync with `--resync`
+### List Projects
 
-**Created files:**
-- `~/.basic-memory/config.json` - Stores sync directory path
-- `~/.config/rclone/rclone.conf` - Remote credentials (mode 600)
-- `~/.basic-memory/bisync-state/{id}/` - Sync state tracking
-
-### Sync Your Files
-
-Run bidirectional sync:
+List Projects
 
 ```bash
-# Basic sync (uses 'balanced' profile)
-bm cloud bisync
-
-# Use specific sync profile
-bm cloud bisync --profile safe
-bm cloud bisync --profile balanced
-bm cloud bisync --profile fast
-
-# Preview changes without applying
-bm cloud bisync --dry-run
-
-# Force resync (rebuild baseline)
-bm cloud bisync --resync
-
-# Verbose output
-bm cloud bisync --verbose
+bm project list
+           Basic Memory Projects
+┏━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┓
+┃ Name ┃ Path                   ┃ Default ┃
+┡━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━┩
+│ main │ /app/data/basic-memory │ ✓       │
+└──────┴────────────────────────┴─────────┘
 ```
 
-**Recommended workflow:**
-```bash
-# Use standard sync command for everything
-bm sync                    # Local sync + cloud sync
-bm sync --watch            # Continuous sync every 60s
-```
+Other project management commands are available. See `bm project --help`.
 
-The `bm sync` command handles both local database sync and cloud bidirectional sync in one operation.
+## Upload files to Cloud Projects
 
-<Warning>
-**Important:** Never run `bm sync --watch` on more than one device at a time. Running watch mode simultaneously on multiple devices can cause sync conflicts and potential data loss. Only enable watch mode on your primary device.
-</Warning>
+You can directly upload local files or directories to cloud projects using `bm cloud upload`. This is useful for:
+- Migrating existing local projects to the cloud
+- Quickly uploading specific files or directories
+- One-time bulk uploads without setting up sync
 
-### Sync Profiles
-
-Three profiles optimize for different use cases:
-
-**safe profile** - Maximum data preservation
-- Conflict resolution: Keep both versions
-- Max deletes: 10 files
-- Speed: Slower (more careful)
-- Best for: Preserving all changes, manual conflict resolution
-- Conflicts saved as `file.conflict1`, `file.conflict2`
-
-**balanced profile** - Default, auto-resolve conflicts
-- Conflict resolution: Use newer file
-- Max deletes: 25 files
-- Speed: Medium
-- Best for: Most users, single-user workflows
-- Automatically resolves conflicts to newer version
-
-**fast profile** - Rapid iteration
-- Conflict resolution: Use newer file
-- Max deletes: 50 files
-- Speed: Fastest
-- Best for: Solo projects, rapid development
-- Trust newer versions without confirmation
-
-### Conflict Resolution
-
-**With safe profile (manual resolution):**
+**Basic Usage:**
 
 ```bash
-bm cloud bisync --profile safe
+# Upload a directory to existing project
+bm cloud upload ~/my-notes --project research
 
-# If conflicts detected:
-# → "Conflict detected: ideas.md"
-# → "Saved as: ideas.md.conflict1 and ideas.md.conflict2"
-# → "Please resolve manually"
-
-# Find conflict files
-find ~/basic-memory-cloud-sync -name "*.conflict*"
-
-# Review differences
-diff ideas.md.conflict1 ideas.md.conflict2
-
-# Merge manually
-vim ideas.md  # Merge changes
-rm ideas.md.conflict*
+# Upload a single file
+bm cloud upload important-doc.md --project research
 ```
 
-**With balanced/fast profiles (automatic resolution):**
+**Create Project On-the-Fly:**
+
+If the target project doesn't exist yet, use `--create-project`:
 
 ```bash
-bm cloud bisync --profile balanced
-
-# Conflicts resolved automatically:
-# → "Resolving conflict: using newer version"
-# → "Device B's version (10:05 AM) selected over Device A (10:00 AM)"
+# Upload and create project in one step
+bm cloud upload ~/local-project --project new-research --create-project
 ```
 
-### Sync Directory Structure
+**Skip Automatic Sync:**
 
-**Default layout:**
-```
-~/basic-memory-cloud-sync/     # Configurable via --dir
-├── project-a/                 # Auto-created local projects
-│   ├── notes/
-│   ├── ideas/
-│   └── .bmignore              # Respected during sync
-├── project-b/
-│   └── documents/
-└── .basic-memory/             # Metadata (ignored in sync)
-```
-
-**Important paths:**
-- `~/basic-memory-cloud-sync/` - Default local sync directory
-- `~/basic-memory-cloud/` - Mount point (DO NOT use for bisync)
-- `~/.basic-memory/bisync-state/{id}/` - Sync state and history
-
-<Warning>
-Bisync and mount must use **different directories**. Never use the mount directory for bisync operations.
-</Warning>
-
-### File Filtering
-
-Basic Memory respects `.bmignore` patterns (gitignore format):
-
-**Default patterns** (`~/.basic-memory/.bmignore`):
-```
-.git
-.DS_Store
-node_modules
-*.tmp
-.env
-__pycache__
-.pytest_cache
-.ruff_cache
-.vscode
-.idea
-```
-
-**How it works:**
-1. `.bmignore` patterns converted to rclone filter format
-2. Auto-regenerated when `.bmignore` changes
-3. Stored as `~/.basic-memory/.bmignore.rclone`
-4. Applied to all bisync operations
-
-**Custom patterns:**
-
-Edit `~/.basic-memory/.bmignore`:
-```
-# Your custom patterns
-.git
-*.log
-temp/
-*.backup
-```
-
-Next sync will use updated filters.
-
-### Project Auto-Registration
-
-Bisync automatically registers new local projects with cloud:
+By default, the command syncs the project after upload to index the files. To skip this:
 
 ```bash
-# Create new project locally
-mkdir ~/basic-memory-cloud-sync/new-project
-echo "# Hello" > ~/basic-memory-cloud-sync/new-project/README.md
-
-# Next sync auto-creates on cloud
-bm sync
-# → "Found 1 new local project, creating on cloud..."
-# → "✓ Created project: new-project"
+# Upload without triggering sync
+bm cloud upload ~/bulk-data --project archives --no-sync
 ```
 
-## Cloud Mount
+**File Filtering:**
 
-Mount cloud storage as a local filesystem using [rclone mount](https://rclone.org/commands/rclone_mount/).
+The upload command respects `.bmignore` and `.gitignore` patterns, automatically excluding:
+- Hidden files (`.git`, `.DS_Store`)
+- Build artifacts (`node_modules`, `__pycache__`)
+- Database files (`*.db`, `*.db-wal`)
+- Environment files (`.env`)
 
-### Mount Cloud Storage
+To customize what gets uploaded, edit `~/.basic-memory/.bmignore`.
 
-Mount your cloud bucket:
+**Complete Example:**
 
 ```bash
-# Mount at default location (~/basic-memory-cloud)
-bm cloud mount
-
-# Mount with different profile
-bm cloud mount --profile fast
-```
-
-**Mount process:**
-1. Authenticates with cloud (uses stored JWT)
-2. Generates scoped S3 credentials
-3. Configures rclone remote
-4. Mounts cloud bucket via FUSE
-5. Files accessible at mount point
-
-**Mount point structure:**
-```
-~/basic-memory-cloud/              # Default mount point
-├── project-a/                     # Cloud projects as directories
-│   ├── notes/
-│   │   └── meeting-notes.md
-│   └── ideas/
-├── project-b/
-│   └── documents/
-└── shared-notes/
-```
-
-### Unmount
-
-Unmount cloud storage:
-
-```bash
-bm cloud unmount
-```
-
-**Unmount process:**
-1. Flushes pending writes to cloud
-2. Unmounts FUSE filesystem
-3. Cleans up mount point directory
-
-### Mount vs Bisync
-
-| Feature | Mount | Bisync |
-|---------|-------|--------|
-| **Access** | Direct cloud access | Synced local copy |
-| **Latency** | Network dependent | Instant (local files) |
-| **Offline** | Requires connection | Works offline |
-| **Storage** | No local storage | Uses local disk |
-| **Obsidian** | Can't see file changes | Sees file changes on sync |
-| **Use Case** | Quick access, browsing | Primary workflow, offline work |
-| **Directory** | `~/basic-memory-cloud` | `~/basic-memory-cloud-sync` |
-
-**Use mount for:**
-- Quick file access and browsing
-- Temporary access on other devices
-- Read-only operations
-- Low disk space situations
-
-**Use bisync for:**
-- Primary workflow
-- Offline access needed
-- Better performance
-- Regular file operations
-- Obsidian integration (required)
-
-<Warning>
-Mount directory (`~/basic-memory-cloud`) and bisync directory (`~/basic-memory-cloud-sync`) must be **different locations**.
-</Warning>
-
-## Usage Workflows
-
-### Daily Multi-Device Workflow
-
-**Morning start:**
-```bash
-# Start watch mode for automatic sync
-bm sync --watch &
-
-# Work in your sync directory
-cd ~/basic-memory-cloud-sync/work-notes
-vim ideas.md
-
-# Changes auto-sync every 60s
-```
-
-**Other device:**
-```bash
-# Pull latest changes
-bm sync
-# → "✓ Sync completed - 3 files downloaded"
-
-# Make changes
-vim ~/basic-memory-cloud-sync/work-notes/meeting.md
-
-# Sync back to cloud
-bm sync
-# → "✓ Sync completed - 1 file uploaded"
-```
-
-### Quick Access on Temporary Device
-
-```bash
-# Authenticate
+# 1. Login to cloud
 bm cloud login
 
-# Mount for quick access
-bm cloud mount
+# 2. Upload local project (creates project if needed)
+bm cloud upload ~/specs --project specs --create-project
 
-# Browse and edit files
-cd ~/basic-memory-cloud
-vim project/notes.md
-
-# Cleanup
-bm cloud unmount
-bm cloud logout
+# 3. Verify upload
+bm project list
 ```
 
-### Working with Obsidian
+**Example Output:**
 
-<Warning>
-**Obsidian limitation:** Obsidian does not see file changes on FUSE-mounted folders. Use bidirectional sync instead for Obsidian workflows.
-</Warning>
-
-**Recommended approach (using bisync):**
-```bash
-# Set up bidirectional sync
-bm cloud setup --dir ~/obsidian-vault
-
-# Initial sync
-bm sync
-
-# Open Obsidian vault at sync directory (NOT mount point)
-# Vault location: ~/obsidian-vault/my-project
-
-# Work in Obsidian - changes are local files
-# Sync periodically
-bm sync
-
-# Or enable automatic sync
-bm sync --watch  # Syncs every 60s
+```
+bm cloud upload --project specs --create-project specs
+Creating cloud project 'specs'...
+✓ Created project 'specs'
+Uploading /Users/phernandez/dev/basicmachines/basic-memory/specs to project 'specs'...
+Found 21 file(s) to upload
+Uploading SPEC-8 TigrisFS Integration.md (1/21)
+Uploading SPEC-14 Cloud Git Versioning & GitHub Backup.md (2/21)
+Uploading SPEC-9 Signed Header Tenant Information.md (3/21)
+Uploading SPEC-12 OpenTelemetry Observability.md (4/21)
+Uploading SPEC-15 Configuration Persistence via Tigris for Cloud Tenants.md (5/21)
+Uploading SPEC-3 Agent Definitions.md (6/21)
+Uploading SPEC-9 Multi-Project Bidirectional Sync Architecture.md (7/21)
+Uploading SPEC-5 CLI Cloud Upload via WebDAV.md (8/21)
+Uploading SPEC-13 CLI Authentication with Subscription Validation.md (9/21)
+Uploading SPEC-17 Semantic Search with ChromaDB.md (10/21)
+Uploading SPEC-14- Cloud Git Versioning & GitHub Backup.md (11/21)
+Uploading SPEC-9-1 Follow-Ups- Conflict, Sync, and Observability.md (12/21)
+Uploading SPEC-10 Unified Deployment Workflow and Event Tracking.md (13/21)
+Uploading SPEC-4 Notes Web UI Component Architecture.md (14/21)
+Uploading SPEC-7 POC to spike Tigris Turso for local access to cloud data.md (15/21)
+Uploading SPEC-2 Slash Commands Reference.md (16/21)
+Uploading SPEC-18 AI Memory Management Tool.md (17/21)
+Uploading SPEC-1 Specification-Driven Development Process.md (18/21)
+Uploading SPEC-11 Basic Memory API Performance Optimization.md (19/21)
+Uploading SPEC-6 Explicit Project Parameter Architecture.md (20/21)
+Uploading SPEC-16 MCP Cloud Service Consolidation.md (21/21)
+✓ Upload complete: 21 file(s) (363.9 KB)
+✅ Successfully uploaded to 'specs'
+Syncing project 'specs'...
+✓ Filesystem sync initiated for project 'specs'
 ```
 
-**Why bisync works with Obsidian:**
-- Obsidian sees local file changes
-- File system events work correctly
-- No FUSE limitations
+After sync completes, the notes are available in the [Notes Web UI](https://app.basicmemory.com) and for AI conversations.
 
-### Adding Existing Notes to Cloud
+**Notes Web UI**
 
-Two methods to add your existing markdown files to Basic Memory Cloud:
+<Card>
+    <img src="/webui-notes-upload.png" alt="Device Activation" height="200"/>
+</Card>
 
-**Method 1: Using Bidirectional Sync (Recommended)**
-
-```bash
-# Authenticate and set up sync
-bm cloud login
-bm cloud setup
-
-# Copy existing notes into sync directory
-cp -r ~/my-existing-notes/* ~/basic-memory-cloud-sync/my-project/
-
-# Sync to cloud (auto-creates new project)
-bm sync
-# → "Found 1 new local project, creating on cloud..."
-# → "✓ Created project: my-project"
-```
-
-This method:
-- Auto-registers new projects on cloud
-- Provides bidirectional sync for ongoing work
-- Works offline after initial setup
-- Best for regular use
-
-**Method 2: Using Mount**
-
-```bash
-# Authenticate and mount cloud storage
-bm cloud login
-bm cloud mount
-
-# Copy files directly to cloud
-mkdir -p ~/basic-memory-cloud/my-project
-cp -r ~/my-existing-notes/* ~/basic-memory-cloud/my-project/
-
-# Unmount when done
-bm cloud unmount
-```
-
-This method:
-- Immediate upload to cloud
-- No local sync directory required
-- Best for one-time uploads
-- Note: Obsidian can't see file changes on mounted folders
-
-**Creating projects explicitly:**
-
-```bash
-# Add existing directory as local project
-bm project add my-project ~/my-existing-notes
-
-# Then sync to cloud
-bm cloud setup --dir ~/my-existing-notes
-bm sync
-```
-
-## Troubleshooting
-
-### "First bisync requires --resync"
-
-**Problem:** Initial sync not established
-
-```bash
-$ bm cloud bisync
-Error: First bisync requires --resync to establish baseline
-```
-
-**Solution:**
-```bash
-bm cloud bisync --resync
-```
-
-### "Cannot use mount directory for bisync"
-
-**Problem:** Trying to use mounted directory for sync
-
-**Solution:** Use different directories
-```bash
-# Correct configuration
-MOUNT: ~/basic-memory-cloud
-BISYNC: ~/basic-memory-cloud-sync
-```
-
-### Deletion Safety Limit
-
-**Problem:** Too many files deleted
-
-```bash
-$ bm cloud bisync
-Error: Deletion exceeds safety limit (26 > 25)
-```
-
-**Solution:**
-```bash
-# Preview deletions
-bm cloud bisync --dry-run
-
-# If intentional, use higher threshold profile
-bm cloud bisync --profile fast  # max_delete=50
-
-# Or rebuild baseline
-bm cloud bisync --resync
-```
-
-### rclone Not Found
-
-**Problem:** rclone not installed
-
-**Solution:**
-```bash
-# Run setup again (auto-installs rclone)
-bm cloud setup
-```
-
-### Mount Failed
-
-**Problem:** Can't mount cloud storage
-
-```bash
-$ bm cloud mount
-Error: mount failed: transport endpoint not connected
-```
-
-**Solutions:**
-1. Check authentication: `bm cloud login`
-2. Verify rclone installed: `which rclone`
-3. Create mount point: `mkdir -p ~/basic-memory-cloud`
-4. Ensure not already mounted: `bm cloud unmount`
-
-### Directory Busy (Can't Unmount)
-
-**Problem:** Mount point in use
-
-```bash
-$ bm cloud unmount
-Error: device is busy
-```
-
-**Solutions:**
-```bash
-# Check what's using it
-lsof | grep basic-memory-cloud
-
-# Close applications using mount
-# Navigate out of mount directory
-cd ~
-
-# Try unmount again
-bm cloud unmount
-
-# If still busy, use system unmount
-umount -f ~/basic-memory-cloud  # macOS
-fusermount -u ~/basic-memory-cloud  # Linux
-```
-
-### Subscription Expired
-
-**Problem:** Cloud commands fail with subscription error
-
-```bash
-$ bm cloud bisync
-Active subscription required
-Subscribe at: https://basicmemory.com/subscribe
-```
-
-**Solution:** Renew subscription at provided URL
-
-### Token Expired
-
-**Automatic resolution:**
-```bash
-$ bm cloud status
-Token expired, refreshing...
-✓ Authenticated
-```
-
-Tokens refresh automatically. If refresh fails, run `bm cloud login` again.
-
-## Configuration
-
-### Bisync Configuration
-
-Edit `~/.basic-memory/config.json`:
-
-```json
-{
-  "bisync_config": {
-    "sync_dir": "~/basic-memory-cloud-sync",
-    "default_profile": "balanced",
-    "auto_sync_interval": 60
-  }
-}
-```
-
-### rclone Configuration
-
-Located at `~/.config/rclone/rclone.conf`:
-
-```ini
-[basic-memory-{id}]
-type = s3
-provider = AWS
-env_auth = false
-access_key_id = AKIA...
-secret_access_key = ***
-region = us-east-1
-endpoint = https://fly.storage.tigris.dev
-```
-
-<Warning>
-This file contains credentials. Keep private (mode 600). Never commit to git.
-</Warning>
-
-## Platform-Specific Notes
-
-### macOS
-
-**Requirements:** macFUSE
-
-```bash
-# Install macFUSE
-brew install --cask macfuse
-
-# Mount
-bm cloud mount
-
-# Unmount
-bm cloud unmount
-# Or: umount ~/basic-memory-cloud
-```
-
-### Linux
-
-**Requirements:** FUSE (usually pre-installed)
-
-```bash
-# Install FUSE if needed
-sudo apt-get install fuse  # Debian/Ubuntu
-sudo yum install fuse      # RHEL/CentOS
-
-# Mount
-bm cloud mount
-
-# Unmount
-bm cloud unmount
-# Or: fusermount -u ~/basic-memory-cloud
-```
-
-### Windows
-
-**Requirements:** WinFsp
-
-```bash
-# Install WinFsp from https://winfsp.dev/
-
-# Mount (appears as drive letter)
-bm cloud mount
-dir Z:\
-```
-
-## Performance Tips
-
-1. **Use balanced profile** - Best trade-off for most users
-2. **Enable watch mode** - `bm sync --watch` for automatic sync
-3. **Optimize .bmignore** - Exclude build artifacts and temporary files
-4. **Batch changes** - Group related edits before manual sync
-5. **Use fast profile** - For rapid iteration on solo projects
-6. **Prefer bisync over mount** - Better performance for regular workflows
-
-## Security
-
-### Authentication
-- JWT tokens with automatic expiration (1 hour)
-- OAuth 2.1 with PKCE flow
-- Credentials encrypted at rest
-- File permissions: 600 (user read/write only)
-
-### Data Transfer
-- All traffic over HTTPS/TLS
-- Checksums verify transfer integrity
-- Scoped S3 credentials (tenant-isolated)
-- No plain-text secrets stored
-
-### Access Control
-- Subscription-based access validation
-- Per-project isolation
-- Revocable tokens via logout
-- .bmignore prevents syncing sensitive files
-
-## Command Reference
-
-```bash
-# Authentication
-bm cloud login                        # Authenticate with OAuth
-bm cloud logout                       # Clear credentials
-bm cloud status                       # View auth and sync status
-
-# Setup
-bm cloud setup                        # Setup bisync (recommended)
-bm cloud setup --mount                # Setup mount instead
-bm cloud setup --dir ~/sync           # Custom bisync directory
-
-# Bidirectional Sync (Recommended)
-bm sync                               # One-time sync (recommended)
-bm sync --watch                       # Continuous sync every 60s
-bm sync --watch --interval 30         # Continuous sync every 30s
-
-# Advanced Bisync Commands
-bm cloud bisync-setup                 # One-time bisync setup (same as setup)
-bm cloud bisync                       # Manual sync (balanced profile)
-bm cloud bisync --profile safe        # Manual conflict resolution
-bm cloud bisync --profile fast        # Fast sync, auto-resolve
-bm cloud bisync --dry-run             # Preview changes
-bm cloud bisync --resync              # Rebuild baseline
-bm cloud bisync --verbose             # Detailed sync output
-
-# Cloud Mount
-bm cloud mount                        # Mount cloud storage
-bm cloud mount --profile fast         # Mount with fast profile
-bm cloud unmount                      # Unmount storage
-
-# Verification
-bm cloud check                        # Integrity verification
-bm cloud check --one-way              # Faster check (missing files only)
-```
 
 ## Related Documentation
 
