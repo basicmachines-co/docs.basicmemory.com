@@ -1,47 +1,147 @@
-# Astro Starter Kit: Minimal
+q# Basic Memory Documentation
 
-```sh
-npm create astro@latest -- --template minimal
+Official documentation site for [Basic Memory](https://basicmemory.com) - a local-first knowledge management system built on the Model Context Protocol (MCP).
+
+🌐 **Live Site:** [docs.basicmemory.com](https://docs.basicmemory.com)
+
+## About
+
+This repository contains the complete documentation for Basic Memory, including:
+
+- Getting Started guides
+- User Guide and AI Assistant Guide
+- MCP Tools Reference
+- Integration guides (Claude Desktop, ChatGPT, VS Code, Cursor, Obsidian)
+- Cloud features documentation
+- CLI Reference
+- Release notes and What's New
+
+## Tech Stack
+
+- **Framework:** [Astro](https://astro.build) with React components
+- **Styling:** Tailwind CSS
+- **Components:** Custom documentation components (Note, Warning, Info, etc.)
+- **Content:** MDX (Markdown + JSX)
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm or pnpm
+
+### Setup
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+The site will be available at `http://localhost:4321`
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Commands
 
-## 🚀 Project Structure
+| Command | Action |
+|---------|--------|
+| `npm install` | Install dependencies |
+| `npm run dev` | Start dev server at `localhost:4321` |
+| `npm run build` | Build production site to `./dist/` |
+| `npm run preview` | Preview production build locally |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project Structure
 
-```text
-/
-├── public/
+```
+docs.basicmemory.com/
+├── public/              # Static assets
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/      # React components (Note, Warning, etc.)
+│   ├── config/          # Site configuration (navigation, etc.)
+│   ├── layouts/         # Page layouts
+│   ├── pages/           # Documentation pages (MDX)
+│   │   ├── guides/      # User and developer guides
+│   │   ├── integrations/ # Integration-specific docs
+│   │   ├── how-to/      # Use case examples
+│   │   └── technical/   # Technical deep dives
+│   └── styles/          # Global styles
+└── .claude/
+    └── agents/          # Claude Code agent definitions
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Contributing Documentation
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Writing Style
 
-Any static assets, like images, can be placed in the `public/` directory.
+- **Factual and clear** - No embellishment or marketing language
+- **Present tense** - Describe what features do, not what they will do
+- **Practical examples** - Include working code examples from actual usage
+- **Consistent terminology** - Use terms as defined in the codebase
 
-## 🧞 Commands
+### Adding New Pages
 
-All commands are run from the root of the project, from a terminal:
+1. Create `.mdx` file in appropriate directory under `src/pages/`
+2. Add frontmatter with title, description, and optional icon
+3. Update navigation in `src/config/navigation.ts`
+4. Use standard components: `<Note>`, `<Warning>`, `<Info>`, `<Tip>`
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Example:
 
-## 👀 Want to learn more?
+```mdx
+---
+layout: '@/layouts/DocsLayout.astro'
+title: 'Page Title'
+description: 'Brief description'
+---
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+import { Note, Warning, Info } from '@/components'
+
+<Note>
+Important information for readers
+</Note>
+
+## Section
+
+Content here...
+```
+
+### Documentation Components
+
+- `<Note>` - General information
+- `<Warning>` - Important warnings
+- `<Info>` - Highlighted information
+- `<Tip>` - Helpful tips
+- `<Steps>` / `<Step>` - Step-by-step instructions
+- `<Accordion>` / `<AccordionItem>` - Collapsible sections
+
+### AI Agent for Documentation
+
+This repository includes a Claude Code agent for documentation writing:
+
+`.claude/agents/basic-memory-docs-writer.md`
+
+Use this agent for:
+- Creating new documentation pages
+- Updating existing documentation
+- Ensuring consistent style and tone
+
+## Deployment
+
+Documentation is automatically deployed from the `main` branch.
+
+## Related Repositories
+
+- [basic-memory](https://github.com/basicmachines-co/basic-memory) - Main Basic Memory repository
+- [basicmemory.com](https://github.com/basicmachines-co/basicmemory.com) - Product marketing site
+- [basicmachines.co](https://github.com/basicmachines-co/basicmachines.co) - Company website
+
+## License
+
+See the main [Basic Memory repository](https://github.com/basicmachines-co/basic-memory) for license information.
+
+## Support
+
+- [Discord](https://discord.gg/tyvKNccgqN) - Community support
+- [GitHub Issues](https://github.com/basicmachines-co/basic-memory/issues) - Bug reports and feature requests
+- [Reddit](https://www.reddit.com/r/basicmemory) - Community discussions
