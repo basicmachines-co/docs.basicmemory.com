@@ -121,6 +121,112 @@ Basic Memory Cloud is currently in invite-only beta. Sign up for Early Access on
 See [What's New](/whats-new#v0.15.0) for complete details and [Getting Started](/getting-started#multi-project-setup) for setup guidance.
 
 ---
+## [v0.15.2](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.15.2) — 2025-10-14
+
+### Cloud Features
+
+- **WebDAV upload command for cloud projects** ([#356](https://github.com/basicmachines-co/basic-memory/pull/356))
+  - New `basic-memory cloud upload` command for uploading files to cloud projects via WebDAV
+  - Supports uploading individual files or entire directories
+  - Automatic project syncing after upload completes
+  - Simplifies workflow for adding local files to cloud projects
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.15.1...v0.15.2
+
+---
+## [v0.15.1](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.15.1) — 2025-10-13
+
+**Focus:** Cloud mode stability, performance optimizations, and bug fixes
+
+<Info>
+**Highlights:**
+- 10-100x performance improvement for directory operations
+- 43% faster sync and indexing operations
+- Enhanced cloud mode security with path validation
+- Critical bug fixes for project deletion and Claude Desktop compatibility
+</Info>
+
+### Performance Improvements
+
+- **Optimize directory operations for 10-100x performance improvement** ([#350](https://github.com/basicmachines-co/basic-memory/pull/350))
+  - Dramatically faster directory listing and traversal operations
+  - Improved responsiveness for large knowledge bases
+  - Optimized file system operations
+
+- **Optimize sync/indexing for 43% faster performance** ([#352](https://github.com/basicmachines-co/basic-memory/pull/352))
+  - Significantly faster file synchronization
+  - Reduced indexing time for large projects
+  - Enhanced overall system responsiveness
+
+### Cloud Mode Enhancements
+
+- **Cloud mode path validation and sanitization** ([#332](https://github.com/basicmachines-co/basic-memory/pull/332))
+  - Enhanced security with strict path validation in cloud mode
+  - Prevents path traversal attacks and unauthorized file access
+  - Improved data isolation for multi-tenant environments
+
+- **BASIC_MEMORY_PROJECT_ROOT for path constraints** ([#334](https://github.com/basicmachines-co/basic-memory/pull/334))
+  - New environment variable for defining project root boundaries
+  - Additional security layer for cloud deployments
+  - Prevents access to files outside designated project directories
+
+- **Normalize paths to lowercase in cloud mode** ([#336](https://github.com/basicmachines-co/basic-memory/pull/336))
+  - Prevents case-sensitivity collisions in cloud storage
+  - Ensures consistent file handling across platforms
+  - Improves cross-platform compatibility
+
+- **Configuration persistence via Tigris (SPEC-15)** ([#343](https://github.com/basicmachines-co/basic-memory/pull/343))
+  - Cloud configuration storage implementation
+  - Persistent settings across sessions
+  - Foundation for enhanced cloud features
+
+- **Async client context manager pattern** ([#344](https://github.com/basicmachines-co/basic-memory/pull/344))
+  - Improved cloud client architecture
+  - Better resource management and connection handling
+  - Enhanced reliability for cloud operations
+
+### Bug Fixes
+
+- **Prevent nested project paths** ([#338](https://github.com/basicmachines-co/basic-memory/pull/338))
+  - Prevents data conflicts from nested project configurations
+  - Improved project isolation and data integrity
+  - Clear error messages for invalid project structures
+
+- **Project deletion with permalink normalization** ([#345](https://github.com/basicmachines-co/basic-memory/pull/345))
+  - Fixed project deletion failures caused by permalink handling
+  - Consistent permalink normalization across operations
+  - Improved project management reliability
+
+- **Add permalink normalization to project lookups** ([#348](https://github.com/basicmachines-co/basic-memory/pull/348))
+  - Ensures consistent project lookups across all operations
+  - Fixes edge cases with project switching
+  - Enhanced project management stability
+
+- **Correct ProjectItem.home property** ([#341](https://github.com/basicmachines-co/basic-memory/pull/341))
+  - Fixed property to return path instead of name
+  - Corrects API contract for project information
+  - Improved integration reliability
+
+- **Update view_note and ChatGPT tools for Claude Desktop compatibility** ([#355](https://github.com/basicmachines-co/basic-memory/pull/355))
+  - Fixed Claude Desktop integration issues
+  - Enhanced MCP tool compatibility
+  - Improved cross-platform tool support
+
+### Documentation
+
+- **v0.15.0 assistant guide** ([#335](https://github.com/basicmachines-co/basic-memory/pull/335))
+  - Comprehensive guide for AI assistants working with Basic Memory
+  - Enhanced integration documentation
+  - Improved developer experience
+
+- **Tool documentation for write_note** ([#339](https://github.com/basicmachines-co/basic-memory/pull/339))
+  - Clarified usage of empty string or "/" for root folder
+  - Improved API documentation
+  - Better tool usage examples
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.15.0...v0.15.1
+
+---
 ## [v0.14.4](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.14.4) — 2025-09-04
 
 ### Critical Bug Fixes
