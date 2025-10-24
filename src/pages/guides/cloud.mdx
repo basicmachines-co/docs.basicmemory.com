@@ -21,21 +21,78 @@ import {
 } from '@/components'
 
 
-Basic Memory Cloud provides hosted cloud sync for multi-device workflows. Currently in invite-only beta. Sign up for an invite
-at the [Basic Memory](https://basicmemory.com) website.
+Bring your knowledge to the cloud. All your existing notes, connections, and context - accessible from anywhere.
 
-<Info>
-    Cloud features require an active Basic Memory subscription. [Subscribe here](https://basicmemory.com/subscribe).
-</Info>
+<Tip>
+[Basic Memory Cloud](/guides/cloud-cli) is live! Now accessible from everywhere, in the Cloud. [Sign up ->](https://basicmemory.com/beta).
+</Tip>
+
+## Setup
+
+Basic Memory Cloud uses remote mcp to connect to AI assistants. The connection URL is:
+```
+https://cloud.basicmemory.com/mcp
+```
+
+### Claude Web/Desktop
+
+In Claude Web or Desktop
+
+**Go to Settings -> Claude**
+<Card className="m-2">
+    <img src="/claude-settings-connectors.png" alt="Claude -> Settings -> Connectors" height="200"/>
+</Card>
+
+- Click **Add custom connector**
+
+<Card className="m-2">
+    <img src="/claude-settings-add-connector.png" alt="Claude -> Add connectors" height="200"/>
+</Card>
+
+- Enter "Basic Memory" for the Name
+
+For the `Remote MCP server URL` value, enter:
+```
+https://cloud.basicmemory.com/mcp
+```
+
+- Click **Add**
+- Click **Connect**, this will prompt you to authenticate and grant permmissions to Claude
+
+You can configure which tools are enabled via the **Configure** button.
+
+<Card className="m-2">
+    <img src="/claude-settings-configure.png" alt="Claude -> Configure" height="200"/>
+</Card>
+
+You can configure permissions and which tools are enabled or disabled.
+<Card className="m-2">
+    <img src="/claude-settings-tools.png" alt="Claude -> Tools" height="200"/>
+</Card>
+
+Confirm that Basic Memory is available in the "search and tools" menu for a chat.
+<Card className="m-2">
+    <img src="/claude-search-tools.png" alt="Claude -> Tools" height="200"/>
+</Card>
+
+All your notes will be saved to your cloud instance.
+
+### ChatGPT
+
+<Note>
+    ChatGPT requires a Pro or Max subscription to use remote mcp.
+</Note>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NvU0Jo38P_k?si=0VvGBAhN8uOGw-KG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## Command line Quick Start
 
 Basic Memory Cloud requires version v0.15.2 or later of the Basic Memory CLI tools. See the install and upgrade
 instructions on the <a href="/getting-started">Getting Started</a> page.
 
-<Tip>
+<Info>
     You can use the shorter command alias `bm` instead of `basic-memory` for all CLI commands (e.g., `bm cloud login` instead of `basic-memory cloud login`).
-</Tip>
-
-## Quick Start
+</Info>
 
 <Steps>
     <Step title="Authenticate">
