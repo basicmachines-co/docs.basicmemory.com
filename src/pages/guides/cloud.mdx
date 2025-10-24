@@ -1,7 +1,7 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
 title: 'Basic Memory Cloud'
-description: 'Cloud authentication, setup, and mount commands for Basic Memory Cloud'
+description: 'Cloud remote MCP setup and command line tools for Basic Memory Cloud'
 icon: 'cloud'
 ---
 
@@ -27,7 +27,7 @@ Bring your knowledge to the cloud. All your existing notes, connections, and con
 [Basic Memory Cloud](/guides/cloud-cli) is live! Now accessible from everywhere, in the Cloud. [Sign up ->](https://basicmemory.com/beta).
 </Tip>
 
-## Setup
+## Claude
 
 Basic Memory Cloud uses remote mcp to connect to AI assistants. The connection URL is:
 ```
@@ -77,15 +77,48 @@ Confirm that Basic Memory is available in the "search and tools" menu for a chat
 
 All your notes will be saved to your cloud instance.
 
-### ChatGPT
+## ChatGPT
 
 <Note>
     ChatGPT requires a Pro or Max subscription to use remote mcp.
 </Note>
 
+A complete setup walkthrough is shown in the following video.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/NvU0Jo38P_k?si=0VvGBAhN8uOGw-KG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-## Command line Quick Start
+
+## Web Note Editor
+
+Basic Memory Cloud notes are viewable via a web based note editor
+
+```
+https://app.basicmemory.com/notes
+```
+
+You can view your projects, notes and edit them via the web editor.
+<Card className="m-2">
+    <img src="/web-editor.png" alt="Claude -> Tools" height="200"/>
+</Card>
+
+To switch or manage project, use the Project dropdown from the upper left corner.
+
+<Card className="m-2">
+    <img src="/web-manage-projects-menu.png" alt="Claude -> Tools" height="200"/>
+</Card>
+
+
+On the Manage Projects page you can add or delete projects, and upload and download notes.
+<Card className="m-2">
+    <img src="/web-manage-projects.png" alt="Claude -> Tools" height="200"/>
+</Card>
+
+Click the "more" button (...) to
+- Upload notes
+- Download project notes as a zip
+- Delete a project and its notes
+
+## Command line
 
 Basic Memory Cloud requires version v0.15.2 or later of the Basic Memory CLI tools. See the install and upgrade
 instructions on the <a href="/getting-started">Getting Started</a> page.
@@ -119,7 +152,7 @@ instructions on the <a href="/getting-started">Getting Started</a> page.
     </Step>
 </Steps>
 
-## Authentication
+### Authentication
 
 Basic Memory uses JWT-based cloud authentication with OAuth 2.1 and automatic subscription validation.
 
@@ -337,12 +370,12 @@ Syncing project 'specs'...
 ✓ Filesystem sync initiated for project 'specs'
 ```
 
-After sync completes, the notes are available in the [Notes Web UI](https://app.basicmemory.com) and for AI conversations.
+After sync completes, the notes are available in the [Notes Web Editor](https://app.basicmemory.com) and for AI conversations.
 
-**Notes Web UI**
+**Notes Web Editor**
 
 <Card>
-    <img src="/webui-notes-upload.png" alt="Device Activation" height="200"/>
+    <img src="/webui-notes-upload.png" alt="Notes Editor" height="200"/>
 </Card>
 
 
