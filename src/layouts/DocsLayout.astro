@@ -5,6 +5,7 @@ import Sidebar from '@/components/Sidebar.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
 import Footer from '@/components/Footer.astro'
 import Breadcrumb from '@/components/Breadcrumb.astro'
+import { BetaAnnouncementBanner } from '@/components/beta-announcement-banner'
 
 export interface Props {
   title: string
@@ -16,6 +17,7 @@ const { title, description } = Astro.props.frontmatter || Astro.props
 
 <Layout title={title} description={description}>
   <div class="min-h-screen flex flex-col">
+    <BetaAnnouncementBanner client:load />
     <Header />
     <div class="flex flex-1 justify-center">
       <div class="flex w-full max-w-screen-2xl">
