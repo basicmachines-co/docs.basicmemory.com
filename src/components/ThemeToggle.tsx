@@ -21,6 +21,13 @@ export default function ThemeToggle() {
     setTheme(newTheme)
     localStorage.setItem('basic-memory-theme', newTheme)
     document.documentElement.className = newTheme
+
+    // Update favicon
+    const isDark = newTheme === 'dark'
+    const iconLink = document.querySelector('link[rel="icon"]') as HTMLLinkElement
+    const appleTouchLink = document.querySelector('link[rel="apple-touch-icon"]') as HTMLLinkElement
+    if (iconLink) iconLink.href = isDark ? '/android-chrome-dark.png' : '/android-chrome-light.png'
+    if (appleTouchLink) appleTouchLink.href = isDark ? '/apple-touch-icon-dark.png' : '/apple-touch-icon-light.png'
   }
 
   return (
