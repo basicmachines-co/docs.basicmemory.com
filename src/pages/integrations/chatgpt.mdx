@@ -8,6 +8,46 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 ChatGPT connects to Basic Memory through OpenAI's Model Context Protocol implementation, providing search and document retrieval from your knowledge base.
 
+<Info>
+ChatGPT **only works with remote MCP servers**. Basic Memory Cloud provides this out of the box.
+</Info>
+
+## Cloud Setup (Recommended)
+
+Basic Memory Cloud provides the remote MCP endpoint ChatGPT requires.
+
+<Steps>
+  <Step title="Sign Up">
+    Create your account at [app.basicmemory.com](https://app.basicmemory.com)
+  </Step>
+
+  <Step title="Get Your MCP Endpoint">
+    Your remote MCP URL: `https://cloud.basicmemory.com/mcp`
+  </Step>
+
+  <Step title="Configure ChatGPT">
+    In ChatGPT, go to Settings → Developer → Custom MCP Servers
+
+    Add Basic Memory:
+    - **Name**: Basic Memory
+    - **Server URL**: `https://cloud.basicmemory.com/mcp`
+  </Step>
+
+  <Step title="Authenticate">
+    Follow the OAuth flow to grant ChatGPT access to your Basic Memory account
+  </Step>
+
+  <Step title="Enable in Conversations">
+    When chatting, enable Basic Memory from the MCP server selector to access your knowledge base
+  </Step>
+</Steps>
+
+<Tip>
+See the [Cloud Setup Guide](/guides/cloud) for detailed instructions and troubleshooting.
+</Tip>
+
+---
+
 ## Requirements
 
 <Warning>

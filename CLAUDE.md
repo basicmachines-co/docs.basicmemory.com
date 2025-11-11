@@ -8,7 +8,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 
 ### What is Basic Memory?
 
-**Basic Memory** is a local-first knowledge management system built on the Model Context Protocol (MCP) that enables persistent AI memory across conversations. Instead of losing valuable insights in conversation history, users build a persistent knowledge base where both human and AI can read, write, and enhance each other's work.
+**Basic Memory** is a user-first knowledge management system built on the Model Context Protocol (MCP) that enables persistent AI memory across conversations. Instead of losing valuable insights in conversation history, users build a persistent knowledge base where both human and AI can read, write, and enhance each other's work.
 
 **Repository**: https://github.com/basicmachines-co/basic-memory
 **Website**: https://basicmemory.com
@@ -35,12 +35,12 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 - Performance optimizations for API and database
 - Critical bug fixes for permalink collisions
 
-### Basic Memory Cloud (Upcoming Release)
+### Basic Memory Cloud
 
 **Basic Memory Cloud** is a multi-tenant cloud platform that provides hosted Basic Memory instances with subscription billing and authentication.
 
 **Repository**: https://github.com/basicmachines-co/basic-memory-cloud
-**Status**: Active development, pre-release
+**Status**: public beta
 
 **Architecture**:
 - **Web App** (Vue.js + Nuxt) - Frontend with WorkOS AuthKit magic link authentication
