@@ -23,7 +23,7 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
     <title>{!title || title === 'Basic Memory' ? 'Basic Memory' : `${title} - Basic Memory`}</title>
 
     <!-- Umami Analytics -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="8d51086e-5c67-401e-97b0-b24706a6d4f3"></script>
+    <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="8d51086e-5c67-401e-97b0-b24706a6d4f3"></script>
 
     <!-- Theme initialization script - prevents flash of light mode -->
     <script is:inline>
@@ -45,8 +45,9 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
       // Preserve sidebar scroll position
       document.addEventListener('click', (e) => {
         const sidebar = document.getElementById('sidebar-nav');
-        if (sidebar && e.target.closest('a')) {
-          sessionStorage.setItem('sidebarScrollPos', sidebar.scrollTop);
+        const target = e.target as HTMLElement;
+        if (sidebar && target?.closest('a')) {
+          sessionStorage.setItem('sidebarScrollPos', String(sidebar.scrollTop));
         }
       });
 
@@ -180,12 +181,13 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
         `
         document.body.appendChild(viewer)
 
-        const viewerImg = viewer.querySelector('img')
+        const viewerImg = viewer.querySelector<HTMLImageElement>('img')
         const closeBtn = viewer.querySelector('.image-viewer-close')
 
         // Close on click outside image or close button
         viewer.addEventListener('click', (e) => {
-          if (e.target === viewer || e.target === closeBtn || closeBtn.contains(e.target)) {
+          const target = e.target as Node | null;
+          if (e.target === viewer || e.target === closeBtn || (closeBtn && target && closeBtn.contains(target))) {
             viewer.classList.remove('active')
           }
         })
@@ -204,11 +206,13 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
       const { viewer, viewerImg } = createImageViewer()
 
       // Add click handlers to all images
-      const images = document.querySelectorAll('article img')
+      const images = document.querySelectorAll<HTMLImageElement>('article img')
       images.forEach(img => {
         img.addEventListener('click', () => {
-          viewerImg.src = img.src
-          viewerImg.alt = img.alt || ''
+          if (viewerImg) {
+            viewerImg.src = img.src
+            viewerImg.alt = img.alt || ''
+          }
           viewer.classList.add('active')
         })
       })

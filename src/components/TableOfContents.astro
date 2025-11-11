@@ -34,7 +34,7 @@
     
     // If no headings found, hide the TOC
     if (headings.length === 0) {
-      const aside = document.querySelector('aside:has(#toc-list)');
+      const aside = document.querySelector<HTMLElement>('aside:has(#toc-list)');
       if (aside) aside.style.display = 'none';
       return;
     }
