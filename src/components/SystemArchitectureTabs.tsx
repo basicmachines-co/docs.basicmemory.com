@@ -1,4 +1,3 @@
-import React from 'react'
 import Tabs, { type Tab } from './Tabs'
 
 export default function SystemArchitectureTabs() {

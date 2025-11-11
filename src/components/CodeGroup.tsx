@@ -25,7 +25,7 @@ export default function CodeGroup({ children, className }: CodeGroupProps) {
   const tabs: { label: string; content: React.ReactNode }[] = []
   
   childArray.forEach(child => {
-    if (React.isValidElement(child) && child.props.label) {
+    if (React.isValidElement<CodeTabProps>(child) && child.props.label) {
       tabs.push({
         label: child.props.label,
         content: child.props.children
