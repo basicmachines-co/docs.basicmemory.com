@@ -8,6 +8,84 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 VS Code provides excellent support for Basic Memory through direct file editing, terminal integration, and rich markdown features, making it ideal for maintaining development documentation alongside your code.
 
+## Cloud Sync Workflow
+
+Basic Memory Cloud enables editing locally in VS Code while your notes sync to the cloud.
+
+<Steps>
+  <Step title="Sign Up for Basic Memory Cloud">
+    Create your account at [app.basicmemory.com](https://app.basicmemory.com)
+  </Step>
+
+  <Step title="Enable Cloud Mode">
+    Authenticate and enable cloud mode:
+
+    ```bash
+    bm cloud login
+    ```
+  </Step>
+
+  <Step title="Set Up Sync">
+    Install rclone and configure credentials:
+
+    ```bash
+    bm cloud setup
+    ```
+
+    This installs rclone automatically and configures your cloud credentials.
+
+    <Note>
+    Sync requires the Basic Memory CLI. See [Local Installation](/getting-started#local-installation) for installation steps.
+    </Note>
+  </Step>
+
+  <Step title="Create Project with Local Sync">
+    Point Basic Memory to your local workspace:
+
+    ```bash
+    # For a project-specific docs folder
+    bm project add my-project --local-path ~/workspace/my-project/docs
+
+    # Or for a shared knowledge base
+    bm project add knowledge --local-path ~/Documents/knowledge
+    ```
+  </Step>
+
+  <Step title="Establish Sync Baseline">
+    Preview and run the initial sync:
+
+    ```bash
+    # Preview first (recommended)
+    bm project bisync --name my-project --resync --dry-run
+
+    # Establish baseline
+    bm project bisync --name my-project --resync
+    ```
+
+    Only use `--resync` for the first sync.
+  </Step>
+
+  <Step title="Edit in VS Code">
+    Open your local directory in VS Code. Edit files with full IDE features, syntax highlighting, and markdown preview.
+  </Step>
+
+  <Step title="Sync Changes">
+    After editing locally or making changes in cloud, run bidirectional sync:
+
+    ```bash
+    bm project bisync --name my-project
+    ```
+
+    This syncs changes in both directions - edit locally or in cloud, both stay in sync.
+  </Step>
+</Steps>
+
+<Note>
+**Bidirectional sync**: `bisync` keeps local and cloud in sync automatically. Changes flow both ways, with newer files winning conflicts. For one-way sync options and advanced configuration, see the [Cloud Sync Guide](/guides/cloud-sync).
+</Note>
+
+---
+
 ## Setup
 
 ### Configure VS Code Settings

@@ -41,6 +41,7 @@ export const navConfig = {
       title: 'Guides',
       items: [
         { title: 'Basic Memory Cloud', href: '/guides/cloud' },
+        { title: 'Cloud Sync', href: '/guides/cloud-sync' },
         { title: 'Knowledge Format', href: '/guides/knowledge-format' },
         { title: 'MCP Tools Reference', href: '/guides/mcp-tools-reference' },
         { title: 'Canvas', href: '/guides/canvas' },

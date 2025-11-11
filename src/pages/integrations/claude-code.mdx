@@ -8,7 +8,45 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 Claude Code provides native support for Basic Memory through the Model Context Protocol (MCP), enabling persistent context across development sessions and building comprehensive coding knowledge.
 
-## Setup
+## Cloud Setup
+
+Basic Memory Cloud provides hosted MCP access with no local installation required.
+
+<Steps>
+  <Step title="Sign Up">
+    Create your account at [app.basicmemory.com](https://app.basicmemory.com)
+  </Step>
+
+  <Step title="Add Remote MCP Server">
+    In Claude Code, add the remote MCP server:
+
+    ```bash
+    claude mcp add basic-memory-cloud --url https://cloud.basicmemory.com/mcp
+    ```
+  </Step>
+
+  <Step title="Authenticate">
+    Follow the OAuth flow in Claude Code to grant permissions
+  </Step>
+
+  <Step title="Verify Setup">
+    In Claude Code, check available tools:
+
+    ```
+    You: "What tools do you have access to?"
+    ```
+
+    You should see Basic Memory tools listed
+  </Step>
+</Steps>
+
+<Tip>
+See the [Cloud Setup Guide](/guides/cloud) for detailed instructions and troubleshooting.
+</Tip>
+
+---
+
+## Local Setup
 
 ### Install Basic Memory cli
 

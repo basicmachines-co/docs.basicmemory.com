@@ -8,6 +8,10 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 Basic Memory provides a comprehensive suite of MCP (Model Context Protocol) tools and prompts that enable AI assistants to work directly with your knowledge base. This reference catalogs all available tools and where to find detailed examples.
 
+<Tip>
+Using Basic Memory Cloud? All MCP tools work the same whether you're using cloud or local. Cloud users authenticate via OAuth and tools automatically work with your cloud projects. See the [Cloud Guide](/guides/cloud) for setup.
+</Tip>
+
 <Note>
 **v0.15.0 Change**: Most MCP tools now require an explicit `project` parameter to specify which knowledge base to operate on. You can enable `default_project_mode` in your configuration for automatic project selection, or use the `--project` flag when starting the MCP server to constrain operations to a specific project. See [What's New](/whats-new#explicit-project-parameters) for migration details.
 </Note>
