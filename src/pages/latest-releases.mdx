@@ -10,6 +10,101 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
 
+## [v0.16.1](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.16.1) — 2025-11-11
+
+**Focus:** Windows cloud sync stability
+
+### Bug Fixes
+
+- **#422**: Handle Windows line endings in rclone bisync
+  ([`e9d0a94`](https://github.com/basicmachines-co/basic-memory/commit/e9d0a94))
+  - Added `--compare=modtime` flag to rclone bisync to ignore size differences from line ending conversions
+  - Fixes issue where LF→CRLF conversion on Windows was treated as file corruption
+  - Resolves "corrupted on transfer: sizes differ" errors during cloud sync on Windows
+  - Users will need to run `--resync` once after updating to establish new baseline
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.16.0...v0.16.1
+
+---
+## [v0.16.0](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.16.0) — 2025-11-10
+
+**Focus:** Cloud sync improvements, Windows compatibility, and enhanced robustness
+
+<Info>
+**Highlights:**
+- Simplified project-scoped rclone sync with better reliability
+- Background sync operations support
+- Circuit breaker for sync failures
+- Major Windows compatibility improvements
+- Enhanced error handling and robustness
+</Info>
+
+### Features
+
+- **#417**: Add run_in_background parameter to sync endpoint
+  ([`7ccec7e`](https://github.com/basicmachines-co/basic-memory/commit/7ccec7e))
+  - New `run_in_background` parameter for async sync operations
+  - Improved API flexibility for long-running sync tasks
+
+- **#405**: SPEC-20 Simplified Project-Scoped Rclone Sync
+  ([`0b3272a`](https://github.com/basicmachines-co/basic-memory/commit/0b3272a))
+  - Simplified and more reliable cloud synchronization
+  - Project-scoped rclone configuration
+  - Better error handling and status reporting
+
+- **#384**: Streaming Foundation & Async I/O Consolidation (SPEC-19)
+  ([`e78345f`](https://github.com/basicmachines-co/basic-memory/commit/e78345f))
+  - Foundation for streaming support in future releases
+  - Consolidated async I/O patterns across codebase
+
+- **#364**: Add circuit breaker for file sync failures
+  ([`434cdf2`](https://github.com/basicmachines-co/basic-memory/commit/434cdf2))
+  - Prevents cascading failures during sync operations
+  - Automatic recovery from transient errors
+
+- **#362**: Add --verbose and --no-gitignore options to cloud upload
+  ([`7f9c1a9`](https://github.com/basicmachines-co/basic-memory/commit/7f9c1a9))
+  - Enhanced upload control with verbose logging
+  - Option to bypass gitignore filtering when needed
+
+- **#391**: Add delete_notes parameter to remove project endpoint
+  ([`c9946ec`](https://github.com/basicmachines-co/basic-memory/commit/c9946ec))
+  - Option to delete notes when removing projects
+  - Safer project cleanup workflows
+
+### Bug Fixes
+
+- **#420**: Skip archive files during cloud upload
+  ([`49b2adc`](https://github.com/basicmachines-co/basic-memory/commit/49b2adc))
+  - Prevents uploading of zip, tar, gz and other archive files
+
+- **#419**: Rename write_note entity_type to note_type for clarity
+  ([`1646572`](https://github.com/basicmachines-co/basic-memory/commit/1646572))
+  - Clearer parameter naming in write_note tool
+
+- **#418**: Quote string values in YAML frontmatter to handle special characters
+  ([`f0d7398`](https://github.com/basicmachines-co/basic-memory/commit/f0d7398))
+  - Fixes YAML parsing errors with special characters
+
+- **#414**: Replace Unicode arrows with ASCII for Windows compatibility
+  ([`fc01f6a`](https://github.com/basicmachines-co/basic-memory/commit/fc01f6a))
+  - Fixes display issues on Windows terminals
+
+- **#411**: Windows CLI Unicode encoding errors
+  ([`0ba6f21`](https://github.com/basicmachines-co/basic-memory/commit/0ba6f21))
+  - Resolves Unicode encoding issues on Windows
+
+- **#410**: Various rclone fixes for cloud sync on Windows
+  ([`c9946ec`](https://github.com/basicmachines-co/basic-memory/commit/c9946ec))
+  - Fixes cloud sync reliability on Windows
+
+- **#380**: Optimize sync memory usage to prevent OOM on large projects
+  ([`4fd6d0c`](https://github.com/basicmachines-co/basic-memory/commit/4fd6d0c))
+  - Prevents out-of-memory errors on large knowledge bases
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.15.2...v0.16.0
+
+---
 ## [v0.15.2](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.15.2) — 2025-10-14
 
 ### Cloud Features
