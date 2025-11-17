@@ -9,10 +9,7 @@ import mermaid from 'astro-mermaid';
 // https://astro.build/config
 export default defineConfig({
   integrations: [mdx(), react(), pagefind(), mermaid({
-    themes: {
-      light: 'default',
-      dark: 'base'
-    },
+    theme: 'default',
     mermaidConfig: {
       themeVariables: {
         darkMode: true,

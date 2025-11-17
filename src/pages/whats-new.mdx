@@ -1,23 +1,131 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
-title: "What's New - v0.15.0"
-description: 'Cloud sync, performance improvements, and Python 3.13 support'
+title: "What's New - Basic Memory Cloud is live!"
+description: 'Bring your knowledge to the cloud. All your existing notes, connections, and context - accessible from anywhere.'
 ---
 
 import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
 
+## Basic Memory Cloud
+
+<Tip>
+[Basic Memory Cloud](/guides/cloud) is live! Now accessible from everywhere, in the Cloud. [Sign up ->](https://basicmemory.com/beta) with a 7 day free trial.
+</Tip>
+
+Work with your knowledge base across multiple devices using cloud sync and storage.
+
+## v0.16.0
+
+Basic Memory v0.16.0 focuses on cloud sync reliability, Windows platform support, and overall system robustness.
+
+<Info>
+**Key improvements:**
+- Simplified and more reliable cloud sync with project-scoped rclone configuration
+- Significantly improved Windows compatibility with Unicode fixes
+- Circuit breaker pattern prevents cascading sync failures
+- Better memory management for large knowledge bases
+- Enhanced cloud upload controls and debugging
+</Info>
+
+### Cloud Sync Enhancements
+
+**Simplified project-scoped sync:**
+The cloud sync architecture has been simplified with project-level rclone configuration, making sync operations more reliable and easier to troubleshoot.
+
+**What you'll experience:**
+- More consistent sync behavior across different environments
+- Better error messages when sync issues occur
+- Improved sync performance and reliability
+
+**Background sync operations:**
+Long-running sync operations can now run in the background, preventing API timeouts and improving overall system responsiveness.
+
+```bash
+# Sync runs in background, returns immediately
+bm project bisync --name main --background
+```
+
+**Circuit breaker for resilience:**
+Automatic failure recovery prevents cascading errors during sync operations. Transient network issues no longer cause complete sync failures.
+
+**Enhanced upload controls:**
+```bash
+# Verbose logging for troubleshooting
+bm cloud upload ~/notes --project main --verbose
+
+# Bypass gitignore when needed
+bm cloud upload ~/all-files --project archive --no-gitignore
+```
+
+### Windows Platform Support
+
+v0.16.0 includes major improvements for Windows users:
+
+**Unicode encoding fixes:**
+- Resolves terminal encoding issues on Windows
+- Better handling of international characters in filenames and content
+- ASCII characters replace Unicode symbols for better compatibility
+
+**Improved rclone integration:**
+- Better path handling for Windows filesystem conventions
+- More reliable cloud sync on Windows
+- Fixed edge cases with Windows-specific path separators
+
+### Reliability Improvements
+
+**Memory optimization for large projects:**
+Prevents out-of-memory errors when syncing large knowledge bases. The sync process now handles projects with thousands of files efficiently.
+
+**Better YAML frontmatter handling:**
+- Automatically quotes string values to handle special characters
+- Normalizes frontmatter types to prevent parsing errors
+- More robust handling of edge cases in markdown files
+
+**Improved sync accuracy:**
+Uses filesystem timestamps instead of database operation times for better detection of external file modifications. This makes sync more reliable when editing files in external editors like Obsidian or VS Code.
+
+### API & Tool Improvements
+
+**Clearer write_note parameter:**
+The `entity_type` parameter has been renamed to `note_type` for better clarity and consistency.
+
+```python
+# v0.16.0 (new)
+write_note("My Note", "Content", "folder", note_type="note")
+
+# v0.15.x (old, still supported)
+write_note("My Note", "Content", "folder", entity_type="note")
+```
+
+**Safer project deletion:**
+```bash
+# Delete project configuration only (preserves files)
+bm project remove work
+
+# Delete project AND all notes
+bm project remove work --delete-notes
+```
+
+**Better error handling:**
+- Graceful handling of malformed YAML frontmatter
+- Better recovery from missing or incomplete metadata
+- More informative error messages
+
+### Bug Fixes
+
+- Archive files (zip, tar, gz) automatically excluded from cloud uploads
+- Duplicate headers no longer created when replacing note sections
+- Deleted projects won't be recreated by background sync
+- Better handling of empty or null titles in frontmatter
+- Database constraint violations resolved during sync operations
+
+See the [complete v0.16.0 changelog](https://github.com/basicmachines-co/basic-memory/blob/main/CHANGELOG.md) for full details.
+
+---
+
 ## v0.15.0
 
 Basic Memory v0.15.0 introduces Cloud projects, multi-project conversation improvements, performance optimizations, and Python 3.13 support.
-
-
-### Basic Memory Cloud
-
-<Info>
-Basic Memory Cloud is currently in invite-only beta. Sign up for Early Access on [basicmemory.com](https://basicmemory.com).
-</Info>
-
-Work with your knowledge base across multiple devices using cloud sync and storage.
 
 #### Learn More
 

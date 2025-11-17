@@ -1,7 +1,7 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
 title: "Obsidian Integration"
-description: "Basic Memory integrates seamlessly with Obsidian, providing powerful visualization and navigation capabilities for your knowledge graph.
+description: "Basic Memory works with Obsidian to visualize and navigate your knowledge graph.
 "
 ---
 
@@ -11,6 +11,88 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 For more information about Obsidian, <a href="https://obsidian.md" target="_blank">visit the Obsidian home page</a>.
 </Info>
 
+## Using with Basic Memory Cloud
+
+Basic Memory Cloud enables a hybrid workflow: edit locally in Obsidian while your notes sync to the cloud.
+
+<Note>
+Sync requires the Basic Memory CLI. See [Local Installation](/getting-started#local-installation) for installation steps.
+</Note>
+
+<Steps>
+  <Step title="Sign Up for Basic Memory Cloud">
+    Create your account at [app.basicmemory.com](https://app.basicmemory.com)
+  </Step>
+
+  <Step title="Enable Cloud Mode">
+    Authenticate and enable cloud mode:
+
+    ```bash
+    bm cloud login
+    ```
+
+    This enables cloud mode and validates your subscription.
+  </Step>
+
+  <Step title="Set Up Sync">
+    Install rclone and configure credentials:
+
+    ```bash
+    bm cloud setup
+    ```
+
+    This installs rclone automatically and configures your cloud credentials.
+
+  </Step>
+
+  <Step title="Create Project with Local Sync">
+    Point Basic Memory to your Obsidian vault:
+
+    ```bash
+    # If you have an existing vault
+    bm project add my-vault --local-path ~/path/to/obsidian-vault
+
+    # Or create a new project for a new vault
+    bm project add notes --local-path ~/Documents/notes
+    ```
+
+    This creates the project on cloud and prepares local sync.
+  </Step>
+
+  <Step title="Establish Sync Baseline">
+    Preview and run the initial sync:
+
+    ```bash
+    # Preview first (recommended)
+    bm project bisync --name my-vault --resync --dry-run
+
+    # If all looks good, establish baseline
+    bm project bisync --name my-vault --resync
+    ```
+
+    This creates the initial sync state. Only use `--resync` for the first sync.
+  </Step>
+
+  <Step title="Open Your Vault in Obsidian">
+    Open your local directory as a vault in Obsidian. Continue editing locally with full graph view, plugins, and IDE features.
+  </Step>
+
+  <Step title="Sync Changes">
+    After editing in Obsidian or making changes in cloud (via AI assistants), run bidirectional sync:
+
+    ```bash
+    bm project bisync --name my-vault
+    ```
+
+    This syncs changes in both directions - edit locally or in cloud, both stay in sync.
+  </Step>
+</Steps>
+
+<Note>
+**Bidirectional sync**: `bisync` keeps local and cloud in sync automatically. Changes flow both ways, with newer files winning conflicts. For one-way sync options and advanced configuration, see the [Cloud Sync Guide](/guides/cloud-sync).
+</Note>
+
+---
 
 ## Setup
 
@@ -118,7 +200,7 @@ These display as clickable links in Obsidian and appear in the graph view.
 ```markdown
 ## Observations
 - [tech] Using SQLite #database
-- [design] Local-first #architecture
+- [design] Plain-text #architecture
 ```
 
 Tags become searchable and filterable in Obsidian's tag pane.

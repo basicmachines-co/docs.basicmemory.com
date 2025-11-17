@@ -8,8 +8,54 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 Cursor's AI-powered development environment integrates natively with Basic Memory through the Model Context Protocol (MCP), enabling persistent context across coding sessions.
 
-## Setup
+## Cloud Setup
 
+Basic Memory Cloud provides hosted MCP access with no local installation required.
+
+<Steps>
+  <Step title="Sign Up">
+    Create your account at [app.basicmemory.com](https://app.basicmemory.com)
+  </Step>
+
+  <Step title="Configure Remote MCP in Cursor">
+    In Cursor, go to **Settings → Developer → Edit Config**
+
+    Select **MCP Tools** and click **Add Custom MCP**
+
+    Add Basic Memory Cloud configuration:
+    ```json
+    {
+      "mcpServers": {
+        "basic-memory-cloud": {
+          "url": "https://cloud.basicmemory.com/mcp"
+        }
+      }
+    }
+    ```
+  </Step>
+
+  <Step title="Authenticate">
+    Follow the OAuth flow to grant Cursor access to your Basic Memory account
+  </Step>
+
+  <Step title="Verify Setup">
+    In Cursor, ask the AI:
+
+    ```
+    You: "What tools do you have access to?"
+    ```
+
+    You should see Basic Memory tools listed
+  </Step>
+</Steps>
+
+<Tip>
+See the [Cloud Setup Guide](/guides/cloud) for detailed instructions and troubleshooting.
+</Tip>
+
+---
+
+## Local Setup
 
 ### Configure MCP in Cursor
 
@@ -63,7 +109,7 @@ Cursor: [Creates structured notes with observations and relations]
 ## MCP Integration Benefits
 
 <Info>
-Cursor's native MCP support enables seamless Basic Memory integration with:
+Cursor's native MCP support enables Basic Memory integration with:
 - Direct tool access in AI conversations
 - Real-time knowledge base queries
 - Persistent context across coding sessions

@@ -261,8 +261,9 @@
 </style>
 
 <script>
-  let searchModal = null;
-  let pagefindUI = null;
+  declare const PagefindUI: any;
+
+  let searchModal: HTMLElement | null = null;
   let searchInitialized = false;
 
   function initSearch() {
@@ -271,7 +272,7 @@
 
     // Initialize Pagefind UI only once
     if (!searchInitialized && typeof PagefindUI !== 'undefined') {
-      pagefindUI = new PagefindUI({
+      new PagefindUI({
         element: "#pagefind-container",
         showImages: false,
         showSubResults: true,
@@ -284,21 +285,21 @@
       searchInitialized = true;
 
       // Focus on search input when modal opens
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (!searchModal.classList.contains('hidden')) {
-            const searchInput = document.querySelector('.pagefind-ui__search-input');
-            if (searchInput) {
-              searchInput.focus();
-            }
+      const observer = new MutationObserver(() => {
+        if (searchModal && !searchModal.classList.contains('hidden')) {
+          const searchInput = document.querySelector<HTMLInputElement>('.pagefind-ui__search-input');
+          if (searchInput) {
+            searchInput.focus();
           }
-        });
+        }
       });
 
-      observer.observe(searchModal, {
-        attributes: true,
-        attributeFilter: ['class']
-      });
+      if (searchModal) {
+        observer.observe(searchModal, {
+          attributes: true,
+          attributeFilter: ['class']
+        });
+      }
     }
 
     // Open search with Cmd/Ctrl+K
@@ -309,7 +310,7 @@
       }
 
       // Close with Escape
-      if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) {
+      if (e.key === 'Escape' && searchModal && !searchModal.classList.contains('hidden')) {
         closeSearch();
       }
     });
@@ -324,7 +325,8 @@
 
     // Handle click on search results to close modal
     document.addEventListener('click', (e) => {
-      const result = e.target.closest('.pagefind-ui__result');
+      const target = e.target as HTMLElement;
+      const result = target?.closest('.pagefind-ui__result');
       if (result) {
         // Small delay to allow navigation to happen
         setTimeout(() => closeSearch(), 100);
@@ -336,7 +338,7 @@
     searchModal?.classList.remove('hidden');
     // Focus search input after a short delay
     setTimeout(() => {
-      const searchInput = document.querySelector('.pagefind-ui__search-input');
+      const searchInput = document.querySelector<HTMLInputElement>('.pagefind-ui__search-input');
       if (searchInput) {
         searchInput.focus();
         searchInput.value = '';
@@ -346,7 +348,7 @@
 
   function closeSearch() {
     searchModal?.classList.add('hidden');
-    const searchInput = document.querySelector('.pagefind-ui__search-input');
+    const searchInput = document.querySelector<HTMLInputElement>('.pagefind-ui__search-input');
     if (searchInput) {
       searchInput.value = '';
       searchInput.blur();
