@@ -28,79 +28,119 @@ View the latest changes to Basic Memory on [GitHub](https://github.com/basicmach
 ---
 ## [v0.16.0](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.16.0) — 2025-11-10
 
-**Focus:** Cloud sync improvements, Windows compatibility, and enhanced robustness
+**Focus:** Cloud sync improvements, Windows platform support, and reliability enhancements
 
 <Info>
 **Highlights:**
-- Simplified project-scoped rclone sync with better reliability
-- Background sync operations support
-- Circuit breaker for sync failures
-- Major Windows compatibility improvements
-- Enhanced error handling and robustness
+- Simplified project-scoped cloud sync with rclone
+- Significantly improved Windows compatibility and Unicode handling
+- Circuit breaker pattern for sync resilience
+- Better memory management for large knowledge bases
+- Enhanced cloud upload controls with verbose logging
 </Info>
 
-### Features
+### Cloud Sync Improvements
 
-- **#417**: Add run_in_background parameter to sync endpoint
-  ([`7ccec7e`](https://github.com/basicmachines-co/basic-memory/commit/7ccec7e))
-  - New `run_in_background` parameter for async sync operations
-  - Improved API flexibility for long-running sync tasks
-
-- **#405**: SPEC-20 Simplified Project-Scoped Rclone Sync
-  ([`0b3272a`](https://github.com/basicmachines-co/basic-memory/commit/0b3272a))
-  - Simplified and more reliable cloud synchronization
-  - Project-scoped rclone configuration
+- **Simplified project-scoped rclone sync** ([#405](https://github.com/basicmachines-co/basic-memory/pull/405))
+  - More reliable cloud synchronization with project-level configuration
   - Better error handling and status reporting
+  - Improved sync performance and consistency
 
-- **#384**: Streaming Foundation & Async I/O Consolidation (SPEC-19)
-  ([`e78345f`](https://github.com/basicmachines-co/basic-memory/commit/e78345f))
-  - Foundation for streaming support in future releases
-  - Consolidated async I/O patterns across codebase
+- **Background sync operations** ([#417](https://github.com/basicmachines-co/basic-memory/pull/417))
+  - New `run_in_background` parameter for async sync operations
+  - Better API flexibility for long-running sync tasks
+  - Non-blocking sync workflows
 
-- **#364**: Add circuit breaker for file sync failures
-  ([`434cdf2`](https://github.com/basicmachines-co/basic-memory/commit/434cdf2))
+- **Circuit breaker for file sync failures** ([#364](https://github.com/basicmachines-co/basic-memory/pull/364))
   - Prevents cascading failures during sync operations
   - Automatic recovery from transient errors
+  - Enhanced resilience in cloud sync scenarios
 
-- **#362**: Add --verbose and --no-gitignore options to cloud upload
-  ([`7f9c1a9`](https://github.com/basicmachines-co/basic-memory/commit/7f9c1a9))
-  - Enhanced upload control with verbose logging
-  - Option to bypass gitignore filtering when needed
+- **Enhanced cloud upload controls** ([#362](https://github.com/basicmachines-co/basic-memory/pull/362))
+  - `--verbose` flag for detailed upload logging
+  - `--no-gitignore` option to bypass gitignore filtering
+  - Better debugging and troubleshooting capabilities
 
-- **#391**: Add delete_notes parameter to remove project endpoint
-  ([`c9946ec`](https://github.com/basicmachines-co/basic-memory/commit/c9946ec))
-  - Option to delete notes when removing projects
-  - Safer project cleanup workflows
+- **Preserve file timestamps on upload** ([#377](https://github.com/basicmachines-co/basic-memory/pull/377))
+  - Maintains modification times during WebDAV upload
+  - Better sync accuracy and detection
+  - Prevents unnecessary re-syncing
+
+### Windows Platform Support
+
+- **Unicode encoding fixes** ([#411](https://github.com/basicmachines-co/basic-memory/pull/411), [#414](https://github.com/basicmachines-co/basic-memory/pull/414))
+  - Resolves Unicode encoding issues on Windows terminals
+  - ASCII arrows replace Unicode characters for compatibility
+  - Better handling of international characters
+
+- **Rclone Windows compatibility** ([#410](https://github.com/basicmachines-co/basic-memory/pull/410))
+  - Fixes cloud sync reliability on Windows
+  - Better path handling for Windows filesystem
+  - Improved rclone integration
+
+### Reliability & Performance
+
+- **Optimized memory usage for large projects** ([#380](https://github.com/basicmachines-co/basic-memory/pull/380))
+  - Prevents out-of-memory errors on large knowledge bases
+  - Better memory management during sync operations
+  - Improved scalability
+
+- **Better YAML frontmatter handling** ([#418](https://github.com/basicmachines-co/basic-memory/pull/418), [#402](https://github.com/basicmachines-co/basic-memory/pull/402))
+  - Quotes string values to handle special characters
+  - Normalizes frontmatter types to prevent errors
+  - More robust markdown parsing
+
+- **Improved sync accuracy** ([#369](https://github.com/basicmachines-co/basic-memory/pull/369))
+  - Uses filesystem timestamps instead of database operation time
+  - Better detection of external file modifications
+  - More reliable sync behavior
+
+- **Streaming foundation** ([#384](https://github.com/basicmachines-co/basic-memory/pull/384))
+  - Foundation for streaming support in future releases
+  - Consolidated async I/O patterns
+  - Improved performance and resource management
 
 ### Bug Fixes
 
-- **#420**: Skip archive files during cloud upload
-  ([`49b2adc`](https://github.com/basicmachines-co/basic-memory/commit/49b2adc))
-  - Prevents uploading of zip, tar, gz and other archive files
+- **Skip archive files during cloud upload** ([#420](https://github.com/basicmachines-co/basic-memory/pull/420))
+  - Prevents uploading zip, tar, gz and other archives
+  - Reduces storage usage and upload time
 
-- **#419**: Rename write_note entity_type to note_type for clarity
-  ([`1646572`](https://github.com/basicmachines-co/basic-memory/commit/1646572))
-  - Clearer parameter naming in write_note tool
+- **Cleaner note editing** ([#396](https://github.com/basicmachines-co/basic-memory/pull/396))
+  - Strips duplicate headers in edit_note replace_section
+  - Better content consistency
 
-- **#418**: Quote string values in YAML frontmatter to handle special characters
-  ([`f0d7398`](https://github.com/basicmachines-co/basic-memory/commit/f0d7398))
-  - Fixes YAML parsing errors with special characters
+- **Improved error handling** ([#379](https://github.com/basicmachines-co/basic-memory/pull/379), [#368](https://github.com/basicmachines-co/basic-memory/pull/368), [#389](https://github.com/basicmachines-co/basic-memory/pull/389))
+  - Graceful handling of YAML parsing errors
+  - Better handling of missing or malformed frontmatter
+  - More robust markdown processing
 
-- **#414**: Replace Unicode arrows with ASCII for Windows compatibility
-  ([`fc01f6a`](https://github.com/basicmachines-co/basic-memory/commit/fc01f6a))
-  - Fixes display issues on Windows terminals
+- **Project lifecycle fixes** ([#370](https://github.com/basicmachines-co/basic-memory/pull/370), [#366](https://github.com/basicmachines-co/basic-memory/pull/366))
+  - Prevents deleted projects from being recreated by background sync
+  - Faster project deletion with immediate sync termination
 
-- **#411**: Windows CLI Unicode encoding errors
-  ([`0ba6f21`](https://github.com/basicmachines-co/basic-memory/commit/0ba6f21))
-  - Resolves Unicode encoding issues on Windows
+- **Database integrity** ([#367](https://github.com/basicmachines-co/basic-memory/pull/367))
+  - Resolves UNIQUE constraint violations during sync
+  - Better handling of duplicate observations
 
-- **#410**: Various rclone fixes for cloud sync on Windows
-  ([`c9946ec`](https://github.com/basicmachines-co/basic-memory/commit/c9946ec))
-  - Fixes cloud sync reliability on Windows
+### API Improvements
 
-- **#380**: Optimize sync memory usage to prevent OOM on large projects
-  ([`4fd6d0c`](https://github.com/basicmachines-co/basic-memory/commit/4fd6d0c))
-  - Prevents out-of-memory errors on large knowledge bases
+- **Renamed write_note parameter** ([#419](https://github.com/basicmachines-co/basic-memory/pull/419))
+  - Changed `entity_type` to `note_type` for clarity
+  - Better API consistency and documentation
+
+- **Project deletion options** ([#391](https://github.com/basicmachines-co/basic-memory/pull/391))
+  - `delete_notes` parameter for safer project cleanup
+  - Prevents accidental data loss
+
+- **Idempotent project creation** ([#357](https://github.com/basicmachines-co/basic-memory/pull/357))
+  - No errors when creating existing projects
+  - Better API reliability
+
+- **Better type safety** ([#394](https://github.com/basicmachines-co/basic-memory/pull/394), [#395](https://github.com/basicmachines-co/basic-memory/pull/395))
+  - Explicit type annotations in MCP tool parameters
+  - Cleaner search_notes schema
+  - Improved IDE support
 
 **Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.15.2...v0.16.0
 

@@ -14,7 +14,13 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Favicons with theme support -->
+    <link rel="icon" type="image/png" href="/android-chrome-light.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="/android-chrome-dark.png" media="(prefers-color-scheme: dark)" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-light.png" media="(prefers-color-scheme: light)" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-dark.png" media="(prefers-color-scheme: dark)" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -23,7 +29,7 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
     <title>{!title || title === 'Basic Memory' ? 'Basic Memory' : `${title} - Basic Memory`}</title>
 
     <!-- Umami Analytics -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="8d51086e-5c67-401e-97b0-b24706a6d4f3"></script>
+    <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="8d51086e-5c67-401e-97b0-b24706a6d4f3"></script>
 
     <!-- Theme initialization script - prevents flash of light mode -->
     <script is:inline>
@@ -35,6 +41,15 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
 
         // Apply theme immediately to prevent flashing
         document.documentElement.className = initialTheme;
+
+        // Update favicon based on theme
+        const updateFavicon = (theme) => {
+          const isDark = theme === 'dark';
+          document.querySelector('link[rel="icon"]').href = isDark ? '/android-chrome-dark.png' : '/android-chrome-light.png';
+          document.querySelector('link[rel="apple-touch-icon"]').href = isDark ? '/apple-touch-icon-dark.png' : '/apple-touch-icon-light.png';
+        };
+
+        updateFavicon(initialTheme);
       })();
     </script>
   </head>
@@ -45,8 +60,9 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
       // Preserve sidebar scroll position
       document.addEventListener('click', (e) => {
         const sidebar = document.getElementById('sidebar-nav');
-        if (sidebar && e.target.closest('a')) {
-          sessionStorage.setItem('sidebarScrollPos', sidebar.scrollTop);
+        const target = e.target as HTMLElement;
+        if (sidebar && target?.closest('a')) {
+          sessionStorage.setItem('sidebarScrollPos', String(sidebar.scrollTop));
         }
       });
 
@@ -180,12 +196,13 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
         `
         document.body.appendChild(viewer)
 
-        const viewerImg = viewer.querySelector('img')
+        const viewerImg = viewer.querySelector<HTMLImageElement>('img')
         const closeBtn = viewer.querySelector('.image-viewer-close')
 
         // Close on click outside image or close button
         viewer.addEventListener('click', (e) => {
-          if (e.target === viewer || e.target === closeBtn || closeBtn.contains(e.target)) {
+          const target = e.target as Node | null;
+          if (e.target === viewer || e.target === closeBtn || (closeBtn && target && closeBtn.contains(target))) {
             viewer.classList.remove('active')
           }
         })
@@ -204,11 +221,13 @@ const { title = 'Basic Memory', description = 'Basic Memory - Persistent memory 
       const { viewer, viewerImg } = createImageViewer()
 
       // Add click handlers to all images
-      const images = document.querySelectorAll('article img')
+      const images = document.querySelectorAll<HTMLImageElement>('article img')
       images.forEach(img => {
         img.addEventListener('click', () => {
-          viewerImg.src = img.src
-          viewerImg.alt = img.alt || ''
+          if (viewerImg) {
+            viewerImg.src = img.src
+            viewerImg.alt = img.alt || ''
+          }
           viewer.classList.add('active')
         })
       })

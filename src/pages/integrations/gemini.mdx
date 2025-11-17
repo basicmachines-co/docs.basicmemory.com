@@ -8,7 +8,45 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 Google Gemini provides native support for Basic Memory through the Model Context Protocol (MCP), enabling persistent context across AI sessions and building comprehensive knowledge bases.
 
-## Setup
+## Cloud Setup
+
+Basic Memory Cloud provides hosted MCP access with no local installation required.
+
+<Steps>
+  <Step title="Sign Up">
+    Create your account at [app.basicmemory.com](https://app.basicmemory.com)
+  </Step>
+
+  <Step title="Configure Remote MCP in Gemini">
+    Add Basic Memory Cloud using SSE transport:
+
+    ```bash
+    gemini mcp add -t sse basic-memory-cloud https://cloud.basicmemory.com/mcp
+    ```
+  </Step>
+
+  <Step title="Authenticate">
+    Follow the OAuth flow to grant Gemini access to your Basic Memory account
+  </Step>
+
+  <Step title="Verify Setup">
+    Check that Basic Memory is configured:
+
+    ```bash
+    gemini mcp list
+    ```
+
+    You should see `basic-memory-cloud` with Connected status
+  </Step>
+</Steps>
+
+<Tip>
+See the [Cloud Setup Guide](/guides/cloud) for detailed instructions and troubleshooting.
+</Tip>
+
+---
+
+## Local Setup
 
 ### Video Tutorial
 

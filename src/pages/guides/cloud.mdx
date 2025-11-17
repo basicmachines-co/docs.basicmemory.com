@@ -1,7 +1,7 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
 title: 'Basic Memory Cloud'
-description: 'Cloud authentication, setup, and mount commands for Basic Memory Cloud'
+description: 'Cloud remote MCP setup and command line tools for Basic Memory Cloud'
 icon: 'cloud'
 ---
 
@@ -20,22 +20,202 @@ import {
     CodeTab
 } from '@/components'
 
-
-Basic Memory Cloud provides hosted cloud sync for multi-device workflows. Currently in invite-only beta. Sign up for an invite
-at the [Basic Memory](https://basicmemory.com) website.
+Basic Memory Cloud provides hosted MCP access with no local installation required. Bring your knowledge to the cloud - all your existing notes, connections, and context accessible from anywhere.
 
 <Info>
-    Cloud features require an active Basic Memory subscription. [Subscribe here](https://basicmemory.com).
+**Why use Basic Memory Cloud?**
+- Access from any device
+- Easily import your data
+- 2-minute setup
+- Local sync optional
+- OAuth authentication
 </Info>
 
-Basic Memory Cloud requires version v0.15.2 or later of the Basic Memory CLI tools. See the install and upgrade
-instructions on the <a href="/getting-started">Getting Started</a> page.
+## Setup with Claude
+
+Basic Memory Cloud uses Remote MCP to connect to AI assistants. The connection URL is:
+```
+https://cloud.basicmemory.com/mcp
+```
+
+<Steps>
+  <Step title="Open Claude Settings">
+    In Claude Web or Desktop, go to **Settings → Claude → Connectors**
+
+    ![Claude Settings - Connectors](/claude-settings-connectors.png)
+  </Step>
+
+  <Step title="Add Custom Connector">
+    Click **Add custom connector**
+
+    ![Claude Add Connector](/claude-settings-add-connector.png)
+
+    Enter the following details:
+    - **Name**: Basic Memory
+    - **Remote MCP server URL**: `https://cloud.basicmemory.com/mcp`
+
+    Click **Add**
+  </Step>
+
+  <Step title="Authenticate">
+    Click **Connect** to authenticate and grant permissions to Claude
+
+    This will open an OAuth flow to authorize Claude to access your Basic Memory Cloud account.
+  </Step>
+
+  <Step title="Configure Tools (Optional)">
+    Click **Configure** to customize which tools are enabled
+
+    ![Claude Configure Tools](/claude-settings-configure.png)
+
+    You can enable or disable specific tools and configure permissions.
+
+    ![Claude Tools Menu](/claude-settings-tools.png)
+  </Step>
+
+  <Step title="Verify Setup">
+    Confirm Basic Memory is available in the "search and tools" menu for a chat
+
+    ![Claude Search and Tools](/claude-search-tools.png)
+
+    All your notes will be saved to your cloud instance.
+  </Step>
+</Steps>
 
 <Tip>
-    You can use the shorter command alias `bm` instead of `basic-memory` for all CLI commands (e.g., `bm cloud login` instead of `basic-memory cloud login`).
+For detailed Claude setup instructions, see the [Claude Desktop Integration](/integrations/claude-desktop) guide.
 </Tip>
 
-## Quick Start
+## Setup with ChatGPT
+
+<Note>
+ChatGPT requires a **Pro or Max subscription** to use Remote MCP servers.
+</Note>
+
+A complete setup walkthrough is shown in the following video:
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 2rem 0;">
+  <iframe
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 0.5rem;"
+    src="https://www.youtube.com/embed/NvU0Jo38P_k?si=0VvGBAhN8uOGw-KG"
+    title="Basic Memory Cloud + ChatGPT Setup Guide"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<Tip>
+For detailed ChatGPT setup instructions, see the [ChatGPT Integration](/integrations/chatgpt) guide.
+</Tip>
+
+---
+
+## Web Editor
+
+Edit and manage your cloud notes directly in your browser at [app.basicmemory.com/notes](https://app.basicmemory.com/notes).
+
+### Features
+
+<CardGroup cols={2}>
+  <Card title="View and Edit Notes">
+    Browse and edit all your notes with a rich markdown editor
+  </Card>
+  <Card title="Import Conversations">
+    Import your ChatGPT, Claude, or JSON data directly in the browser
+  </Card>
+  <Card title="Manage Projects">
+    Create, switch between, and manage multiple projects
+  </Card>
+  <Card title="Upload Files">
+    Bulk upload markdown files and directories
+  </Card>
+  <Card title="Download Archives">
+    Export projects as zip files for backup
+  </Card>
+</CardGroup>
+
+### Using the Web Editor
+
+<Steps>
+  <Step title="Access Notes">
+    Navigate to [app.basicmemory.com/notes](https://app.basicmemory.com/notes)
+
+    ![Web Editor](/web-editor.png)
+
+    View and edit your notes with full markdown support.
+  </Step>
+
+  <Step title="Switch Projects">
+    Use the Project dropdown in the upper left corner to switch between projects
+
+    ![Manage Projects Menu](/web-manage-projects-menu.png)
+  </Step>
+
+  <Step title="Manage Projects">
+    Click on "Manage Projects" to access project management features
+
+    ![Manage Projects](/web-manage-projects.png)
+
+    Click the "more" button (...) on any project to:
+    - Upload notes (files or folders)
+    - Download project as zip
+    - Delete project and its notes
+  </Step>
+</Steps>
+
+### Import Data
+
+Import conversations and data from Claude, ChatGPT, or Basic Memory JSON files directly via the web interface.
+
+<Steps>
+  <Step title="Access Import Settings">
+    In the web app, navigate to **Settings → Import Data**
+
+    <div style="max-width: 800px;">
+      ![Import Data Settings](/web-import-data.png)
+    </div>
+  </Step>
+
+  <Step title="Select Import Type">
+    Choose the type of data to import:
+    - **Claude Conversations** (conversations.json)
+    - **ChatGPT Conversations** (export JSON)
+    - **Memory JSON** (entities & relations)
+  </Step>
+
+  <Step title="Choose Target Project (Optional)">
+    Select which project to import into, or leave empty to use the default project
+  </Step>
+
+  <Step title="Set Destination Folder">
+    Specify the folder within the project to store imported files (default: `imports`)
+  </Step>
+
+  <Step title="Upload File">
+    Click to upload or drag and drop your JSON file, then click **Start Import**
+  </Step>
+</Steps>
+
+<Note>
+The import feature supports the same formats as the CLI import command. All imported conversations are converted to Basic Memory's markdown knowledge format.
+</Note>
+
+---
+
+## Command Line Tools
+
+The CLI tools are **optional** but enable advanced features like project management, file upload, and bidirectional sync.
+
+**Requirements**: Basic Memory CLI v0.16.0 or later. See install and upgrade instructions on the [Getting Started](/getting-started) page.
+
+<Info>
+**Why use the CLI?**
+- Manage multiple projects from terminal
+- Upload entire folders to cloud
+- Set up bidirectional sync with local files
+- Automate workflows with scripts
+</Info>
 
 <Steps>
     <Step title="Authenticate">
@@ -62,7 +242,7 @@ instructions on the <a href="/getting-started">Getting Started</a> page.
     </Step>
 </Steps>
 
-## Authentication
+### Authentication
 
 Basic Memory uses JWT-based cloud authentication with OAuth 2.1 and automatic subscription validation.
 
@@ -82,9 +262,7 @@ bm cloud login
 5. Token automatically refreshed when needed
 
 **Browser Confirmation Code**
-<Card>
-    <img src="/device-activation.png" alt="Device Activation" height="200"/>
-</Card>
+![Device Activation](/device-activation.png)
 
 **Terminal**
 
@@ -157,26 +335,24 @@ bm cloud logout
 
 Removes `~/.basic-memory/basic-memory-cloud.json` and clears cached credentials. All cloud commands will require re-authentication.
 
-## Manage Cloud Projects from the command line
+### Project Management
 
-### Creating Projects
-
-Create a new project
+Create and manage projects from the command line:
 
 ```bash
-# In cloud mode - creates cloud project
+# Create a new cloud project
 bm project add my-new-project
 
 # Create and set as default
 bm project add my-new-project --default
+
+# List all cloud projects
+bm project list
 ```
 
-### List Projects
+Example output:
 
-List Projects
-
-```bash
-bm project list
+```
            Basic Memory Projects
 ┏━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┓
 ┃ Name ┃ Path                   ┃ Default ┃
@@ -185,7 +361,9 @@ bm project list
 └──────┴────────────────────────┴─────────┘
 ```
 
-Other project management commands are available. See `bm project --help`.
+<Tip>
+For more project management commands, see `bm project --help` or the [CLI Reference](/guides/cli-reference).
+</Tip>
 
 ## Upload files to Cloud Projects
 
@@ -280,18 +458,79 @@ Syncing project 'specs'...
 ✓ Filesystem sync initiated for project 'specs'
 ```
 
-After sync completes, the notes are available in the [Notes Web UI](https://app.basicmemory.com) and for AI conversations.
+After sync completes, the notes are available in the [Notes Web Editor](https://app.basicmemory.com) and for AI conversations.
 
-**Notes Web UI**
+![Notes Web Editor](/webui-notes-upload.png)
 
-<Card>
-    <img src="/webui-notes-upload.png" alt="Device Activation" height="200"/>
-</Card>
+<Tip>
+For bidirectional sync (editing both locally and in cloud), see the [Cloud Sync Guide](/guides/cloud-sync).
+</Tip>
 
+---
 
-## Related Documentation
+## Migrating to Cloud
 
-- [CLI Reference](/guides/cli-reference) - Complete CLI command reference
-- [Getting Started](/getting-started) - Initial setup and configuration
-- [MCP Tools Reference](/guides/mcp-tools-reference) - Multi-project workflows
-- [What's New](/whats-new) - v0.15.0 release notes
+Already using Basic Memory locally? You have two options to move your notes to the cloud:
+
+### Option 1: One-Time Upload (Fastest)
+
+Upload your existing local project to cloud:
+
+```bash
+# Login first
+bm cloud login
+
+# Upload entire project
+bm cloud upload ~/basic-memory --project main --create-project
+```
+
+**Use when:**
+- You want to move to cloud-only
+- One-time migration is sufficient
+- Don't need ongoing local-cloud sync
+
+### Option 2: Bidirectional Sync (Hybrid Workflow)
+
+Set up sync to work both locally and in cloud:
+
+```bash
+# Login and setup sync
+bm cloud login
+bm cloud setup
+
+# Add existing project with sync enabled
+bm project add main --local-path ~/basic-memory
+
+# Initial sync (resync creates baseline)
+bm project bisync --name main --resync --dry-run  # preview first
+bm project bisync --name main --resync             # establish baseline
+
+# Ongoing sync (run after local or cloud changes)
+bm project bisync --name main
+```
+
+**Use when:**
+- You want to edit both locally (Obsidian, VS Code) and in cloud
+- Need offline access
+- Want automatic bidirectional sync
+
+<Info>
+Both methods preserve all your notes, relations, and tags. Choose based on whether you want cloud-only or hybrid local+cloud workflow. See the [Cloud Sync Guide](/guides/cloud-sync) for detailed sync configuration.
+</Info>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Cloud Sync Guide" href="/guides/cloud-sync">
+    Set up bidirectional sync for local editing
+  </Card>
+  <Card title="CLI Reference" href="/guides/cli-reference">
+    Complete CLI command reference
+  </Card>
+  <Card title="Getting Started" href="/getting-started">
+    Initial setup and configuration
+  </Card>
+  <Card title="MCP Tools Reference" href="/guides/mcp-tools-reference">
+    All available MCP tools and workflows
+  </Card>
+</CardGroup>

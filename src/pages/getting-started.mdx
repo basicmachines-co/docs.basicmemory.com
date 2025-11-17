@@ -6,15 +6,69 @@ description: 'Install Basic Memory, configure it with your AI assistant, and cre
 
 import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
 
-Basic Memory works through the Model Context Protocol (MCP) to connect with AI assistants like Claude Desktop, Claude Code, and Gemini CLI. Here's how to set it up.
+Basic Memory works through the Model Context Protocol (MCP) to connect with AI assistants like Claude Desktop, Claude Code, and Gemini CLI.
 
-<Info>
-**New in v0.15.0:** [Basic Memory Cloud](/guides/cloud-cli) provides hosted cloud sync for multi-device workflows. Currently in invite-only beta. [Sign up for Early Access on basicmemory.com](https://basicmemory.com).
-</Info>
+**New to Basic Memory?** Start with [Cloud Setup](#cloud-setup) for the fastest experience.
+
+**Prefer local-only or offline access?** See [Local Installation](#local-installation) - the open-source version is free to install on your own machine.
 
 import InstallationTabs from '../components/InstallationTabs'
 
-## Installation
+## Cloud Setup
+
+Basic Memory Cloud provides hosted MCP access with no local installation required.
+
+<Info>
+**Why use Basic Memory Cloud?**
+- Access from any device
+- Easily import your data
+- 2-minute setup
+- Local sync
+- OAuth authentication
+</Info>
+
+<Steps>
+  <Step title="Sign Up">
+    Create your account at [app.basicmemory.com](https://app.basicmemory.com)
+  </Step>
+
+  <Step title="Add Remote MCP Connector (Claude)">
+    In Claude Desktop, go to **Settings → Claude → Connectors**
+
+    Click "Add connector" and enter:
+    - **Name**: Basic Memory
+    - **Remote MCP server URL**: `https://cloud.basicmemory.com/mcp`
+
+    ![Add connector](/claude-settings-add-connector.png)
+  </Step>
+
+  <Step title="Authenticate">
+    Click "Connect" and follow the OAuth flow to grant permissions
+
+    ![Configure connector](/claude-settings-configure.png)
+  </Step>
+
+  <Step title="Verify Setup">
+    In Claude, click the tools icon (🔨) to see Basic Memory tools
+
+    ![Tools menu](/claude-settings-tools.png)
+
+    Try Prompting: `List my projects`
+
+  </Step>
+</Steps>
+
+<Tip>
+See the [Cloud Setup Guide](/guides/cloud) for detailed instructions, web editor usage, and troubleshooting.
+</Tip>
+
+---
+
+## Local Installation
+
+<Info>
+Basic Memory is **open source** and free to install on your own machine using the stdio MCP transport. If you decide to use the cloud product later, you can easily upload or sync all of your notes and projects. See the [Cloud Guide](/guides/cloud#migrating-to-cloud) for migration options.
+</Info>
 
 ### Single-Step Installation (Recommended)
 
@@ -123,7 +177,7 @@ If you change default projects from the command line new notes will be saved in 
 
 Basic Memory supports multiple projects for organizing different knowledge bases (work, personal, research, etc.).
 
-**How it works in v0.15.0:**
+**How it works:**
 
 When you start a conversation, the AI will:
 1. Check your available projects
