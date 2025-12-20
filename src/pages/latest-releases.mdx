@@ -10,6 +10,74 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
 
+## [v0.16.3](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.16.3) — 2025-12-20
+
+**Focus:** PostgreSQL database backend, API v2, and critical bug fixes
+
+<Info>
+**Highlights:**
+- Full PostgreSQL/Neon database support as alternative to SQLite
+- API v2 with ID-based endpoints for improved performance
+- Fixed FastMCP version to restore MCP tools visibility
+- Reduced CPU usage in watch service
+- Improved shutdown handling for background tasks
+</Info>
+
+### Features
+
+- **PostgreSQL database backend** ([#439](https://github.com/basicmachines-co/basic-memory/pull/439))
+  - Full PostgreSQL/Neon database support as alternative to SQLite
+  - Async connection pooling with asyncpg
+  - Alembic migrations support for both backends
+  - Configurable via `BASIC_MEMORY_DATABASE_BACKEND` environment variable
+
+- **API v2 with ID-based endpoints** ([#441](https://github.com/basicmachines-co/basic-memory/pull/441))
+  - New ID-based API endpoints for improved performance
+  - Foundation for future API enhancements
+  - Backward compatible with existing endpoints
+
+- **Performance improvements**
+  - Project-scoped queries with `project_id` on Relations and Observations
+  - Bulk insert with ON CONFLICT handling for relations
+  - Lightweight permalink resolution to avoid eager loading
+
+### Bug Fixes
+
+- **#464**: Pin FastMCP to 2.12.3 to fix MCP tools visibility
+  - Fixes issue where MCP tools were not visible to Claude
+  - Reverts to last known working FastMCP version
+
+- **#458**: Reduce watch service CPU usage
+  - Increased reload interval to lower CPU utilization
+  - More efficient resource usage during file watching
+
+- **#456**: Await background sync task cancellation in lifespan shutdown
+  - Prevents hanging on shutdown
+  - Clean async task cleanup
+
+- **#434**: Respect --project flag in background sync
+  - Background sync now correctly uses specified project
+  - Fixes multi-project sync issues
+
+- **#424**: Handle periods in kebab_filenames mode
+  - Fixes filename handling for files with multiple periods
+  - Improved kebab-case conversion
+
+### Testing
+
+- Replace py-pglite with testcontainers for Postgres testing
+  - More reliable Postgres testing infrastructure
+  - Uses Docker-based test containers
+  - CI runs both SQLite and Postgres tests in parallel
+
+### New Contributors
+
+- [@divideby0](https://github.com/divideby0) made their first contribution
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.16.2...v0.16.3
+
+---
+
 ## [v0.16.2](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.16.2) — 2025-11-16
 
 **Focus:** Windows platform improvements and project management fixes
