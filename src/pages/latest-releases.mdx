@@ -10,6 +10,86 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
 
+## [v0.17.2](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.2) — 2025-12-29
+
+**Focus:** Cloud mode improvements and build optimizations
+
+### Bug Fixes
+
+- **Allow recent_activity discovery mode in cloud mode**
+  - Added `allow_discovery` parameter to `resolve_project_parameter()` that enables tools like `recent_activity` to work across all projects in cloud mode without requiring a project parameter
+  - Fixes workflow where users want to see activity across all projects
+
+### Infrastructure
+
+- **Build optimizations** - Release builds now run lint and typecheck only, skipping full test suite for faster releases
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.17.1...v0.17.2
+
+---
+
+## [v0.17.1](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.1) — 2025-12-29
+
+**Focus:** Critical fix for file watch service
+
+### Bug Fixes
+
+- **Fix watch service not starting** ([#482](https://github.com/basicmachines-co/basic-memory/pull/482))
+  - Fixed issue where `BASIC_MEMORY_ENV='test'` was being set unconditionally at import time
+  - This caused `config.is_test_env` to always return True, preventing the MCP server from starting the file watch service
+  - File sync for external changes now works correctly in production
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.17.0...v0.17.1
+
+---
+
+## [v0.17.0](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.0) — 2025-12-28
+
+**Focus:** API v2 migration, auto-formatting, and telemetry
+
+<Info>
+**Highlights:**
+- MCP tools now use API v2 endpoints for improved performance
+- Auto-format files on save with built-in Python formatter
+- Anonymous usage telemetry (Homebrew-style opt-out)
+- CLI commands no longer hang on exit
+</Info>
+
+### Features
+
+- **API v2 Migration - Phase 2 Complete** ([#447](https://github.com/basicmachines-co/basic-memory/pull/447))
+  - All MCP tools now use v2 endpoints for improved performance
+  - Foundation for future API enhancements
+  - Backward compatible with existing integrations
+
+- **Auto-format files on save** ([#474](https://github.com/basicmachines-co/basic-memory/pull/474))
+  - Built-in Python formatter automatically formats files when saved
+  - Consistent formatting without external tools
+  - Configurable behavior
+
+- **Anonymous usage telemetry** ([#478](https://github.com/basicmachines-co/basic-memory/pull/478))
+  - Homebrew-style opt-out telemetry to help improve the product
+  - Privacy-respecting with no personal data collected
+  - Easy to disable via environment variable
+
+### Bug Fixes
+
+- **CLI commands no longer hang on exit** ([#471](https://github.com/basicmachines-co/basic-memory/pull/471))
+  - Fixed issue where CLI commands would hang instead of cleanly exiting
+  - Improved user experience with responsive command completion
+
+- **Rclone version detection** ([#473](https://github.com/basicmachines-co/basic-memory/pull/473))
+  - Detects rclone version to check for `--create-empty-src-dirs` support
+  - Better compatibility across different rclone versions
+
+- **Null titles in ChatGPT import** ([#475](https://github.com/basicmachines-co/basic-memory/pull/475))
+  - Handles null titles gracefully during ChatGPT conversation import
+  - Prevents crashes on malformed import data
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.16.3...v0.17.0
+
+---
+
 ## [v0.16.3](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.16.3) — 2025-12-20
 
 **Focus:** PostgreSQL database backend, API v2, and critical bug fixes

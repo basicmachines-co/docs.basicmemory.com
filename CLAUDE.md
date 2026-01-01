@@ -12,7 +12,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 
 **Repository**: https://github.com/basicmachines-co/basic-memory
 **Website**: https://basicmemory.com
-**Current Version**: v0.15.0 (released October 4, 2025)
+**Current Version**: v0.17.2 (released December 29, 2025)
 
 **Key Features**:
 - 17 MCP tools for AI integration (write_note, read_note, edit_note, search_notes, build_context, etc.)
@@ -21,19 +21,15 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 - Integrations with Claude Desktop, VS Code, Cursor, Obsidian
 - Python-based with FastAPI endpoints and comprehensive CLI
 - Real-time file synchronization
-- SQLite indexing with markdown as source of truth
+- SQLite and PostgreSQL database backends
 
-**v0.15.0 Major Features**:
-- Cloud authentication support (WorkOS integration)
-- Stateless MCP architecture for cloud deployment
-- Cloud sync via rclone bisync
-- Cloud mount CLI commands for local file access
-- Subscription validation for cloud billing
-- ChatGPT tools integration
-- `.gitignore` support in sync operations
-- Configurable permalink generation
-- Performance optimizations for API and database
-- Critical bug fixes for permalink collisions
+**v0.17.x Major Features**:
+- API v2 migration complete - all MCP tools use optimized v2 endpoints
+- Auto-format files on save with built-in Python formatter
+- Anonymous usage telemetry (Homebrew-style opt-out)
+- CLI stability improvements - commands no longer hang on exit
+- Cloud mode discovery for recent_activity across projects
+- PostgreSQL/Neon database support as alternative to SQLite
 
 ### Basic Memory Cloud
 
@@ -65,7 +61,7 @@ This documentation site covers both:
 1. **Basic Memory** (local-first product) - Installation, MCP tools, CLI, integrations, knowledge format
 2. **Basic Memory Cloud** (upcoming) - Cloud-specific features, authentication, sync, billing
 
-The site is currently being updated for v0.15.0 and to include cloud product documentation.
+The site documents the latest v0.17.x release and includes cloud product documentation.
 
 ## Development Commands
 
@@ -211,56 +207,13 @@ The sidebar automatically highlights the current page based on `href` matching `
 
 ## Documentation Status & Priorities
 
-### Current Branch: v0.15.0-release-docs
-
-This branch is dedicated to updating documentation for:
-1. Basic Memory v0.15.0 release (October 4, 2025)
-2. Basic Memory Cloud product (upcoming release)
-
-### Areas Requiring Updates for v0.15.0
-
-**New Features to Document**:
-- Cloud authentication and WorkOS integration
-- Cloud sync capabilities via rclone bisync
-- Cloud mount CLI commands (fast/balanced/safe profiles)
-- Subscription validation and billing integration
-- ChatGPT tools integration
-- `.gitignore` support in sync operations
-- Configurable permalink generation (`disable_permalinks` flag)
-- Stateless MCP architecture changes
-
-**CLI Reference Updates**:
-- Cloud-specific commands (`cloud mount`, `cloud sync`, etc.)
-- New MCP tools if any were added
-- Subscription validation commands
-
-**Integration Updates**:
-- Any changes to Claude Desktop integration
-- Any changes to VS Code/Cursor integrations
-- ChatGPT integration documentation (new)
-
-### Areas Requiring Cloud Product Documentation
-
-**New Pages Needed**:
-- Cloud product overview and value proposition
-- Getting started with Basic Memory Cloud
-- Authentication (WorkOS magic links)
-- Subscription and billing (Polar integration)
-- Cloud sync setup and usage
-- Cloud mount for local editing
-- Cloud vs. Local comparison
-
-**Architecture Documentation**:
-- Multi-tenant architecture overview
-- Per-tenant isolation model
-- Cloud sync architecture
-- MCP gateway and proxy routing
+Documentation is up-to-date for v0.17.x release. Cloud product documentation is complete.
 
 ### Reference Materials
 
 When documenting features:
 - **Basic Memory CHANGELOG**: `gh api repos/basicmachines-co/basic-memory/contents/CHANGELOG.md`
-- **Release Notes**: `gh release view v0.15.0 --repo basicmachines-co/basic-memory`
+- **Release Notes**: `gh release view v0.17.2 --repo basicmachines-co/basic-memory`
 - **Basic Memory README**: https://github.com/basicmachines-co/basic-memory
 - **Cloud README**: https://github.com/basicmachines-co/basic-memory-cloud
 - **Cloud CLAUDE.md**: https://github.com/basicmachines-co/basic-memory-cloud/blob/main/CLAUDE.md

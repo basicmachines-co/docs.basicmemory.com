@@ -14,6 +14,62 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 Work with your knowledge base across multiple devices using cloud sync and storage.
 
+## v0.17.0
+
+Basic Memory v0.17.0 completes the API v2 migration, adds auto-formatting, and improves CLI stability.
+
+<Info>
+**Key improvements:**
+- All MCP tools now use API v2 endpoints for improved performance
+- Auto-format files on save with built-in Python formatter
+- CLI commands no longer hang on exit
+- Anonymous usage telemetry (Homebrew-style opt-out)
+</Info>
+
+### API v2 Migration Complete
+
+Phase 2 of the API v2 migration is complete. All MCP tools now use the new v2 endpoints, providing:
+
+- **Improved performance** - Optimized endpoints for faster responses
+- **Better scalability** - Foundation for future API enhancements
+- **Backward compatibility** - Existing integrations continue to work
+
+### Auto-Format on Save
+
+Basic Memory now includes a built-in Python formatter that automatically formats files when saved:
+
+```bash
+# Files are automatically formatted on save
+# No external tools required
+```
+
+This ensures consistent formatting across your knowledge base without needing to configure external formatters.
+
+### CLI Stability Improvements
+
+Several improvements make the CLI more reliable:
+
+- **No more hanging** - Commands exit cleanly after completion
+- **Rclone version detection** - Automatically checks for `--create-empty-src-dirs` support
+- **Better ChatGPT import** - Handles null titles gracefully
+
+### Anonymous Telemetry
+
+Basic Memory now includes opt-out anonymous telemetry (similar to Homebrew) to help improve the product:
+
+- No personal data collected
+- Privacy-respecting design
+- Easy to disable via environment variable
+
+```bash
+# Disable telemetry
+export BASIC_MEMORY_NO_TELEMETRY=1
+```
+
+See the [complete v0.17.0 changelog](/latest-releases) for full details.
+
+---
+
 ## v0.16.0
 
 Basic Memory v0.16.0 focuses on cloud sync reliability, Windows platform support, and overall system robustness.
