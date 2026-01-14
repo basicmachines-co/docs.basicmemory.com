@@ -12,7 +12,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 
 **Repository**: https://github.com/basicmachines-co/basic-memory
 **Website**: https://basicmemory.com
-**Current Version**: v0.17.2 (released December 29, 2025)
+**Current Version**: v0.17.5 (released January 11, 2026)
 
 **Key Features**:
 - 17 MCP tools for AI integration (write_note, read_note, edit_note, search_notes, build_context, etc.)

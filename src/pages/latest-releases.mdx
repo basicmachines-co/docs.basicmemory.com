@@ -10,6 +10,64 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
 
+## [v0.17.5](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.5) — 2026-01-11
+
+**Focus:** Python 3.14 compatibility and CLI stability
+
+<Info>
+**Highlights:**
+- Python 3.14 compatibility fixes
+- CLI commands no longer hang on exit
+- Updated pyright for better type checking
+</Info>
+
+### Bug Fixes
+
+- **Prevent CLI commands from hanging on exit** ([#505](https://github.com/basicmachines-co/basic-memory/pull/505))
+  - Skip `nest_asyncio` on Python 3.14+ where it causes event loop issues
+  - Simplify CLI test infrastructure for cross-version compatibility
+  - Update pyright to 1.1.408 for Python 3.14 support
+  - Fix SQLAlchemy rowcount typing for Python 3.14
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.17.4...v0.17.5
+
+---
+
+## [v0.17.4](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.4) — 2026-01-05
+
+**Focus:** Critical search index fix and major architecture refactor
+
+<Warning>
+**Important:** If you're upgrading from v0.16.3-v0.17.3, run `basic-memory reset` once after updating to rebuild your search index. A bug introduced in v0.16.3 caused the search index to be wiped on every server restart.
+</Warning>
+
+<Info>
+**Highlights:**
+- Critical fix: Search index now persists across server restarts
+- Major internal architecture improvements with composition roots
+- New typed API clients for better code organization
+</Info>
+
+### Bug Fixes
+
+- **Preserve search index across server restarts** ([#503](https://github.com/basicmachines-co/basic-memory/pull/503))
+  - Fixes critical bug where search index was wiped on every MCP server restart
+  - Bug was introduced in v0.16.3, affecting v0.16.3-v0.17.3
+  - **User action**: Run `basic-memory reset` once after updating to rebuild search index
+
+### Internal
+
+- **Major architecture refactor** ([#502](https://github.com/basicmachines-co/basic-memory/pull/502))
+  - Add composition roots for API, MCP, and CLI entrypoints
+  - Split deps.py into feature-scoped modules (config, db, projects, repositories, services, importers)
+  - Add ProjectResolver for unified project selection
+  - Add SyncCoordinator for centralized sync/watch lifecycle
+  - Introduce typed API clients for MCP tools (KnowledgeClient, SearchClient, MemoryClient, etc.)
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.17.3...v0.17.4
+
+---
+
 ## [v0.17.3](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.3) — 2026-01-03
 
 **Focus:** Claude Code compatibility and cloud deployment stability
