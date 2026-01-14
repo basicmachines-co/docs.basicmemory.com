@@ -47,6 +47,7 @@ export const navConfig = {
         { title: 'Canvas', href: '/guides/canvas' },
         { title: 'CLI Reference', href: '/guides/cli-reference' },
         { title: 'AI Assistant Guide', href: '/guides/ai-assistant-guide' },
+        { title: 'Docker', href: '/guides/docker' },
       ],
     },
     {
