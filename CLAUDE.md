@@ -12,7 +12,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 
 **Repository**: https://github.com/basicmachines-co/basic-memory
 **Website**: https://basicmemory.com
-**Current Version**: v0.17.7 (released January 19, 2026)
+**Current Version**: v0.18.0 (released January 26, 2026)
 
 **Key Features**:
 - 17 MCP tools for AI integration (write_note, read_note, edit_note, search_notes, build_context, etc.)
@@ -23,12 +23,13 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 - Real-time file synchronization
 - SQLite and PostgreSQL database backends
 
-**v0.17.x Major Features**:
+**v0.18.x Major Features**:
+- Directory operations - move and delete entire directories with MCP tools
+- Local/cloud routing flags - `--local` and `--cloud` CLI flags for explicit routing control
+- Cloud snapshots - create, list, browse, and restore point-in-time snapshots
 - API v2 migration complete - all MCP tools use optimized v2 endpoints
 - Auto-format files on save with built-in Python formatter
-- Anonymous usage telemetry (Homebrew-style opt-out)
-- CLI stability improvements - commands no longer hang on exit
-- Cloud mode discovery for recent_activity across projects
+- Cloud mode stability improvements
 - PostgreSQL/Neon database support as alternative to SQLite
 
 ### Basic Memory Cloud
@@ -61,7 +62,7 @@ This documentation site covers both:
 1. **Basic Memory** (local-first product) - Installation, MCP tools, CLI, integrations, knowledge format
 2. **Basic Memory Cloud** (upcoming) - Cloud-specific features, authentication, sync, billing
 
-The site documents the latest v0.17.x release and includes cloud product documentation.
+The site documents the latest v0.18.x release and includes cloud product documentation.
 
 ## Development Commands
 
@@ -207,13 +208,13 @@ The sidebar automatically highlights the current page based on `href` matching `
 
 ## Documentation Status & Priorities
 
-Documentation is up-to-date for v0.17.x release. Cloud product documentation is complete.
+Documentation is up-to-date for v0.18.x release. Cloud product documentation is complete.
 
 ### Reference Materials
 
 When documenting features:
 - **Basic Memory CHANGELOG**: `gh api repos/basicmachines-co/basic-memory/contents/CHANGELOG.md`
-- **Release Notes**: `gh release view v0.17.2 --repo basicmachines-co/basic-memory`
+- **Release Notes**: `gh release view v0.18.0 --repo basicmachines-co/basic-memory`
 - **Basic Memory README**: https://github.com/basicmachines-co/basic-memory
 - **Cloud README**: https://github.com/basicmachines-co/basic-memory-cloud
 - **Cloud CLAUDE.md**: https://github.com/basicmachines-co/basic-memory-cloud/blob/main/CLAUDE.md

@@ -14,6 +14,74 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 Work with your knowledge base across multiple devices using cloud sync and storage.
 
+## v0.18.0
+
+Basic Memory v0.18.0 adds directory operations to MCP tools, local/cloud routing control, and cloud snapshots.
+
+<Info>
+**Key improvements:**
+- Move and delete entire directories with MCP tools
+- New `--local` and `--cloud` flags for routing control
+- Cloud snapshot commands for backup and recovery
+- Improved cloud mode stability
+</Info>
+
+### Directory Operations
+
+MCP tools now support bulk directory operations:
+
+**Move entire directories:**
+```python
+# Move a folder and all its contents
+move_note("old-projects", "archive/old-projects", is_directory=True)
+```
+
+**Delete directories recursively:**
+```python
+# Remove a folder and all contained files
+delete_note("temp-folder", is_directory=True)
+```
+
+This enables efficient bulk organization of your knowledge base without moving files one at a time.
+
+### Local/Cloud Routing Flags
+
+New CLI flags give you explicit control over where operations are routed:
+
+```bash
+# Force local MCP server even when cloud mode is enabled
+basic-memory --local mcp
+
+# Force cloud routing
+basic-memory --cloud tool search-notes --query "api"
+```
+
+Useful when you want to work with local files while cloud mode is configured, or ensure operations go through the cloud.
+
+### Cloud Snapshots
+
+Create and manage point-in-time snapshots of your cloud bucket:
+
+```bash
+# Create a snapshot before major changes
+bm cloud snapshot create "Before reorganization"
+
+# List all snapshots
+bm cloud snapshot list
+
+# Browse snapshot contents
+bm cloud snapshot browse <snapshot-id>
+
+# Restore from snapshot (browse and download files)
+bm cloud snapshot show <snapshot-id>
+```
+
+Snapshots provide a safety net for major reorganizations or experiments with your knowledge base.
+
+See the [complete v0.18.0 changelog](/latest-releases) for full details.
+
+---
+
 ## v0.17.0
 
 Basic Memory v0.17.0 completes the API v2 migration, adds auto-formatting, and improves CLI stability.

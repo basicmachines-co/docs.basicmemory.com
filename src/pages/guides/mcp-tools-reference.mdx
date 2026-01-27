@@ -48,15 +48,17 @@ Using Basic Memory Cloud? All MCP tools work the same whether you're using cloud
     - [Detailed examples →](/whats-new#view-notes-as-formatted-artifacts)
   </Card>
   <Card title="delete_note" icon="trash">
-    **Remove notes from knowledge base**
-    - Parameters: identifier, project
+    **Remove notes or directories from knowledge base**
+    - Parameters: identifier, project, is_directory
     - Removes from database and file system
+    - Use `is_directory=True` for recursive directory deletion
     - Updates search index and relations
   </Card>
   <Card title="move_note" icon="move">
-    **Move and rename notes**
-    - Parameters: identifier, new_path, project
+    **Move and rename notes or directories**
+    - Parameters: identifier, new_path, project, is_directory
     - Maintains database consistency
+    - Use `is_directory=True` to move entire folders
     - Updates search index
     - [Detailed examples →](/whats-new#smart-file-management)
   </Card>
@@ -395,6 +397,30 @@ Claude: I'll move all mobile app notes to a new 'mobile-app' folder.
 You: "Show me the updated folder structure"
 Claude: Here's your reorganized projects folder with the new mobile-app directory.
 [Uses list_directory to verify the changes]
+```
+</details>
+
+**Directory Operations Flow:**
+```
+list_directory → move_note (is_directory=True) → delete_note (is_directory=True)
+```
+*Bulk organize folders, move entire directories, clean up old folders*
+
+<details>
+<summary>Example conversation</summary>
+
+```
+You: "Move the entire 'old-projects' folder to 'archive'"
+Claude: I'll move the old-projects directory to your archive folder.
+[Uses move_note with is_directory=True]
+✓ Moved old-projects/ → archive/old-projects/
+✓ All 15 files moved with database consistency maintained
+
+You: "Delete the empty 'temp' folder"
+Claude: I'll remove the temp directory and all its contents.
+[Uses delete_note with is_directory=True]
+✓ Deleted temp/ and 3 contained files
+✓ Search index and relations updated
 ```
 </details>
 

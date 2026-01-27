@@ -35,6 +35,21 @@ bm cloud upload ~/my-notes --project research --create-project
 
 # Set up sync (one-time)
 bm cloud setup
+
+# Create a snapshot of your cloud bucket
+bm cloud snapshot create "Before major reorganization"
+
+# List all snapshots
+bm cloud snapshot list
+
+# Show snapshot details
+bm cloud snapshot show <snapshot-id>
+
+# Browse snapshot contents
+bm cloud snapshot browse <snapshot-id>
+
+# Delete a snapshot
+bm cloud snapshot delete <snapshot-id>
 ```
 
 <Tip>
@@ -116,6 +131,26 @@ All commands support the `--project` flag to specify which project to use:
 # Run MCP server for a specific project
 basic-memory --project=personal mcp
 ```
+
+#### Local/Cloud Routing Flags
+
+When cloud mode is enabled, you can force routing to local or cloud using these flags:
+
+```bash
+# Force local MCP server even when cloud mode is enabled
+basic-memory --local mcp
+
+# Force cloud routing
+basic-memory --cloud mcp
+
+# These flags work with mcp, project, and tool commands
+basic-memory --local project list
+basic-memory --cloud tool search-notes --query "api"
+```
+
+<Note>
+The `--local` flag is useful when you want to work with local files while cloud mode is configured. The `--cloud` flag ensures operations go through the cloud even if local files exist.
+</Note>
 
 ### tools
 

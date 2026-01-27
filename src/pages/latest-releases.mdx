@@ -10,6 +10,57 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
 
+## [v0.17.9](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.9) — 2026-01-26
+
+**Focus:** Directory operations and routing improvements
+
+<Info>
+**Highlights:**
+- MCP tools now support directory operations for `move_note` and `delete_note`
+- New `--local` and `--cloud` routing flags for CLI commands
+</Info>
+
+### Features
+
+- **Directory Operations for MCP Tools** ([#525](https://github.com/basicmachines-co/basic-memory/pull/525))
+  - `move_note` now supports moving entire directories with `is_directory=True`
+  - `delete_note` now supports deleting directories recursively with `is_directory=True`
+  - Enables bulk organization of knowledge base folders
+
+- **Local/Cloud Routing Flags** ([#526](https://github.com/basicmachines-co/basic-memory/pull/526))
+  - New `--local` flag to force local MCP server even when cloud mode is enabled
+  - New `--cloud` flag to force cloud routing
+  - Applies to `mcp`, `project`, and `tool` CLI commands
+
+### Bug Fixes
+
+- **Fix `remove_project()` checking stale config in cloud mode** ([#523](https://github.com/basicmachines-co/basic-memory/pull/523))
+  - Project removal now correctly handles cloud mode configuration
+
+- **Fix MCP prompt rendering errors in `recent_activity`** ([#524](https://github.com/basicmachines-co/basic-memory/pull/524))
+  - Resolves errors when rendering recent activity prompts
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.17.8...v0.17.9
+
+---
+
+## [v0.17.8](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.8) — 2026-01-22
+
+**Focus:** Cloud mode stability
+
+### Bug Fixes
+
+- **Fix `get_default_project()` returning multiple results** ([#521](https://github.com/basicmachines-co/basic-memory/pull/521))
+  - Ensures only a single default project is returned in cloud mode
+
+- **Read default project from database in cloud mode** ([#520](https://github.com/basicmachines-co/basic-memory/pull/520))
+  - Default project resolution now correctly uses database in cloud mode
+  - Improves reliability of project selection for cloud users
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.17.7...v0.17.8
+
+---
+
 ## [v0.17.7](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.7) — 2026-01-19
 
 **Focus:** MCP Registry publication and bug fixes
