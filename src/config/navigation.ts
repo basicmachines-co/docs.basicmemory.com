@@ -34,7 +34,7 @@ export const navConfig = {
       title: "What's New",
       items: [
         { title: "What's New", href: '/whats-new' },
-        { title: 'Latest Releases', href: '/latest-releases' },
+        { title: 'Changelog', href: '/changelog' },
       ],
     },
     {

@@ -46,19 +46,23 @@ This enables efficient bulk organization of your knowledge base without moving f
 
 ### Local/Cloud Routing Flags
 
-New CLI flags give you explicit control over where operations are routed:
+New CLI flags on `tools` commands give you explicit control over where operations are routed:
 
 ```bash
-# Force local MCP server even when cloud mode is enabled
-basic-memory --local mcp
+# Force local routing when cloud mode is enabled
+bm tools search-notes --query "api" --local
 
 # Force cloud routing
-basic-memory --cloud tool search-notes --query "api"
+bm tools recent-activity --cloud
 ```
 
 Useful when you want to work with local files while cloud mode is configured, or ensure operations go through the cloud.
 
 ### Cloud Snapshots
+
+<Note>
+Cloud snapshots require a Basic Memory Cloud subscription.
+</Note>
 
 Create and manage point-in-time snapshots of your cloud bucket:
 
@@ -72,13 +76,13 @@ bm cloud snapshot list
 # Browse snapshot contents
 bm cloud snapshot browse <snapshot-id>
 
-# Restore from snapshot (browse and download files)
+# Show snapshot details
 bm cloud snapshot show <snapshot-id>
 ```
 
 Snapshots provide a safety net for major reorganizations or experiments with your knowledge base.
 
-See the [complete v0.18.0 changelog](/latest-releases) for full details.
+See the [complete v0.18.0 changelog](/changelog) for full details.
 
 ---
 

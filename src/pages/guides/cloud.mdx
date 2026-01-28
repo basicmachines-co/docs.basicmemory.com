@@ -468,6 +468,79 @@ For bidirectional sync (editing both locally and in cloud), see the [Cloud Sync 
 
 ---
 
+## Cloud Snapshots
+
+Basic Memory Cloud includes point-in-time snapshots for backup and recovery. Snapshots let you:
+
+- **Rollback** to a previous state after accidental changes
+- **Browse** historical versions of your notes
+- **Restore** individual files or entire folders
+- **Protect** against accidental deletion
+
+<Info>
+Create as many snapshots as you need—there's no limit. Basic Memory Cloud also creates daily automatic snapshots, so you're always protected even if you forget to create one manually.
+</Info>
+
+### Creating Snapshots
+
+Create a snapshot before making major changes:
+
+```bash
+# Create a named snapshot
+bm cloud snapshot create "Before reorganization"
+
+# Output:
+# Created snapshot: snap_abc123 (2026-01-27T10:30:00)
+```
+
+<Tip>
+Create a manual snapshot before reorganizing folders, bulk imports, or other major changes—this gives you a clear restore point if needed.
+</Tip>
+
+### Managing Snapshots
+
+```bash
+# List all snapshots
+bm cloud snapshot list
+
+# Show snapshot details
+bm cloud snapshot show <snapshot-id>
+
+# Browse files in a snapshot
+bm cloud snapshot browse <snapshot-id>
+
+# Delete a snapshot
+bm cloud snapshot delete <snapshot-id>
+```
+
+Example output from `bm cloud snapshot list`:
+
+```
+snap_abc123  "Before reorganization"  Jan 27, 2026  42 MB
+snap_xyz789  "daily-auto"             Jan 26, 2026  41 MB
+snap_def456  "daily-auto"             Jan 25, 2026  40 MB
+```
+
+### Restoring from Snapshots
+
+To restore files, browse the snapshot contents and download what you need:
+
+```bash
+# Browse snapshot contents
+bm cloud snapshot browse snap_abc123
+
+# Shows files available in the snapshot
+# notes/project.md
+# notes/ideas.md
+# research/analysis.md
+```
+
+<Note>
+File-level restore is available via the snapshot browse command. Select and download individual files to restore them to your current project.
+</Note>
+
+---
+
 ## Migrating to Cloud
 
 Already using Basic Memory locally? You have two options to move your notes to the cloud:

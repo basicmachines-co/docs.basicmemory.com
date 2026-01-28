@@ -18,7 +18,11 @@ You can use the shorter command alias `bm` instead of `basic-memory` for all com
 
 ### cloud
 
-Manage Basic Memory Cloud authentication, projects, and file uploads. Requires active subscription.
+Manage Basic Memory Cloud authentication, projects, and file uploads.
+
+<Note>
+Cloud commands require a Basic Memory Cloud subscription.
+</Note>
 
 ```bash
 # Authenticate with cloud
@@ -134,19 +138,20 @@ basic-memory --project=personal mcp
 
 #### Local/Cloud Routing Flags
 
-When cloud mode is enabled, you can force routing to local or cloud using these flags:
+The `tools` commands support `--local` and `--cloud` flags to control routing when cloud mode is enabled:
 
 ```bash
-# Force local MCP server even when cloud mode is enabled
-basic-memory --local mcp
+# Force local routing for tool commands
+bm tools search-notes --query "api" --local
+bm tools recent-activity --local
 
 # Force cloud routing
-basic-memory --cloud mcp
-
-# These flags work with mcp, project, and tool commands
-basic-memory --local project list
-basic-memory --cloud tool search-notes --query "api"
+bm tools search-notes --query "api" --cloud
 ```
+
+<Note>
+These flags are available on `tools` subcommands like `search-notes`, `recent-activity`, `build-context`, etc. The `mcp` command always runs locally.
+</Note>
 
 <Note>
 The `--local` flag is useful when you want to work with local files while cloud mode is configured. The `--cloud` flag ensures operations go through the cloud even if local files exist.

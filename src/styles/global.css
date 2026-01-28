@@ -54,44 +54,51 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Typography */
   h1 {
-    @apply scroll-m-20 text-3xl font-semibold tracking-tight mb-6;
+    @apply scroll-m-20 text-4xl font-bold tracking-tight mb-6;
+    letter-spacing: -0.025em;
   }
 
   h2 {
-    @apply scroll-m-20 text-3xl font-medium tracking-tight first:mt-0 mt-12 mb-4;
+    @apply scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0 mt-14 mb-5;
+    letter-spacing: -0.02em;
   }
 
   h3 {
-    @apply scroll-m-20 text-2xl font-medium tracking-tight;
+    @apply scroll-m-20 text-xl font-semibold tracking-tight;
+    letter-spacing: -0.015em;
   }
 
   /* Article content h3 spacing - only applies to h3 in main content */
   article > h3:not([class*="text-lg"]) {
-    @apply mt-8 mb-4;
+    @apply mt-10 mb-4;
   }
 
   h4 {
-    @apply scroll-m-20 text-xl font-medium tracking-tight mt-6 mb-3;
+    @apply scroll-m-20 text-lg font-semibold tracking-tight mt-8 mb-3;
   }
 
   p {
-    @apply leading-7 [&:not(:first-child)]:mt-6 text-gray-700 dark:text-gray-300;
-    font-size: 16px;
+    @apply leading-relaxed [&:not(:first-child)]:mt-5 text-zinc-600 dark:text-zinc-400;
+    font-size: 1rem;
+    line-height: 1.75;
   }
 
   blockquote {
-    @apply mt-6 border-l-2 pl-6 italic;
+    @apply mt-6 border-l-2 border-zinc-300 dark:border-zinc-700 pl-6 italic text-zinc-600 dark:text-zinc-400;
   }
 
   ul {
-    @apply my-4 ml-6 list-disc [&>li]:mt-2;
+    @apply my-5 ml-6 list-disc [&>li]:mt-2;
   }
 
   ol {
@@ -99,21 +106,23 @@
   }
 
   li {
-    @apply text-gray-700 dark:text-gray-300;
+    @apply text-zinc-600 dark:text-zinc-400 leading-relaxed;
   }
 
   code {
-    @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
+    @apply relative rounded-md bg-zinc-100 dark:bg-zinc-800 px-[0.4rem] py-[0.2rem] font-mono text-[0.875em] text-zinc-800 dark:text-zinc-200;
+    font-feature-settings: normal;
   }
 
   pre {
-    @apply mb-4 mt-6 overflow-x-auto rounded-lg bg-gray-100/50 dark:bg-gray-900 p-4 pr-12 border border-gray-200 dark:border-gray-800;
+    @apply mb-4 mt-6 overflow-x-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 p-4 pr-12 border border-zinc-200 dark:border-zinc-800;
   }
 
   pre code {
-    @apply bg-transparent p-0 text-gray-900 dark:text-gray-100 font-light;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    @apply bg-transparent p-0 text-zinc-800 dark:text-zinc-100 font-normal text-sm;
+    white-space: pre;
+    word-wrap: normal;
+    line-height: 1.6;
   }
 
   /* Code block wrapper */
@@ -208,16 +217,16 @@
 
   /* Default link styles for content */
   a {
-    @apply font-medium text-primary hover:text-primary/80;
+    @apply font-medium text-zinc-900 dark:text-zinc-100 transition-colors duration-150;
   }
-  
+
   /* Article content links with proper dark mode colors */
   article a,
   main p a,
   main li a {
-    @apply font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 underline underline-offset-2;
+    @apply font-medium text-zinc-900 dark:text-zinc-100 hover:text-zinc-600 dark:hover:text-zinc-300 underline decoration-zinc-300 dark:decoration-zinc-600 underline-offset-2 hover:decoration-zinc-400 dark:hover:decoration-zinc-500;
   }
-  
+
   /* Remove underlines from specific areas */
   header a,
   nav a,
@@ -228,32 +237,37 @@
     text-decoration: none !important;
   }
 
+  /* Strong text */
+  strong, b {
+    @apply font-semibold text-zinc-900 dark:text-zinc-100;
+  }
+
   table {
-    @apply w-full;
+    @apply w-full my-6 text-sm;
   }
 
   table thead tr {
-    @apply m-0 border-t p-0 even:bg-muted;
+    @apply border-b border-zinc-200 dark:border-zinc-800;
   }
 
   table thead th {
-    @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+    @apply px-4 py-3 text-left font-semibold text-zinc-900 dark:text-zinc-100 [&[align=center]]:text-center [&[align=right]]:text-right;
   }
 
   table tbody tr {
-    @apply m-0 border-t p-0 even:bg-muted;
+    @apply border-b border-zinc-100 dark:border-zinc-800/50;
   }
 
   table tbody td {
-    @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
+    @apply px-4 py-3 text-left text-zinc-600 dark:text-zinc-400 [&[align=center]]:text-center [&[align=right]]:text-right;
   }
 
   hr {
-    @apply my-16 border-gray-200;
+    @apply my-12 border-zinc-200 dark:border-zinc-800;
   }
 
   img {
-    @apply rounded-lg my-6 cursor-pointer transition-opacity hover:opacity-90;
+    @apply rounded-lg my-8 cursor-pointer transition-all duration-200 hover:opacity-95;
   }
 
   /* Full screen image viewer */
