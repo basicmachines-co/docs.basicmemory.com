@@ -1,7 +1,7 @@
 ---
 layout: '@/layouts/DocsLayout.astro'
-title: "What's New - Basic Memory Cloud is live!"
-description: 'Bring your knowledge to the cloud. All your existing notes, connections, and context - accessible from anywhere.'
+title: "What's New in Basic Memory"
+description: 'Latest features and improvements in Basic Memory - context-aware wiki links, directory operations, and cloud sync.'
 ---
 
 import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, Steps, Step } from '@/components'
@@ -13,6 +13,62 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 </Tip>
 
 Work with your knowledge base across multiple devices using cloud sync and storage.
+
+## v0.18.0
+
+Basic Memory v0.18.0 introduces context-aware wiki link resolution, directory operations, and improved cloud routing.
+
+<Info>
+**Key improvements:**
+- Context-aware wiki link resolution with `source_path` support
+- Directory support for `move_note` and `delete_note` tools
+- Local MCP cloud mode routing for simultaneous local/cloud usage
+- MCP prompt rendering fixes
+</Info>
+
+### Context-Aware Wiki Link Resolution
+
+Wiki links now resolve intelligently based on where they appear in your knowledge base.
+
+**Relative path resolution:**
+When you write `[[nested/note]]` in a file at `folder/file.md`, Basic Memory first looks for `folder/nested/note.md` before searching globally.
+
+**Proximity-based resolution:**
+If you have notes with the same title in different folders, links resolve to the note closest to your current location. A link to `[[Meeting Notes]]` from `projects/alpha/tasks.md` prefers `projects/alpha/Meeting Notes.md` over `projects/beta/Meeting Notes.md`.
+
+**Strict mode:**
+The resolve endpoint now supports strict mode to disable fuzzy search fallback, ensuring exact matches only.
+
+### Directory Operations
+
+Move and delete entire folders of notes with database consistency:
+
+```python
+# Move all notes in a directory
+move_note("old-folder", "new-folder", is_directory=True)
+
+# Delete all notes in a directory
+delete_note("archive/old-project", is_directory=True)
+```
+
+### Local/Cloud Routing
+
+Use local Claude Desktop and cloud-based clients simultaneously:
+
+```bash
+# Force local routing (when cloud mode is enabled)
+basic-memory status --local
+basic-memory project list --local
+
+# Force cloud routing
+basic-memory status --cloud
+```
+
+The local MCP server (`basic-memory mcp`) automatically uses local routing, so you can run both without conflicts.
+
+See the [complete v0.18.0 changelog](/latest-releases) for full details.
+
+---
 
 ## v0.17.0
 
