@@ -10,6 +10,73 @@ import { Card, CardGroup, Info, Warning, Note, Tip, Accordion, AccordionItem, St
 
 View the latest changes to Basic Memory on [GitHub](https://github.com/basicmachines-co/basic-memory/releases)
 
+## [v0.18.0](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.18.0) — 2026-01-28
+
+**Focus:** Context-aware wiki link resolution, directory operations, and cloud routing improvements
+
+<Info>
+**Highlights:**
+- Context-aware wiki link resolution with `source_path` support
+- Directory support for move and delete operations
+- Local MCP cloud mode routing for simultaneous local/cloud usage
+- MCP prompt rendering fixes
+</Info>
+
+### Features
+
+- **Context-aware wiki link resolution** ([#527](https://github.com/basicmachines-co/basic-memory/pull/527))
+  - Add `source_path` parameter to `resolve_link()` for context-aware resolution
+  - Relative path resolution: `[[nested/note]]` from `folder/file.md` → `folder/nested/note.md`
+  - Proximity-based resolution for duplicate titles (prefers notes in same folder)
+  - Strict mode to disable fuzzy search fallback for wiki links
+
+- **Directory support for move and delete** ([#518](https://github.com/basicmachines-co/basic-memory/pull/518))
+  - Add `is_directory` parameter to `move_note` and `delete_note` MCP tools
+  - New `POST /move-directory` and `POST /delete-directory` API endpoints
+  - Rename `folder` → `directory` parameter across codebase for consistency
+
+- **Local MCP cloud mode routing** ([#522](https://github.com/basicmachines-co/basic-memory/pull/522))
+  - Add `--local` and `--cloud` CLI routing flags
+  - Local MCP server (`basic-memory mcp`) automatically uses local routing
+  - Enables simultaneous use of local Claude Desktop and cloud-based clients
+  - Environment variable `BASIC_MEMORY_FORCE_LOCAL=true` for global override
+
+### Bug Fixes
+
+- **Fix MCP prompt rendering errors** ([#524](https://github.com/basicmachines-co/basic-memory/pull/524))
+  - Fix "Error rendering prompt recent_activity" error
+  - Change `TimeFrame` to `str` in prompt type annotations for FastMCP compatibility
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.17.9...v0.18.0
+
+---
+
+## [v0.17.8-v0.17.9](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.9) — 2026-01-24
+
+**Focus:** Cloud mode bug fixes and snapshot CLI commands
+
+### Features
+
+- **Cloud snapshot CLI commands** ([#476](https://github.com/basicmachines-co/basic-memory/pull/476))
+  - New `basic-memory cloud snapshot` commands: `create`, `list`, `delete`, `show`, `browse`
+  - Manage cloud backups directly from the command line
+
+### Bug Fixes
+
+- **Fix `get_default_project()` returning multiple results** ([#521](https://github.com/basicmachines-co/basic-memory/pull/521))
+  - Query incorrectly matched any project with non-NULL `is_default` (both True and False)
+  - Now correctly checks for `is_default=True` only
+
+- **Fix `remove_project()` checking stale config in cloud mode** ([#523](https://github.com/basicmachines-co/basic-memory/pull/523))
+  - In cloud mode, only check database `is_default` field (source of truth)
+  - Config file can become stale when users set default project via v2 API
+
+- **Read default project from database in cloud mode** ([#520](https://github.com/basicmachines-co/basic-memory/pull/520))
+
+**Full Changelog**: https://github.com/basicmachines-co/basic-memory/compare/v0.17.7...v0.17.9
+
+---
+
 ## [v0.17.7](https://github.com/basicmachines-co/basic-memory/releases/tag/v0.17.7) — 2026-01-19
 
 **Focus:** MCP Registry publication and bug fixes

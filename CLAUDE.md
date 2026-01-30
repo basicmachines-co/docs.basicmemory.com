@@ -12,7 +12,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 
 **Repository**: https://github.com/basicmachines-co/basic-memory
 **Website**: https://basicmemory.com
-**Current Version**: v0.17.7 (released January 19, 2026)
+**Current Version**: v0.18.0 (released January 28, 2026)
 
 **Key Features**:
 - 17 MCP tools for AI integration (write_note, read_note, edit_note, search_notes, build_context, etc.)
@@ -23,13 +23,11 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 - Real-time file synchronization
 - SQLite and PostgreSQL database backends
 
-**v0.17.x Major Features**:
-- API v2 migration complete - all MCP tools use optimized v2 endpoints
-- Auto-format files on save with built-in Python formatter
-- Anonymous usage telemetry (Homebrew-style opt-out)
-- CLI stability improvements - commands no longer hang on exit
-- Cloud mode discovery for recent_activity across projects
-- PostgreSQL/Neon database support as alternative to SQLite
+**v0.18.0 Major Features**:
+- Context-aware wiki link resolution with source_path support
+- Directory support for move_note and delete_note tools
+- Local MCP cloud mode routing for simultaneous local/cloud usage
+- Cloud snapshot CLI commands for backup management
 
 ### Basic Memory Cloud
 
