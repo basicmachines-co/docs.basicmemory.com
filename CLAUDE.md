@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the documentation website for Basic Memory (`docs.basicmemory.com`), built with Astro, React components, and MDX for content. The site provides comprehensive documentation including guides, integrations, how-to articles, and technical references.
+This is the documentation website for Basic Memory (`docs.basicmemory.com`), built with Docus (Nuxt-based documentation theme). The site provides comprehensive documentation including guides, integrations, how-to articles, and technical references.
 
 ### What is Basic Memory?
 
@@ -12,7 +12,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 
 **Repository**: https://github.com/basicmachines-co/basic-memory
 **Website**: https://basicmemory.com
-**Current Version**: v0.18.0 (released January 26, 2026)
+**Current Version**: v0.18.0 (released January 28, 2026)
 
 **Key Features**:
 - 17 MCP tools for AI integration (write_note, read_note, edit_note, search_notes, build_context, etc.)
@@ -23,14 +23,11 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 - Real-time file synchronization
 - SQLite and PostgreSQL database backends
 
-**v0.18.x Major Features**:
-- Directory operations - move and delete entire directories with MCP tools
-- Local/cloud routing flags - `--local` and `--cloud` CLI flags for explicit routing control
-- Cloud snapshots - create, list, browse, and restore point-in-time snapshots
-- API v2 migration complete - all MCP tools use optimized v2 endpoints
-- Auto-format files on save with built-in Python formatter
-- Cloud mode stability improvements
-- PostgreSQL/Neon database support as alternative to SQLite
+**v0.18.0 Major Features**:
+- Context-aware wiki link resolution with source_path support
+- Directory support for move_note and delete_note tools
+- Local MCP cloud mode routing for simultaneous local/cloud usage
+- Cloud snapshot CLI commands for backup management
 
 ### Basic Memory Cloud
 
@@ -62,159 +59,123 @@ This documentation site covers both:
 1. **Basic Memory** (local-first product) - Installation, MCP tools, CLI, integrations, knowledge format
 2. **Basic Memory Cloud** (upcoming) - Cloud-specific features, authentication, sync, billing
 
-The site documents the latest v0.18.x release and includes cloud product documentation.
+The site documents the latest v0.17.x release and includes cloud product documentation.
 
 ## Development Commands
 
 ```bash
 npm install          # Install dependencies
-npm run dev          # Start dev server at localhost:4321
-npm run build        # Build production site to ./dist/
+npm run dev          # Start dev server at localhost:3000
+npm run build        # Build production site
 npm run preview      # Preview production build locally
-npm run astro ...    # Run Astro CLI commands
+just deploy development  # Deploy to development environment
+just deploy production   # Deploy to production environment
 ```
 
 ## Architecture
 
 ### Tech Stack
-- **Framework**: Astro 5 with MDX and React integration
-- **Styling**: Tailwind CSS with custom design tokens
-- **Components**: React (TSX) and Astro components
-- **Search**: Pagefind for static search
-- **Diagrams**: Mermaid integration with theme support
-- **Syntax Highlighting**: Shiki with GitHub light/dark themes
+- **Framework**: Docus (Nuxt 4-based documentation theme)
+- **Styling**: Tailwind CSS 4 with Nuxt UI
+- **Content**: Markdown with MDC syntax
+- **Search**: Built-in full-text search
+- **LLM Integration**: nuxt-llms for AI-friendly documentation
+- **Deployment**: Fly.io with Docker containerization
 
 ### Directory Structure
 
 ```
-src/
-├── components/     # React and Astro components
-│   ├── *.tsx      # React components (Callout, Card, CodeBlock, Tabs, etc.)
-│   └── *.astro    # Astro components (Header, Sidebar, Footer, etc.)
-├── config/
-│   └── navigation.ts  # Navigation configuration
-├── layouts/
-│   ├── Layout.astro      # Base layout
-│   └── DocsLayout.astro  # Docs page layout with sidebar + TOC
-├── lib/
-│   └── utils.ts   # Utility functions (cn, etc.)
-├── pages/         # File-based routing
-│   ├── index.mdx
-│   ├── guides/
-│   ├── integrations/
-│   ├── how-to/
-│   └── technical/
-└── styles/        # Global styles and CSS variables
+├── app/
+│   ├── app.config.ts    # Docus configuration
+│   └── components/      # Custom Vue components
+├── content/             # Documentation pages (Markdown)
+│   ├── 1.start-here/    # Getting started guides
+│   ├── 2.whats-new/     # Release notes
+│   ├── 3.cloud/         # Cloud documentation
+│   ├── 4.local/         # Local installation
+│   ├── 5.concepts/      # Core concepts
+│   ├── 6.integrations/  # Integration guides
+│   ├── 7.how-to/        # How-to guides
+│   └── 8.reference/     # Technical reference
+├── public/              # Static assets
+├── server/              # Server routes (API)
+├── nuxt.config.ts       # Nuxt configuration
+├── Dockerfile           # Container build
+├── fly.toml.template    # Fly.io deployment template
+└── justfile             # Development commands
 ```
 
 ### Key Architectural Patterns
 
-**Navigation System** (`src/config/navigation.ts`):
-- Centralized configuration for all navigation
-- `navConfig.sidebar`: Hierarchical sidebar structure with sections and items
-- `navConfig.sidebarTopLinks`: External links with icons (GitHub, Discord, etc.)
-- `navConfig.topNav`: Top navigation links
-- Interface: `SidebarSection` containing `NavItem[]`
+**Configuration** (`app/app.config.ts`):
+- Docus theme configuration (header, footer, socials, TOC)
+- Nuxt UI color and component customization
 
-**Layout Composition**:
-- `Layout.astro`: Base layout with head/meta tags
-- `DocsLayout.astro`: Three-column layout (Sidebar → Content → TableOfContents)
-- Uses frontmatter `layout` field in MDX files
+**Navigation**:
+- File-based routing via numbered directory prefixes (e.g., `1.start-here/`)
+- `.navigation.yml` files for section titles and icons
+- Automatic sidebar generation from content structure
 
 **Component System**:
-- Documentation components exported from `src/components/index.ts`
-- Custom components available in MDX: `Card`, `CardGroup`, `Callout`, `Tip`, `Warning`, `Note`, `Info`, `Steps`, `Tabs`, `CodeBlock`, `CodeGroup`, `InstallationTabs`
-- All use Tailwind CSS with dark mode support via `class` strategy
-
-**Path Aliases**:
-- `@/*` maps to `./src/*` (configured in tsconfig.json)
-- Always use `@/components`, `@/config`, etc. for imports
+- MDC (Markdown Components) syntax for inline components
+- Custom Vue components in `app/components/content/`
+- Built-in Docus components: `::note`, `::warning`, `::tip`, `::code-group`
 
 **Theming**:
-- Dark mode: Class-based (`darkMode: 'class'` in Tailwind)
-- Theme toggle component with localStorage persistence
-- Custom CSS variables in Tailwind config for design tokens
-- Mermaid diagrams support light/dark themes
+- Dark mode built-in with Nuxt UI
+- Tailwind CSS 4 with CSS variables
+- Theme configuration in `app/app.config.ts`
 
 ## Content Guidelines
 
 ### Adding Documentation Pages
 
-1. Create MDX file in appropriate `src/pages/` subdirectory
-2. Add frontmatter:
+1. Create `.md` file in appropriate `content/` subdirectory
+2. Use numeric prefix for ordering (e.g., `1.getting-started.md`)
+3. Add frontmatter:
    ```yaml
    ---
-   layout: '@/layouts/DocsLayout.astro'
-   title: 'Page Title'
-   description: 'Optional description'
+   title: Page Title
+   description: Optional description
    ---
    ```
-3. Add navigation entry to `src/config/navigation.ts` in correct section
-4. Import and use documentation components as needed
 
-### Using Components in MDX
+### Using MDC Components
 
-```mdx
-import { Card, CardGroup, Callout, Steps } from '@/components'
+```md
+::note
+Important information here
+::
 
-<Callout type="info">
-  Important information here
-</Callout>
+::warning
+Warning message
+::
 
-<Steps>
-1. First step
-2. Second step
-</Steps>
-
-<CardGroup cols={2}>
-  <Card title="Guide 1" href="/guide-1" />
-  <Card title="Guide 2" href="/guide-2" />
-</CardGroup>
+::code-group
+```bash [npm]
+npm install basic-memory
 ```
-
-## Navigation Updates
-
-When adding/removing/reorganizing pages, update `src/config/navigation.ts`:
-
-```typescript
-export const navConfig = {
-  sidebar: [
-    {
-      title: 'Section Name',
-      items: [
-        { title: 'Page Title', href: '/path/to/page' },
-      ],
-    },
-  ],
-}
+```bash [pip]
+pip install basic-memory
 ```
-
-The sidebar automatically highlights the current page based on `href` matching `Astro.url.pathname`.
-
-## Styling Conventions
-
-- Use Tailwind utility classes
-- Dark mode: Add `dark:` variants for all colors
-- Responsive: Mobile-first with `md:` and `lg:` breakpoints
-- Custom colors use HSL CSS variables from Tailwind config
-- Components should support both light and dark themes
+::
+```
 
 ## Site Configuration
 
-- Site URL: `https://docs.basicmemory.com` (in astro.config.mjs)
-- Mermaid diagrams use 'default' (light) and 'base' (dark) themes
-- Shiki syntax highlighting uses 'github-light' and 'github-dark'
-- Pagefind builds search index automatically during production build
+- Site URL: `https://docs.basicmemory.com` (in nuxt.config.ts)
+- Docus configuration in `app/app.config.ts`
+- LLM-friendly output via nuxt-llms module
 
 ## Documentation Status & Priorities
 
-Documentation is up-to-date for v0.18.x release. Cloud product documentation is complete.
+Documentation is up-to-date for v0.17.x release. Cloud product documentation is complete.
 
 ### Reference Materials
 
 When documenting features:
 - **Basic Memory CHANGELOG**: `gh api repos/basicmachines-co/basic-memory/contents/CHANGELOG.md`
-- **Release Notes**: `gh release view v0.18.0 --repo basicmachines-co/basic-memory`
+- **Release Notes**: `gh release view v0.17.2 --repo basicmachines-co/basic-memory`
 - **Basic Memory README**: https://github.com/basicmachines-co/basic-memory
 - **Cloud README**: https://github.com/basicmachines-co/basic-memory-cloud
 - **Cloud CLAUDE.md**: https://github.com/basicmachines-co/basic-memory-cloud/blob/main/CLAUDE.md
