@@ -1,34 +1,18 @@
 {
-  "name": "docs.basicmemory.com",
-  "type": "module",
-  "version": "0.0.1",
+  "name": "basic-memory-docs",
+  "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "check": "astro check"
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.5",
-    "@astrojs/mdx": "^4.3.0",
-    "@astrojs/react": "^4.3.0",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "astro": "^5.11.0",
-    "astro-mermaid": "^1.0.4",
-    "astro-pagefind": "^1.8.3",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.525.0",
-    "mermaid": "^11.8.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tailwind-merge": "^3.3.1",
-    "typescript": "^5.9.3"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.17"
+    "beautiful-mermaid": "^0.1.3",
+    "better-sqlite3": "^12.5.0",
+    "docus": "latest",
+    "lucide-vue-next": "^0.563.0",
+    "nuxt": "^4.2.2"
   }
 }
