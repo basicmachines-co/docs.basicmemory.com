@@ -5,11 +5,18 @@ seo:
 ---
 
 ::u-page-hero
+---
+orientation: horizontal
+class: py-0
+---
+
 #title
 AI memory that grows with you.
 
 #description
-Build persistent knowledge that both you and AI can read, write, and enhance together.
+Build persistent knowledge that both you and AI can read, write, and enhance together. 
+Learn how it works.
+See why your AI needs Basic Memory.
 
 #links
   :::u-button
@@ -42,9 +49,15 @@ Build persistent knowledge that both you and AI can read, write, and enhance tog
   ---
   v0.18 →
   :::
+
+#default
+![Basic Memory](/computer.png)
 ::
 
 ::u-page-section
+---
+class: pt-0
+---
   :::u-page-grid
     ::::u-page-card
     ---
