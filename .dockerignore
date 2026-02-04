@@ -1,0 +1,16 @@
+node_modules
+.nuxt
+.output
+dist
+.env*
+.git
+.github
+*.md
+!README.md
+.vscode
+.idea
+.DS_Store
+*.log
+coverage
+.claude
+.data

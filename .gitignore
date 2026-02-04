@@ -1,24 +1,33 @@
-# build output
-dist/
-# generated types
-.astro/
+# Nuxt build outputs
+.nuxt
+.output
+dist
 
-# dependencies
-node_modules/
+# Dependencies
+node_modules
 
-# logs
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.development
+!.env.production
+
+# Generated fly.toml
+fly.toml
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-
-# environment variables
-.env
-.env.production
-
-# macOS-specific files
+# macOS
 .DS_Store
 
-# jetbrains setting folder
+# IDE
 .idea/
+.vscode/
+
+# Docus data
+.data
