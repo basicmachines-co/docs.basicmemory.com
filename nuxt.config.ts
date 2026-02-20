@@ -3,6 +3,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   app: {
     head: {
+      meta: [
+        {
+          name: 'msvalidate.01',
+          content: '68D1B3FDD385F6EE2A92C3711AA66E4A',
+        },
+      ],
       script: [
         {
           src: 'https://cloud.umami.is/script.js',
