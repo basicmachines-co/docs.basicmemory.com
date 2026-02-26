@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
   extends: ['docus'],
+  modules: ['@nuxtjs/sitemap'],
   compatibilityDate: '2025-07-15',
   app: {
     head: {
