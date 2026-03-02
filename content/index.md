@@ -47,7 +47,7 @@ See why your AI needs Basic Memory.
   to: https://basicmemory.com
   variant: outline
   ---
-  v0.18 →
+  v0.19 →
   :::
 
 #default

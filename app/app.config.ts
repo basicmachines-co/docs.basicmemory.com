@@ -44,6 +44,7 @@ export default defineAppConfig({
   },
   socials: {
     github: 'https://github.com/basicmachines-co/basic-memory',
+    x: 'https://x.com/basic_memory',
     discord: 'https://discord.gg/tyvKNccgqN',
     reddit: 'https://www.reddit.com/r/basicmemory',
   },
@@ -52,6 +53,7 @@ export default defineAppConfig({
       title: 'Community',
       links: [
         { label: 'GitHub', to: 'https://github.com/basicmachines-co/basic-memory' },
+        { label: 'X / Twitter', to: 'https://x.com/basic_memory' },
         { label: 'Discord', to: 'https://discord.gg/tyvKNccgqN' },
         { label: 'Reddit', to: 'https://www.reddit.com/r/basicmemory' },
       ],

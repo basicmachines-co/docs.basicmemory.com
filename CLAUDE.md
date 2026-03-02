@@ -12,7 +12,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 
 **Repository**: https://github.com/basicmachines-co/basic-memory
 **Website**: https://basicmemory.com
-**Current Version**: v0.18.0 (released January 28, 2026)
+**Current Version**: v0.19.0 (released March 2026)
 
 **Key Features**:
 - 17 MCP tools for AI integration (write_note, read_note, edit_note, search_notes, build_context, etc.)
@@ -23,11 +23,14 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 - Real-time file synchronization
 - SQLite and PostgreSQL database backends
 
-**v0.18.0 Major Features**:
-- Context-aware wiki link resolution with source_path support
-- Directory support for move_note and delete_note tools
-- Local MCP cloud mode routing for simultaneous local/cloud usage
-- Cloud snapshot CLI commands for backup management
+**v0.19.0 Major Features**:
+- Schema system for note structure validation
+- Semantic vector search with hybrid fusion
+- Per-project cloud routing
+- Project-prefixed permalinks
+- `write_note` overwrite guard
+- JSON output mode for all MCP tools
+- Unified metadata search (search_by_metadata merged into search_notes)
 
 ### Basic Memory Cloud
 
@@ -59,7 +62,7 @@ This documentation site covers both:
 1. **Basic Memory** (local-first product) - Installation, MCP tools, CLI, integrations, knowledge format
 2. **Basic Memory Cloud** (upcoming) - Cloud-specific features, authentication, sync, billing
 
-The site documents the latest v0.17.x release and includes cloud product documentation.
+The site documents the latest v0.19.x release and includes cloud product documentation.
 
 ## Development Commands
 
@@ -169,13 +172,13 @@ pip install basic-memory
 
 ## Documentation Status & Priorities
 
-Documentation is up-to-date for v0.17.x release. Cloud product documentation is complete.
+Documentation is up-to-date for v0.19.x release. Cloud product documentation is complete.
 
 ### Reference Materials
 
 When documenting features:
 - **Basic Memory CHANGELOG**: `gh api repos/basicmachines-co/basic-memory/contents/CHANGELOG.md`
-- **Release Notes**: `gh release view v0.17.2 --repo basicmachines-co/basic-memory`
+- **Release Notes**: `gh release view v0.19.0 --repo basicmachines-co/basic-memory`
 - **Basic Memory README**: https://github.com/basicmachines-co/basic-memory
 - **Cloud README**: https://github.com/basicmachines-co/basic-memory-cloud
 - **Cloud CLAUDE.md**: https://github.com/basicmachines-co/basic-memory-cloud/blob/main/CLAUDE.md
