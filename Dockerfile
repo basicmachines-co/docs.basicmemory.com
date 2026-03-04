@@ -1,4 +1,4 @@
-FROM node:25-bullseye AS build
+FROM node:25-bookworm AS build
 WORKDIR /app
 
 ARG CACHE_BUST=unknown
