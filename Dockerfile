@@ -1,4 +1,4 @@
-FROM node:22-bullseye AS build
+FROM node:25-bullseye AS build
 WORKDIR /app
 
 ARG CACHE_BUST=unknown
@@ -16,7 +16,7 @@ COPY . .
 RUN npx nuxt prepare && npx nuxt build
 
 # Production image
-FROM node:22-slim AS prod
+FROM node:25-slim AS prod
 
 RUN apt-get update && apt-get install -y \
     curl \
