@@ -44,7 +44,7 @@ See why your AI needs Basic Memory.
   :::u-button
   ---
   size: sm
-  to: https://basicmemory.com
+  to: /whats-new/v0.20.0
   variant: outline
   ---
   v0.20 →

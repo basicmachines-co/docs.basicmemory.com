@@ -170,15 +170,24 @@ pip install basic-memory
 - Docus configuration in `app/app.config.ts`
 - LLM-friendly output via nuxt-llms module
 
+## Version Bump Checklist
+
+When updating docs for a new Basic Memory release, update all of the following:
+
+1. **Homepage version badge** — `content/index.md`: update the version text (e.g., `v0.20 →`) and the `to:` link to point to the new release notes page
+2. **Release notes page** — `content/2.whats-new/0.v<VERSION>.md`: rename and update with new release content (the `0.` prefix keeps it first in the nav)
+3. **Changelog** — `content/2.whats-new/2.changelog.md` auto-fetches from GitHub releases API, no manual update needed
+4. **Deploy** — push to main auto-deploys to development; production requires manual workflow dispatch via GitHub Actions
+
 ## Documentation Status & Priorities
 
-Documentation is up-to-date for v0.19.x release. Cloud product documentation is complete.
+Documentation is up-to-date for v0.20.x release. Cloud product documentation is complete.
 
 ### Reference Materials
 
 When documenting features:
 - **Basic Memory CHANGELOG**: `gh api repos/basicmachines-co/basic-memory/contents/CHANGELOG.md`
-- **Release Notes**: `gh release view v0.19.0 --repo basicmachines-co/basic-memory`
+- **Release Notes**: `gh release view v0.20.0 --repo basicmachines-co/basic-memory`
 - **Basic Memory README**: https://github.com/basicmachines-co/basic-memory
 - **Cloud README**: https://github.com/basicmachines-co/basic-memory-cloud
 - **Cloud CLAUDE.md**: https://github.com/basicmachines-co/basic-memory-cloud/blob/main/CLAUDE.md
