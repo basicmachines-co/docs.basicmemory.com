@@ -176,7 +176,7 @@ When updating docs for a new Basic Memory release, update all of the following:
 
 1. **Homepage version badge** — `content/index.md`: update the version text (e.g., `v0.20 →`) and the `to:` link to point to the new release notes page
 2. **Release notes page** — `content/2.whats-new/0.v<VERSION>.md`: rename and update with new release content (the `0.` prefix keeps it first in the nav)
-3. **Changelog** — `content/2.whats-new/2.changelog.md` auto-fetches from GitHub releases API, no manual update needed
+3. **Changelog** — `content/2.whats-new/3.changelog.md` auto-fetches from GitHub releases API, no manual update needed
 4. **Deploy** — push to main auto-deploys to development; production requires manual workflow dispatch via GitHub Actions
 
 ## Documentation Status & Priorities
