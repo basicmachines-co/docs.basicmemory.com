@@ -181,13 +181,13 @@ When updating docs for a new Basic Memory release, update all of the following:
 
 ## Documentation Status & Priorities
 
-Documentation is up-to-date for v0.20.x release. Cloud product documentation is complete.
+Documentation is up-to-date for v0.21.x release. Cloud product documentation is complete.
 
 ### Reference Materials
 
 When documenting features:
 - **Basic Memory CHANGELOG**: `gh api repos/basicmachines-co/basic-memory/contents/CHANGELOG.md`
-- **Release Notes**: `gh release view v0.20.0 --repo basicmachines-co/basic-memory`
+- **Release Notes**: `gh release view v0.21.0 --repo basicmachines-co/basic-memory`
 - **Basic Memory README**: https://github.com/basicmachines-co/basic-memory
 - **Cloud README**: https://github.com/basicmachines-co/basic-memory-cloud
 - **Cloud CLAUDE.md**: https://github.com/basicmachines-co/basic-memory-cloud/blob/main/CLAUDE.md
