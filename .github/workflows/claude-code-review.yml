@@ -1,14 +1,25 @@
 name: Claude Code Review
 
+# DISABLED 2026-05-18: the org disabled Claude subscription access for Claude
+# Code, and this workflow has no ANTHROPIC_API_KEY fallback, so it fails in
+# ~19s on every PR before reviewing anything. It is a review bot, not a
+# build/correctness gate. Trigger is set to workflow_dispatch only so the
+# config is preserved and easy to restore.
+#
+# To re-enable: fix auth (re-enable Claude subscription access for Claude
+# Code in org settings, OR add an ANTHROPIC_API_KEY repo secret and wire it
+# into the action's `with:` block), then restore the pull_request trigger
+# that is commented out below.
 on:
-  pull_request:
-    types: [opened, synchronize]
-    # Optional: Only run on specific file changes
-    # paths:
-    #   - "src/**/*.ts"
-    #   - "src/**/*.tsx"
-    #   - "src/**/*.js"
-    #   - "src/**/*.jsx"
+  workflow_dispatch:
+  # pull_request:
+  #   types: [opened, synchronize]
+  #   # Optional: Only run on specific file changes
+  #   # paths:
+  #   #   - "src/**/*.ts"
+  #   #   - "src/**/*.tsx"
+  #   #   - "src/**/*.js"
+  #   #   - "src/**/*.jsx"
 
 jobs:
   claude-review:
