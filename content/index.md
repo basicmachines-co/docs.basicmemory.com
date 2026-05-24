@@ -94,7 +94,8 @@ class: pt-0
     class: lg:col-span-1
     spotlight: true
     ---
-    ![Web editor with editor modes](/screenshots/cloud-app/editor-modes.gif)
+    :::theme-image{light="/screenshots/cloud-app/v2-edit-mode-light.png" dark="/screenshots/cloud-app/v2-edit-mode-dark.png" alt="Web editor"}
+    :::
     ::::
 
     ::::u-page-card
