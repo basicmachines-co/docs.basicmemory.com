@@ -4,17 +4,33 @@
 default:
     @just --list
 
+# Load the Node version pinned in .nvmrc (via nvm), then run a command
+_with-node +cmd:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+    if [ -s "$NVM_DIR/nvm.sh" ]; then
+        \. "$NVM_DIR/nvm.sh"
+        nvm use >/dev/null
+    fi
+    echo "Using node $(node --version)"
+    {{cmd}}
+
+# Install dependencies (pinned Node from .nvmrc)
+install:
+    @just _with-node npm install
+
 # Development
 dev:
-    npm run dev
+    @just _with-node npm run dev
 
 # Build
 build:
-    npm run build
+    @just _with-node npm run build
 
 # Preview production build
 preview:
-    npm run preview
+    @just _with-node npm run preview
 
 # Generate fly.toml from template
 generate-fly-toml env:

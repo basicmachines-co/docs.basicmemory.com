@@ -1,6 +1,9 @@
 {
   "name": "basic-memory-docs",
   "private": true,
+  "engines": {
+    "node": ">=20 <25"
+  },
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
