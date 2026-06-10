@@ -1,163 +1,140 @@
 ---
+path: /
 seo:
-  title: Basic Memory
-  description: AI and humans working together to build knowledge that gets smarter over time
+  title: Basic Memory Documentation
+  description: Documentation for Basic Memory Cloud and the open-source project.
 ---
 
-::u-page-hero
----
-orientation: horizontal
-class: py-0
----
+::div{class="bm-home"}
+  :::div{class="bm-docs-intro"}
+  # Basic Memory documentation
 
-#title
-AI memory that grows with you.
+  Build and maintain a shared knowledge base for humans, agents, and their teams. Find guides for Basic Memory Cloud and the open-source project.
 
-#description
-Build persistent knowledge that both you and AI can read, write, and enhance together. 
-Learn how it works.
-See why your AI needs Basic Memory.
-
-#links
-  :::u-button
-  ---
-  color: neutral
-  size: xl
-  to: start-here/what-is-basic-memory
-  trailing-icon: i-lucide-arrow-right
-  ---
-  Get started
+  ::docs-home-search
   :::
 
-  :::u-button
-  ---
-  color: neutral
-  icon: simple-icons-github
-  size: xl
-  to: https://github.com/basicmachines-co/basic-memory
-  variant: outline
-  ---
-  Star on GitHub
+  :::div{class="bm-docs-section bm-start-here"}
+  ## Start here
+
+    ::::div{class="bm-start-grid"}
+      :::::div{class="bm-start-card bm-start-card-primary"}
+      :badge[Recommended]{color="primary" variant="soft"}
+
+      <a class="bm-start-title" href="/start-here/quickstart-cloud">Start with Cloud</a>
+
+      Create a workspace, connect your AI tools, and use Basic Memory from the web app.
+
+      [Quickstart: Cloud →](/start-here/quickstart-cloud)
+
+      :::::
+
+      :::::div{class="bm-start-card"}
+      :badge[Open Source]{color="neutral" variant="soft"}
+
+      <a class="bm-start-title" href="/start-here/quickstart-local">Run locally</a>
+
+      Install the CLI, keep notes on your machine, and connect a local MCP server.
+
+      [Quickstart: Open Source →](/start-here/quickstart-local)
+
+      :::::
+    ::::
+
+    ::::p{class="bm-ai-docs-link"}
+    [AI-friendly docs](/reference/llms-txt) for agents that need clean Markdown, `/llms.txt`, or the full docs corpus.
+    ::::
   :::
 
-#headline
-  :::u-button
-  ---
-  size: sm
-  to: /whats-new/v0.21.0
-  variant: outline
-  ---
-  v0.21 →
+  :::div{class="bm-docs-section bm-common-tasks"}
+  ## Common tasks
+
+    ::::div{class="bm-task-grid"}
+      :::::div{class="bm-task-link"}
+      [Connect an AI tool](/integrations)
+
+      Claude, ChatGPT, Codex, Cursor, and other MCP clients.
+      :::::
+
+      :::::div{class="bm-task-link"}
+      [Import existing knowledge](/cloud/web-app#import-data)
+
+      Bring in Markdown, Claude conversations, or ChatGPT history.
+      :::::
+
+      :::::div{class="bm-task-link"}
+      [Collaborate with your team](/teams/about)
+
+      Invite members, assign roles, and share projects.
+      :::::
+
+      :::::div{class="bm-task-link"}
+      [Understand the knowledge format](/concepts/knowledge-format)
+
+      Learn how notes, observations, relations, and projects work.
+      :::::
+
+      :::::div{class="bm-task-link"}
+      [Look up an MCP tool](/reference/mcp-tools-reference)
+
+      Find tool names, parameters, behavior, and examples.
+      :::::
+
+      :::::div{class="bm-task-link"}
+      [Use Cloud from the terminal](/cloud/cloud-cli)
+
+      Check status, manage keys, sync files, route projects, and automate workflows.
+      :::::
+
+      :::::div{class="bm-task-link"}
+      [Troubleshoot a problem](/reference/troubleshooting)
+
+      Diagnose installation, connection, sync, and indexing issues.
+      :::::
+    ::::
   :::
 
-#default
-![Basic Memory](/computer.png)
-::
+  :::div{class="bm-docs-section bm-browse-docs"}
+  ## Browse the docs
 
-::u-page-section
----
-class: pt-0
----
-  :::u-page-grid
-    ::::u-page-card
-    ---
-    title: See into the black box
-    description: Every piece of AI context is a file you can read and edit. No mystery, no lock-in—just plain Markdown you own forever.
-    class: lg:col-span-1
-    spotlight: true
-    ---
-    ::::
+    ::::div{class="bm-browse-grid"}
+      :::::div{class="bm-browse-group"}
+      ### Cloud
 
-    ::::u-page-card
-    ---
-    title: Knowledge that compounds
-    description: Unlike chat history that disappears, Basic Memory creates a semantic knowledge graph. Every note connects to related ideas, revealing patterns and insights that grow smarter over time.
-    class: lg:col-span-2
-    spotlight: true
-    ---
-    ::::
+      - [Cloud overview](/cloud/cloud-guide)
+      - [Web app](/cloud/web-app)
+      - [Cloud CLI](/cloud/cloud-cli)
+      - [Cloud sync](/cloud/cloud-sync)
+      :::::
 
-    ::::u-page-card
-    ---
-    title: Works with your AI assistant
-    description: Connect to Claude, ChatGPT, Gemini, Cursor, VS Code, and more via the Model Context Protocol. Your AI assistant reads your entire knowledge history instantly.
-    class: lg:col-span-2
-    spotlight: true
-    ---
-    ![MCP Integration with Claude](/screenshots/claude/create-first-note.png)
-    ::::
+      :::::div{class="bm-browse-group"}
+      ### Open Source
 
-    ::::u-page-card
-    ---
-    title: Your web editor for knowledge
-    description: Write and organize notes from any browser. Search your knowledge, make connections, and watch your ideas grow—no installation required.
-    class: lg:col-span-1
-    spotlight: true
-    ---
-    :::theme-image{light="/screenshots/cloud-app/v2-edit-mode-light.png" dark="/screenshots/cloud-app/v2-edit-mode-dark.png" alt="Web editor"}
-    :::
-    ::::
+      - [Install Basic Memory](/local/local-install)
+      - [CLI basics](/local/cli-basics)
+      - [Local MCP tools](/local/mcp-tools-local)
+      - [Configuration](/reference/configuration)
+      :::::
 
-    ::::u-page-card
-    ---
-    title: Cloud or local
-    description: Start with Basic Memory Cloud for instant access from any browser, or run locally on your machine. Sync between them, or keep everything offline—your choice.
-    class: lg:col-span-1
-    icon: i-lucide-cloud
-    to: /start-here/quickstart-cloud
-    ---
-    ::::
+      :::::div{class="bm-browse-group"}
+      ### Integrations
 
-    ::::u-page-card
-    ---
-    title: Plain Markdown
-    description: Human-readable files, not proprietary formats. Your knowledge works in Obsidian, VS Code, or any text editor. Export, backup, or migrate anytime.
-    class: lg:col-span-2
-    icon: i-lucide-file-text
-    ---
-    ```markdown
-    ---
-    title: Project Ideas
-    tags: [ideas, projects]
-    ---
+      - [Connect AI tools](/integrations)
+      - [Claude](/integrations/claude-desktop)
+      - [ChatGPT](/integrations/chatgpt)
+      - [Codex](/integrations/codex)
+      - [Cursor and VS Code](/integrations/cursor)
+      :::::
 
-    ## Observations
-    - [insight] AI collaboration improves over time #growth
+      :::::div{class="bm-browse-group"}
+      ### Concepts & Reference
 
-    ## Relations
-    - relates_to [[AI Tools]]
-    - builds_on [[Past Research]]
-    ```
-    ::::
-
-    ::::u-page-card
-    ---
-    title: Open source
-    description: Basic Memory is fully open source. Run locally, self-host, contribute, or just explore the code. Your knowledge, your rules.
-    class: lg:col-span-1
-    icon: i-simple-icons-github
-    to: https://github.com/basicmachines-co/basic-memory
-    ---
-    ::::
-
-    ::::u-page-card
-    ---
-    title: AI-friendly docs
-    description: This documentation is optimized for AI consumption with llms.txt support and content negotiation. AI assistants can read these docs directly.
-    class: lg:col-span-1
-    icon: i-lucide-bot
-    to: /reference/llms-txt
-    ---
-    ::::
-
-    ::::u-page-card
-    ---
-    title: Ready to start?
-    description: Create your first note in under 2 minutes. Build AI memory that actually remembers.
-    class: lg:col-span-1
-    spotlight: true
-    to: /start-here/quickstart-cloud
-    ---
+      - [Knowledge format](/concepts/knowledge-format)
+      - [Schemas](/concepts/schema-system)
+      - [MCP tools reference](/reference/mcp-tools-reference)
+      - [Troubleshooting](/reference/troubleshooting)
+      - [Contact support](/reference/contact-support)
+      :::::
     ::::
   :::
 ::

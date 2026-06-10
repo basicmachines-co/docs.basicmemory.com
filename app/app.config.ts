@@ -16,11 +16,20 @@ export default defineAppConfig({
     },
     contentNavigation: {
       slots: {
+        link: 'items-start',
         linkLeadingIcon: 'size-4 mr-1',
+        linkTitle: 'min-w-0 flex-1 overflow-visible text-clip whitespace-normal break-words leading-5',
         linkTrailing: 'hidden',
       },
       defaultVariants: {
         variant: 'link',
+      },
+    },
+    contentToc: {
+      slots: {
+        link: 'items-start py-1.5',
+        linkText: 'overflow-visible text-clip whitespace-normal break-words leading-5',
+        indicator: 'hidden',
       },
     },
     pageLinks: {
