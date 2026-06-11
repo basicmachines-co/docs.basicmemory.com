@@ -174,10 +174,11 @@ pip install basic-memory
 
 When updating docs for a new Basic Memory release, update all of the following:
 
-1. **Homepage version badge** — `content/index.md`: update the version text (e.g., `v0.20 →`) and the `to:` link to point to the new release notes page
-2. **Release notes page** — `content/2.whats-new/0.v<VERSION>.md`: rename and update with new release content (the `0.` prefix keeps it first in the nav)
-3. **Changelog** — `content/2.whats-new/3.changelog.md` auto-fetches from GitHub releases API, no manual update needed
-4. **Deploy** — push to main auto-deploys to development; production requires manual workflow dispatch via GitHub Actions
+1. **Homepage version badge** — `content/index.md`: update the version text (e.g., `v0.22 →`) and the `to:` link to point to the new release notes page
+2. **Release notes page** — new minor/major: add `content/2.whats-new/1.v<VERSION>.md` modeled on the previous version's page, and renumber the existing what's-new pages down one slot (URLs don't change — Nuxt strips the numeric prefixes). Patch release: append a short note to the current version's page instead
+3. **Changelog** — the `*.changelog.md` page under `content/2.whats-new/` auto-fetches from the GitHub releases API, no manual update needed
+4. **Feature docs** — if the release adds user-facing features, update the relevant guide and reference pages (`content/3.cloud/`, `content/9.reference/`, etc.)
+5. **Deploy** — push to main auto-deploys to development; production requires manual workflow dispatch via GitHub Actions
 
 ## Documentation Status & Priorities
 
