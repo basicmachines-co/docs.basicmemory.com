@@ -44,10 +44,10 @@ See why your AI needs Basic Memory.
   :::u-button
   ---
   size: sm
-  to: /whats-new/v0.21.0
+  to: /whats-new/v0.22.0
   variant: outline
   ---
-  v0.21 →
+  v0.22 →
   :::
 
 #default
