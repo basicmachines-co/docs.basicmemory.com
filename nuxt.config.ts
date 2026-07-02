@@ -2,6 +2,9 @@ export default defineNuxtConfig({
   extends: ['docus'],
   modules: ['@nuxtjs/sitemap'],
   compatibilityDate: '2025-07-15',
+  routeRules: {
+    '/': { redirect: { to: '/welcome', statusCode: 301 } },
+  },
   app: {
     head: {
       meta: [
