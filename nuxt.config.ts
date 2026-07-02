@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   routeRules: {
     '/': { redirect: { to: '/welcome', statusCode: 301 } },
+    '/start-here/getting-started': { redirect: { to: '/local/getting-started', statusCode: 301 } },
   },
   app: {
     head: {
