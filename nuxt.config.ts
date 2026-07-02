@@ -10,6 +10,8 @@ export default defineNuxtConfig({
     '/whats-new/v0.22.0': { redirect: { to: '/whats-new/changelog', statusCode: 301 } },
     '/reference/v0.19-migration': { redirect: { to: '/whats-new/changelog', statusCode: 301 } },
     '/cloud/edit-locally-and-in-the-app': { redirect: { to: '/cloud/cloud-sync', statusCode: 301 } },
+    '/cloud/user-guide': { redirect: { to: '/cloud/cloud-guide', statusCode: 301 } },
+    '/integrations/claude-research-mode': { redirect: { to: '/integrations/claude-desktop', statusCode: 301 } },
   },
   app: {
     head: {
