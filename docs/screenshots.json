@@ -1,0 +1,26 @@
+{
+  "description": "Screenshots deliberately reviewed during the 2026 documentation overhaul. Add new UI captures here when they become part of the maintained documentation.",
+  "screenshots": [
+    {
+      "path": "screenshots/cloud-app/snapshots-list.png",
+      "page": "/cloud/cloud-snapshots",
+      "source": "Settings > Snapshots",
+      "captured": "2026-06-07",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/cloud-app/create-snapshot.png",
+      "page": "/cloud/cloud-snapshots",
+      "source": "Create Snapshot dialog",
+      "captured": "2026-06-07",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/cloud-app/restore-files.png",
+      "page": "/cloud/cloud-snapshots",
+      "source": "Snapshot restore browser",
+      "captured": "2026-06-07",
+      "theme": "light"
+    }
+  ]
+}
