@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '/start-here/why-basic-memory': { redirect: { to: '/start-here/what-is-basic-memory', statusCode: 301 } },
     '/changelog': { redirect: { to: '/whats-new/changelog', statusCode: 301 } },
     '/whats-new/v0.22.0': { redirect: { to: '/whats-new/changelog', statusCode: 301 } },
+    '/reference/v0.19-migration': { redirect: { to: '/whats-new/changelog', statusCode: 301 } },
   },
   app: {
     head: {

@@ -67,8 +67,7 @@ for (const file of markdownFiles) {
   const display = relative(root, file)
 
   if (!display.includes(`${sep}2.whats-new${sep}`)
-    && !display.endsWith(`${sep}changelog.md`)
-    && !display.endsWith(`${sep}9.v0.19-migration.md`)) {
+    && !display.endsWith(`${sep}changelog.md`)) {
     const versions = [...source.matchAll(/(?<![-\w])v\d+\.\d+(?:\.\d+)?\b/g)]
     for (const match of versions) {
       warnings.push(`${display}: current documentation contains release literal ${match[0]}`)
