@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { redirect: { to: '/welcome', statusCode: 301 } },
     '/start-here/getting-started': { redirect: { to: '/local/getting-started', statusCode: 301 } },
+    '/start-here/why-basic-memory': { redirect: { to: '/start-here/what-is-basic-memory', statusCode: 301 } },
   },
   app: {
     head: {
