@@ -174,7 +174,7 @@ pip install basic-memory
 
 When updating docs for a new Basic Memory release, update all of the following:
 
-1. **Homepage version badge** — `content/index.md`: update the version text (e.g., `v0.22 →`) and the `to:` link to point to the new release notes page
+1. **Welcome page What's New callout** — `content/index.md`: update the version text (e.g., `v0.22`) and the release-notes link in the note block
 2. **Release notes page** — new minor/major: replace the previous version's page — rename `content/2.whats-new/1.v<OLD>.md` to `1.v<NEW>.md` and rewrite it for the new release. Only the latest release gets a dedicated page (the changelog covers older releases), so the left nav must never show two version entries. Update any inbound links to the old release URL: latest-release cards point to the new page; references to version-specific behavior point to the GitHub release tag. Patch release: append a short note to the current version's page instead
 3. **Changelog** — the `*.changelog.md` page under `content/2.whats-new/` auto-fetches from the GitHub releases API, no manual update needed
 4. **Feature docs** — if the release adds user-facing features, update the relevant guide and reference pages (`content/3.cloud/`, `content/9.reference/`, etc.)
