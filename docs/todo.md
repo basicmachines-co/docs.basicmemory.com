@@ -36,7 +36,7 @@ When capturing, record source screen, date, theme, and owning page in `docs/scre
 
 ## Verify against external products (fast-moving UIs)
 
-- [ ] **ChatGPT MCP setup path** — `quickstart-cloud.md` says "Settings → Beta features → enable MCP"; `integrations/3.chatgpt.md` says "Settings → Developer → Custom MCP Servers". They disagree; verify current UI and align. Also check the YouTube walkthrough link still matches.
+- [ ] **ChatGPT MCP setup path** — now consistent across pages ("Settings → Developer → Custom MCP Servers"); verify against current ChatGPT UI, and check the YouTube walkthrough link still matches.
 - [ ] **Claude Desktop connector flow** — "Settings → Claude → Connectors" wording + the screenshot sets above
 - [ ] **Claude advanced research** — the research-mode page was deleted; a troubleshooting bullet in `integrations/1.claude-desktop.md` still claims research runs without MCP access. Verify current Claude behavior.
 - [ ] **Hermes slash-command patch** — version pin removed from `integrations/11.hermes.md`; check whether current Hermes Agent releases still need MONKEYPATCH.md and update or drop the warning
