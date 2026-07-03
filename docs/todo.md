@@ -9,7 +9,7 @@ Last updated: 2026-07-02 (docs-updates-2026-07 branch). Items found during the J
 - [ ] **Activity view** showing agent/MCP writes alongside member edits (for `cloud/02.web-app.md` → Activity)
 - [ ] **Explore 3D graph view** (for `cloud/02.web-app.md` → Explore the graph)
 - [ ] **Snapshots page with workspace selector** (replaces pre-v2 shots below)
-- [ ] Optional: partner portal dashboard (for `teams/4.partners.md`)
+- [ ] Optional: partner portal dashboard (for `partners/about` — now its own top-level section)
 
 ### Stale/pre-v2 — replace or delete
 - [ ] `public/screenshots/cloud-app/snapshots-list.png`, `create-snapshot.png`, `restore-files.png` — pre-v2 UI, used by `cloud/05.cloud-snapshots.md` as plain `![]()` images; recapture as `::theme-image` light/dark pairs
@@ -36,7 +36,8 @@ When capturing, record source screen, date, theme, and owning page in `docs/scre
 
 ## Verify against external products (fast-moving UIs)
 
-- [ ] **ChatGPT MCP setup path** — now consistent across pages ("Settings → Developer → Custom MCP Servers"); verify against current ChatGPT UI, and check the YouTube walkthrough link still matches.
+- [ ] **ChatGPT MCP setup path** — docs now say Settings → Apps & Connectors → Advanced settings → enable Developer mode → Create (per review-agent verification); double-check against current ChatGPT UI, and check the YouTube walkthrough link still matches. Paid-plan wording is now "Plus, Pro, Business/Team, Enterprise, or Edu".
+- [ ] **Cursor MCP setup** — review-agent correction applied (config via `~/.cursor/mcp.json` / `.cursor/mcp.json`, or Cursor Settings → MCP); verify against current Cursor UI
 - [ ] **Claude Desktop connector flow** — "Settings → Claude → Connectors" wording + the screenshot sets above
 - [ ] **Claude advanced research** — the research-mode page was deleted; a troubleshooting bullet in `integrations/1.claude-desktop.md` still claims research runs without MCP access. Verify current Claude behavior.
 - [ ] **Hermes slash-command patch** — version pin removed from `integrations/11.hermes.md`; check whether current Hermes Agent releases still need MONKEYPATCH.md and update or drop the warning
