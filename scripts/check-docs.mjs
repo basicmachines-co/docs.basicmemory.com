@@ -66,7 +66,7 @@ for (const file of markdownFiles) {
   const source = readText(file)
   const display = relative(root, file)
 
-  if (!display.includes(`${sep}2.whats-new${sep}`)
+  if (!display.includes(`${sep}02.whats-new${sep}`)
     && !display.endsWith(`${sep}changelog.md`)) {
     const versions = [...source.matchAll(/(?<![-\w])v\d+\.\d+(?:\.\d+)?\b/g)]
     for (const match of versions) {
