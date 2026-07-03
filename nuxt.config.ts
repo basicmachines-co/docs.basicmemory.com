@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '/cloud/edit-locally-and-in-the-app': { redirect: { to: '/cloud/cloud-sync', statusCode: 301 } },
     '/cloud/user-guide': { redirect: { to: '/cloud/cloud-guide', statusCode: 301 } },
     '/teams/partners': { redirect: { to: '/partners/about', statusCode: 301 } },
+    '/concepts/canvas': { redirect: { to: '/local/canvas', statusCode: 301 } },
     '/integrations/claude-research-mode': { redirect: { to: '/integrations/claude-desktop', statusCode: 301 } },
   },
   app: {
