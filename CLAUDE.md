@@ -93,16 +93,17 @@ just deploy production   # Deploy to production environment
 │   └── components/      # Custom Vue components
 ├── content/             # Documentation pages (Markdown)
 │   ├── 0.welcome.md     # Landing page (/ redirects to /welcome)
-│   ├── 1.start-here/    # Getting started guides
-│   ├── 2.whats-new/     # Announcements + changelog
-│   ├── 3.cloud/         # Cloud documentation
-│   ├── 4.teams/         # Teams documentation
-│   ├── 5.partners/      # MSP partner program
-│   ├── 6.local/         # Local installation
-│   ├── 7.concepts/      # Core concepts
-│   ├── 8.integrations/  # Integration guides
-│   ├── 9.how-to/        # How-to guides
+│   ├── 01.start-here/   # Getting started guides
+│   ├── 02.whats-new/    # Announcements + changelog
+│   ├── 03.cloud/        # Cloud documentation
+│   ├── 04.teams/        # Teams documentation
+│   ├── 05.partners/     # MSP partner program
+│   ├── 06.local/        # Local installation
+│   ├── 07.concepts/     # Core concepts
+│   ├── 08.integrations/ # Integration guides
+│   ├── 09.how-to/       # How-to guides
 │   └── 10.reference/    # Technical reference
+# Nav order sorts numeric prefixes lexically — keep them zero-padded
 ├── public/              # Static assets
 ├── server/              # Server routes (API)
 ├── nuxt.config.ts       # Nuxt configuration
