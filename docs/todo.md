@@ -18,7 +18,7 @@ Last updated: 2026-07-02 (docs-updates-2026-07 branch). Items found during the J
 
 ### Claude UI shots — unverified vintage, re-verify against current Claude
 - [ ] `public/screenshots/claude/settings-connectors.png`, `add-connector.png`, `oauth-connect.png`, `configure-tools.png` and `public/attachments/claude-tools-menu.png` — now used only by `integrations/1.claude-desktop.md`, the single canonical Claude cloud walkthrough (quickstart and cloud-guide link to it). `oauth-authorize.png` is now unreferenced — delete or fold into a recapture.
-- [ ] `public/screenshots/claude/tools-menu-local.png` (used by `start-here/3.quickstart-local.md`)
+- [ ] `public/screenshots/claude/tools-menu-local.png` (now used by `integrations/1.claude-desktop.md` → Local Setup, the canonical local config walkthrough)
 - [x] Root-level `public/claude-settings-*.png` (Feb 2026 set) — deleted; superseded by the consolidated walkthrough
 
 ### Teams shots — May 2026 vintage, predate Teams/Members relabel
