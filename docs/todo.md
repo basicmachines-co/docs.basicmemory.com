@@ -17,9 +17,9 @@ Last updated: 2026-07-02 (docs-updates-2026-07 branch). Items found during the J
 - [ ] Now unreferenced after quickstart-cloud rewrite (delete or recapture): `public/screenshots/cloud/signup.png`, `public/screenshots/cloud-app/first-note.png`, `public/screenshots/claude/project-list-response.png`, `public/screenshots/claude/create-first-note.png`
 
 ### Claude UI shots — unverified vintage, re-verify against current Claude
-- [ ] `public/screenshots/claude/settings-connectors.png`, `add-connector.png`, `oauth-connect.png`, `oauth-authorize.png`, `configure-tools.png` (used by `start-here/2.quickstart-cloud.md`) and `public/attachments/claude-tools-menu.png`
+- [ ] `public/screenshots/claude/settings-connectors.png`, `add-connector.png`, `oauth-connect.png`, `configure-tools.png` and `public/attachments/claude-tools-menu.png` — now used only by `integrations/1.claude-desktop.md`, the single canonical Claude cloud walkthrough (quickstart and cloud-guide link to it). `oauth-authorize.png` is now unreferenced — delete or fold into a recapture.
 - [ ] `public/screenshots/claude/tools-menu-local.png` (used by `start-here/3.quickstart-local.md`)
-- [ ] Root-level `public/claude-settings-add-connector.png`, `claude-settings-configure.png`, `claude-settings-tools.png` (used by `integrations/1.claude-desktop.md`) — oldest set (Feb 2026)
+- [x] Root-level `public/claude-settings-*.png` (Feb 2026 set) — deleted; superseded by the consolidated walkthrough
 
 ### Teams shots — May 2026 vintage, predate Teams/Members relabel
 - [ ] `v2-settings-teams-*`, `v2-team-invite-*`, `v2-team-invitation-*`, `v2-team-accept-invite-*`, `v2-team-manage-billing-*`, `v2-team-usage-*` — verify visible labels match the current "Teams"/"Members" nav and 5-role invite dropdown
