@@ -47,6 +47,7 @@ export default defineAppConfig({
     x: 'https://x.com/basic_memory',
     discord: 'https://discord.gg/tyvKNccgqN',
     reddit: 'https://www.reddit.com/r/basicmemory',
+    linkedin: 'https://www.linkedin.com/company/basicmemory/',
   },
   toc: {
     bottom: {
@@ -56,6 +57,7 @@ export default defineAppConfig({
         { label: 'Discord', to: 'https://discord.gg/tyvKNccgqN' },
         { label: 'GitHub', to: 'https://github.com/basicmachines-co/basic-memory' },
         { label: 'X / Twitter', to: 'https://x.com/basic_memory' },
+        { label: 'LinkedIn', to: 'https://www.linkedin.com/company/basicmemory/' },
         { label: 'Reddit', to: 'https://www.reddit.com/r/basicmemory' },
       ],
     },
