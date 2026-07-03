@@ -13,7 +13,7 @@ Last updated: 2026-07-02 (docs-updates-2026-07 branch). Items found during the J
 
 ### Stale/pre-v2 — replace or delete
 - [ ] `public/screenshots/cloud-app/snapshots-list.png`, `create-snapshot.png`, `restore-files.png` — pre-v2 UI, used by `cloud/05.cloud-snapshots.md` as plain `![]()` images; recapture as `::theme-image` light/dark pairs
-- [ ] `public/screenshots/cloud-app/themes.gif` + themes page imagery — predate the JSON preset system
+- [ ] `public/screenshots/cloud-app/themes.gif` — now unreferenced (themes page rewritten without it); delete or replace with a Look & Feel screenshot
 - [ ] Now unreferenced after quickstart-cloud rewrite (delete or recapture): `public/screenshots/cloud/signup.png`, `public/screenshots/cloud-app/first-note.png`, `public/screenshots/claude/project-list-response.png`, `public/screenshots/claude/create-first-note.png`
 
 ### Claude UI shots — unverified vintage, re-verify against current Claude
@@ -30,7 +30,7 @@ When capturing, record source screen, date, theme, and owning page in `docs/scre
 
 - [ ] **July-1 onboarding batch deployed?** `quickstart-cloud.md` and `web-app.md` now describe the seeded Getting Started project, onboarding popup, Show-onboarding replay, Activity feed with agent writes, and Explore graph. Confirm these are live at app.basicmemory.com before production docs deploy.
 - [ ] `app.basicmemory.com/notes` route used in quickstart step 5 — confirm it's the canonical notes URL
-- [ ] **Themes page** (`cloud/06.themes.md`): claims theme choice persists only in browser localStorage — likely superseded by the JSON preset system. Also verify where theme selection lives in Settings and whether the TweakCN custom-CSS workflow is still supported.
+- [x] **Themes page** — rewritten around the preset system (Settings → General → Look & Feel: Mode + theme swatches); the removed custom-CSS/TweakCN feature and localStorage persistence claims are gone. Capture a fresh Look & Feel screenshot when doing the screenshot pass.
 - [ ] `bm project ls --name <project>` in `cloud/03.cloud-sync.md` command reference — confirm the subcommand exists (everything else on that page is source-verified)
 - [ ] `api-keys.md`: curl example against `https://cloud.basicmemory.com/api/v2/projects` — confirm path
 
