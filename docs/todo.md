@@ -10,13 +10,15 @@ Remaining, only if desired:
 - [ ] Optional new captures: onboarding popup / Activity view / Explore graph / partner portal — pages describe these in prose today and don't require images
 - [ ] When capturing anything new, record source screen, date, theme, and owning page in `docs/screenshots.json` (the checker validates manifest entries)
 
-## Verify against production
+## Verify against production — done 2026-07-03
 
-- [ ] **July-1 onboarding batch deployed?** `quickstart-cloud.md` and `web-app.md` now describe the seeded Getting Started project, onboarding popup, Show-onboarding replay, Activity feed with agent writes, and Explore graph. Confirm these are live at app.basicmemory.com before production docs deploy.
-- [ ] `app.basicmemory.com/notes` route used in quickstart step 5 — confirm it's the canonical notes URL
-- [x] **Themes page** — rewritten around the preset system (Settings → General → Look & Feel: Mode + theme swatches); the removed custom-CSS/TweakCN feature and localStorage persistence claims are gone. Capture a fresh Look & Feel screenshot when doing the screenshot pass.
-- [ ] `bm project ls --name <project>` in `cloud/03.cloud-sync.md` command reference — confirm the subcommand exists (everything else on that page is source-verified)
-- [ ] `api-keys.md`: curl example against `https://cloud.basicmemory.com/api/v2/projects` — confirm path
+Verified live at app.basicmemory.com (logged-in session):
+- [x] July-1 onboarding batch deployed: seeded Getting Started project (all workspaces), Help Center at /help with Connect Your AI Tool (endpoint + copy, Claude/ChatGPT guides, test prompt), Activity feed (sidebar popover + View all), Explore Graph (Graph → Project/Structured/Explore tabs, 2D/3D)
+- [x] `/notes` route confirmed canonical
+- [x] Settings nav matches docs (General…Version); Look & Feel = Mode + Note list + Theme swatches (saved per-browser — docs updated)
+- [x] `bm project ls --name` — source-verified (project.py:1240)
+- [x] `api/v2/projects` — source-verified (gateway path test + v2 project router)
+- Corrections applied to docs: "Show onboarding" control doesn't exist (Help Center is the replay surface); workspaces are sidebar *sections*, not a selector dropdown; graph entry is **Graph** with Explore as a tab
 
 ## Verify against external products (fast-moving UIs)
 
