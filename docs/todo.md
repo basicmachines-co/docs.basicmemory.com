@@ -47,7 +47,7 @@ When capturing, record source screen, date, theme, and owning page in `docs/scre
 
 - [ ] **Quickstart duplication** — cloud and local quickstarts share near-identical structure ("what you can do now" tables, example workflows); fine for now, but they must be edited in pairs
 - [ ] **What's New numbering** — nav order is Teams(0), Changelog(1), Hermes(3), Cloud(4), Skills(6), OpenClaw(7), AI-docs(8) with gaps; consider renumbering and whether the Cloud announcement should outrank plugin announcements
-- [ ] **Teams page "Personal Cloud" label** — app switcher says "Personal"; table in `teams/1.about.md` says "Personal Cloud"
+- [x] **Teams page "Personal Cloud" label** — fixed in the teams-section split (table now says "Personal")
 - [ ] `web-app.md` → "Organize with folders" shows a local `~/basic-memory/` tree in a web-app context
 - [ ] `cloud-guide.md` "search and tools menu" Claude wording is vague
 - [ ] Keep pricing out of docs (none present today; the only safe reference is the marketing site)
