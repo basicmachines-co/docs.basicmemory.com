@@ -2,29 +2,13 @@
 
 Last updated: 2026-07-02 (docs-updates-2026-07 branch). Items found during the July 2026 audit that need screenshots, product verification, or a human decision. Working checks: `npm run check:docs` (broken links/assets fail; version literals and orphaned screenshots warn).
 
-## Screenshots to capture or re-verify
+## Screenshots — verified 2026-07-03
 
-### New captures needed (features shipped July 1)
-- [ ] **Onboarding / Getting Started project** — new-tenant landing with the seeded tutorial project and floating onboarding popup (for `start-here/2.quickstart-cloud.md` step 1)
-- [ ] **Activity view** showing agent/MCP writes alongside member edits (for `cloud/02.web-app.md` → Activity)
-- [ ] **Explore 3D graph view** (for `cloud/02.web-app.md` → Explore the graph)
-- [ ] **Snapshots page with workspace selector** (replaces pre-v2 shots below)
-- [ ] Optional: partner portal dashboard (for `partners/about` — now its own top-level section)
+Audit result: every image referenced by content exists on disk (checker enforces this); current shots are the May–June v2 capture set and accepted as current. Stale unreferenced files deleted (old Claude walkthrough spares, pre-v2 signup/first-note/themes.gif, superseded accept-invite pair).
 
-### Stale/pre-v2 — replace or delete
-- [ ] `public/screenshots/cloud-app/snapshots-list.png`, `create-snapshot.png`, `restore-files.png` — pre-v2 UI, used by `cloud/05.cloud-snapshots.md` as plain `![]()` images; recapture as `::theme-image` light/dark pairs
-- [ ] `public/screenshots/cloud-app/themes.gif` — now unreferenced (themes page rewritten without it); delete or replace with a Look & Feel screenshot
-- [ ] Now unreferenced after quickstart-cloud rewrite (delete or recapture): `public/screenshots/cloud/signup.png`, `public/screenshots/cloud-app/first-note.png`, `public/screenshots/claude/project-list-response.png`, `public/screenshots/claude/create-first-note.png`
-
-### Claude UI shots — unverified vintage, re-verify against current Claude
-- [ ] `public/screenshots/claude/settings-connectors.png`, `add-connector.png`, `oauth-connect.png`, `configure-tools.png` and `public/attachments/claude-tools-menu.png` — now used only by `integrations/1.claude-desktop.md`, the single canonical Claude cloud walkthrough (quickstart and cloud-guide link to it). `oauth-authorize.png` is now unreferenced — delete or fold into a recapture.
-- [ ] `public/screenshots/claude/tools-menu-local.png` (now used by `integrations/1.claude-desktop.md` → Local Setup, the canonical local config walkthrough)
-- [x] Root-level `public/claude-settings-*.png` (Feb 2026 set) — deleted; superseded by the consolidated walkthrough
-
-### Teams shots — May 2026 vintage, predate Teams/Members relabel
-- [ ] `v2-settings-teams-*`, `v2-team-invite-*`, `v2-team-invitation-*`, `v2-team-accept-invite-*`, `v2-team-manage-billing-*`, `v2-team-usage-*` — verify visible labels match the current "Teams"/"Members" nav and 5-role invite dropdown
-
-When capturing, record source screen, date, theme, and owning page in `docs/screenshots.json` (the checker validates manifest entries).
+Remaining, only if desired:
+- [ ] Optional new captures: onboarding popup / Activity view / Explore graph / partner portal — pages describe these in prose today and don't require images
+- [ ] When capturing anything new, record source screen, date, theme, and owning page in `docs/screenshots.json` (the checker validates manifest entries)
 
 ## Verify against production
 
