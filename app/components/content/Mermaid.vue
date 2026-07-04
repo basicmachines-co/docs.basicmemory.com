@@ -62,12 +62,28 @@ async function renderMermaid() {
     // Dynamic import to keep bundle size down when mermaid isn't used
     const { renderMermaid: render } = await import('beautiful-mermaid')
 
-    // Use different colors for light/dark mode
-    const svg = await render(props.code.trim(), {
-      bg: isDark.value ? '#1e293b' : '#ffffff',
-      fg: isDark.value ? '#e2e8f0' : '#18181b',
-      transparent: true,
-    })
+    // Enriched theme matching the site palette (orange primary, stone neutral)
+    const svg = await render(props.code.trim(), isDark.value
+      ? {
+          bg: '#1c1917', // stone-900
+          fg: '#e7e5e4', // stone-200
+          accent: '#f97316', // orange-500 — arrow heads, highlights
+          line: '#78716c', // stone-500 — connectors
+          muted: '#a8a29e', // stone-400 — edge labels, secondary text
+          surface: '#292524', // stone-800 — node fill
+          border: '#57534e', // stone-600 — node stroke
+          transparent: true,
+        }
+      : {
+          bg: '#ffffff',
+          fg: '#292524', // stone-800
+          accent: '#ea580c', // orange-600
+          line: '#a8a29e', // stone-400
+          muted: '#78716c', // stone-500
+          surface: '#fafaf9', // stone-50
+          border: '#d6d3d1', // stone-300
+          transparent: true,
+        })
 
     svgContent.value = svg
   } catch (e) {

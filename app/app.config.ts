@@ -47,14 +47,17 @@ export default defineAppConfig({
     x: 'https://x.com/basic_memory',
     discord: 'https://discord.gg/tyvKNccgqN',
     reddit: 'https://www.reddit.com/r/basicmemory',
+    linkedin: 'https://www.linkedin.com/company/basicmemory/',
   },
   toc: {
     bottom: {
-      title: 'Community',
+      title: 'Contact Us',
       links: [
+        { label: 'Contact Support', to: '/reference/contact-support' },
+        { label: 'Discord', to: 'https://discord.gg/tyvKNccgqN' },
         { label: 'GitHub', to: 'https://github.com/basicmachines-co/basic-memory' },
         { label: 'X / Twitter', to: 'https://x.com/basic_memory' },
-        { label: 'Discord', to: 'https://discord.gg/tyvKNccgqN' },
+        { label: 'LinkedIn', to: 'https://www.linkedin.com/company/basicmemory/' },
         { label: 'Reddit', to: 'https://www.reddit.com/r/basicmemory' },
       ],
     },

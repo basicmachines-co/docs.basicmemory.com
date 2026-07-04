@@ -2,6 +2,19 @@ export default defineNuxtConfig({
   extends: ['docus'],
   modules: ['@nuxtjs/sitemap'],
   compatibilityDate: '2025-07-15',
+  routeRules: {
+    '/': { redirect: { to: '/welcome', statusCode: 301 } },
+    '/start-here/getting-started': { redirect: { to: '/local/getting-started', statusCode: 301 } },
+    '/start-here/why-basic-memory': { redirect: { to: '/start-here/what-is-basic-memory', statusCode: 301 } },
+    '/changelog': { redirect: { to: '/whats-new/changelog', statusCode: 301 } },
+    '/whats-new/v0.22.0': { redirect: { to: '/whats-new/changelog', statusCode: 301 } },
+    '/reference/v0.19-migration': { redirect: { to: '/whats-new/changelog', statusCode: 301 } },
+    '/cloud/edit-locally-and-in-the-app': { redirect: { to: '/cloud/cloud-sync', statusCode: 301 } },
+    '/cloud/user-guide': { redirect: { to: '/cloud/cloud-guide', statusCode: 301 } },
+    '/teams/partners': { redirect: { to: '/partners/about', statusCode: 301 } },
+    '/concepts/canvas': { redirect: { to: '/local/canvas', statusCode: 301 } },
+    '/integrations/claude-research-mode': { redirect: { to: '/integrations/claude-desktop', statusCode: 301 } },
+  },
   app: {
     head: {
       meta: [
