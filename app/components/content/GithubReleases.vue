@@ -174,37 +174,37 @@ function formatItem(text: string): string {
   // Convert full GitHub PR URLs to short format: #123
   result = result.replace(
     /https:\/\/github\.com\/[^/]+\/[^/]+\/pull\/(\d+)/g,
-    `<a href="https://github.com/${props.repo}/pull/$1" class="font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 no-underline hover:underline">#$1</a>`
+    `<a href="https://github.com/${props.repo}/pull/$1" class="font-medium text-primary no-underline hover:underline">#$1</a>`
   )
 
   // Convert full GitHub issue URLs to short format
   result = result.replace(
     /https:\/\/github\.com\/[^/]+\/[^/]+\/issues\/(\d+)/g,
-    `<a href="https://github.com/${props.repo}/issues/$1" class="font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 no-underline hover:underline">#$1</a>`
+    `<a href="https://github.com/${props.repo}/issues/$1" class="font-medium text-primary no-underline hover:underline">#$1</a>`
   )
 
   // Link remaining #123 references (avoid already linked ones)
   result = result.replace(
     /(?<!<a[^>]*>)#(\d+)(?![^<]*<\/a>)/g,
-    `<a href="https://github.com/${props.repo}/pull/$1" class="font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 no-underline hover:underline">#$1</a>`
+    `<a href="https://github.com/${props.repo}/pull/$1" class="font-medium text-primary no-underline hover:underline">#$1</a>`
   )
 
   // Link @mentions
   result = result.replace(
     /@([a-zA-Z0-9_-]+)/g,
-    '<a href="https://github.com/$1" class="font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 no-underline hover:underline">@$1</a>'
+    '<a href="https://github.com/$1" class="font-medium text-primary no-underline hover:underline">@$1</a>'
   )
 
   // Style inline code (backticks)
   result = result.replace(
     /`([^`]+)`/g,
-    '<code class="rounded-md bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 font-mono text-sm text-gray-800 dark:text-gray-200">$1</code>'
+    '<code class="rounded border border-default bg-muted px-1.5 py-0.5 font-mono text-sm text-highlighted">$1</code>'
   )
 
   // Bold the first part before "by @" if present (the description)
   const byMatch = result.match(/^(.+?)(\s+by\s+<a)/)
   if (byMatch) {
-    result = `<span class="text-gray-900 dark:text-gray-100">${byMatch[1]}</span>${result.substring(byMatch[1].length)}`
+    result = `<span class="text-highlighted">${byMatch[1]}</span>${result.substring(byMatch[1].length)}`
   }
 
   // Remove "in https://github.com/..." trailing text
@@ -258,18 +258,18 @@ onMounted(() => {
     <!-- Loading state -->
     <div v-if="loading" class="flex items-center justify-center py-16">
       <div class="flex flex-col items-center gap-3">
-        <div class="size-8 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-600 border-t-primary-500" />
-        <span class="text-sm text-gray-500 dark:text-gray-400">Loading releases...</span>
+        <div class="size-8 animate-spin rounded-full border-2 border-default border-t-primary" />
+        <span class="font-mono text-sm text-muted">Loading releases...</span>
       </div>
     </div>
 
     <!-- Error state -->
-    <div v-else-if="error" class="rounded-lg bg-red-50 dark:bg-red-900/20 p-6 text-center">
-      <p class="font-medium text-red-600 dark:text-red-400">Failed to load releases</p>
-      <p class="mt-1 text-sm text-red-500 dark:text-red-400/80">{{ error }}</p>
+    <div v-else-if="error" class="rounded border border-error/25 bg-error/10 p-6 text-center">
+      <p class="font-medium text-error">Failed to load releases</p>
+      <p class="mt-1 text-sm text-error/80">{{ error }}</p>
       <a
         :href="`https://github.com/${repo}/releases`"
-        class="mt-3 inline-block text-sm text-red-600 dark:text-red-400 underline hover:no-underline"
+        class="mt-3 inline-block text-sm text-error underline hover:no-underline"
       >
         View releases on GitHub
       </a>
@@ -286,16 +286,16 @@ onMounted(() => {
         <div class="flex items-baseline gap-4 mb-6">
           <a
             :href="release.html_url"
-            class="text-3xl font-bold text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-300 transition-colors no-underline"
+            class="font-serif text-3xl font-medium text-highlighted transition-opacity hover:opacity-80 no-underline"
           >
             {{ release.tag_name }}
           </a>
-          <time class="text-sm text-gray-500 dark:text-gray-400 font-medium">
+          <time class="font-mono text-sm font-medium text-muted">
             {{ formatDate(release.published_at) }}
           </time>
           <span
             v-if="release.prerelease"
-            class="px-2 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-full border border-amber-500/20"
+            class="rounded-full border border-secondary/30 bg-secondary/10 px-2 py-0.5 font-mono text-xs font-semibold text-secondary"
           >
             Pre-release
           </span>
@@ -307,7 +307,7 @@ onMounted(() => {
             v-for="[category, data] in sortCategories(parseReleaseBody(release.body))"
             :key="category"
           >
-            <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">
+            <h3 class="flex items-center gap-2 mb-3 font-mono text-[15px] font-semibold text-highlighted">
               <span>{{ data.emoji }}</span>
               <span>{{ category }}</span>
             </h3>
@@ -315,28 +315,28 @@ onMounted(() => {
               <li
                 v-for="(item, idx) in data.items"
                 :key="idx"
-                class="flex gap-3 text-[15px] leading-relaxed text-gray-600 dark:text-gray-400"
+                class="flex gap-3 text-[15px] leading-relaxed text-toned"
               >
-                <span class="text-gray-400 dark:text-gray-600 select-none">•</span>
+                <span class="text-secondary select-none">-</span>
                 <span v-html="formatItem(item)" />
               </li>
             </ul>
           </div>
         </div>
 
-        <p v-else class="text-gray-500 dark:text-gray-400 italic">
+        <p v-else class="font-serif text-muted italic">
           No release notes available.
         </p>
 
         <!-- Divider -->
-        <div class="mt-12 border-b border-gray-200 dark:border-gray-800" />
+        <div class="mt-12 border-b border-default" />
       </section>
 
       <!-- Footer link -->
       <div class="pt-8 text-center">
         <a
           :href="`https://github.com/${repo}/releases`"
-          class="inline-flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors no-underline"
+          class="inline-flex items-center gap-2 font-mono text-sm font-medium text-primary transition-opacity hover:opacity-80 no-underline"
         >
           View all releases on GitHub
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
