@@ -4,8 +4,24 @@ export default defineAppConfig({
   },
   ui: {
     colors: {
-      primary: 'orange',
-      neutral: 'stone',
+      primary: 'cobalt',
+      secondary: 'annotation',
+      neutral: 'ink',
+    },
+    pageHeader: {
+      slots: {
+        root: 'relative border-b border-default py-10',
+        headline: 'mb-3 flex items-center gap-1.5 font-mono text-[13px] font-normal text-secondary',
+        title: 'font-[var(--docs-font-serif)] text-[2.15rem] md:text-[3.25rem] leading-[1.06] font-medium text-pretty text-highlighted',
+        description: 'font-[var(--docs-font-serif)] text-[1.15rem] md:text-[1.6875rem] leading-[1.4] italic text-pretty text-toned',
+      },
+    },
+    header: {
+      slots: {
+        root: 'border-b border-default bg-default/90 backdrop-blur',
+        title: 'shrink-0 font-mono text-[15px] font-semibold text-highlighted flex items-end gap-1.5',
+        link: 'font-mono',
+      },
     },
     commandPalette: {
       slots: {
@@ -18,9 +34,21 @@ export default defineAppConfig({
       slots: {
         linkLeadingIcon: 'size-4 mr-1',
         linkTrailing: 'hidden',
+        trigger: 'font-mono font-semibold',
+        link: 'font-mono text-[13px]',
       },
       defaultVariants: {
         variant: 'link',
+        highlightColor: 'secondary',
+      },
+    },
+    contentToc: {
+      slots: {
+        trigger: 'group flex flex-1 items-center gap-1.5 py-1.5 -mt-1.5 font-mono text-[13px] font-semibold focus-visible:outline-primary',
+        link: 'group relative flex items-center py-1 font-mono text-[12.5px] focus-visible:outline-primary',
+      },
+      defaultVariants: {
+        highlightColor: 'secondary',
       },
     },
     pageLinks: {

@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   extends: ['docus'],
-  modules: ['@nuxtjs/sitemap'],
+  modules: ['@nuxt/fonts', '@nuxtjs/sitemap'],
+  css: ['~/assets/css/main.css'],
   compatibilityDate: '2025-07-15',
   routeRules: {
     '/': { redirect: { to: '/welcome', statusCode: 301 } },

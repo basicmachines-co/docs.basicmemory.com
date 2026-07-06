@@ -1,0 +1,376 @@
+/*
+ * Calm docs theme.
+ *
+ * Matches the live marketing site's ink/cobalt/annotation system while keeping
+ * docs pages compact and readable. Cobalt is for links/graphs; annotation green
+ * is for markdown-style title markers, labels, and small metadata.
+ */
+
+:root {
+  --docs-font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --docs-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --docs-text-display: 2.15rem;
+
+  --color-ink-50: hsl(40 25% 95%);
+  --color-ink-100: hsl(40 18% 91%);
+  --color-ink-200: hsl(40 10% 85%);
+  --color-ink-300: hsl(40 10% 82%);
+  --color-ink-400: hsl(40 8% 72%);
+  --color-ink-500: hsl(0 0% 41%);
+  --color-ink-600: hsl(0 0% 38%);
+  --color-ink-700: hsl(0 0% 30%);
+  --color-ink-800: hsl(0 0% 20%);
+  --color-ink-900: hsl(0 0% 14.5%);
+  --color-ink-950: hsl(0 0% 8%);
+
+  --color-cobalt-50: hsl(214 100% 97%);
+  --color-cobalt-100: hsl(214 95% 93%);
+  --color-cobalt-200: hsl(213 97% 87%);
+  --color-cobalt-300: hsl(212 96% 78%);
+  --color-cobalt-400: hsl(213 94% 68%);
+  --color-cobalt-500: hsl(217 91% 60%);
+  --color-cobalt-600: hsl(221 83% 50%);
+  --color-cobalt-700: hsl(224 76% 48%);
+  --color-cobalt-800: hsl(226 71% 40%);
+  --color-cobalt-900: hsl(224 64% 33%);
+  --color-cobalt-950: hsl(226 57% 21%);
+
+  --color-annotation-50: hsl(158 45% 96%);
+  --color-annotation-100: hsl(158 42% 90%);
+  --color-annotation-200: hsl(158 40% 80%);
+  --color-annotation-300: hsl(158 38% 65%);
+  --color-annotation-400: hsl(158 35% 52%);
+  --color-annotation-500: hsl(158 38% 42%);
+  --color-annotation-600: hsl(158 41% 32%);
+  --color-annotation-700: hsl(158 42% 27%);
+  --color-annotation-800: hsl(158 42% 21%);
+  --color-annotation-900: hsl(158 45% 16%);
+  --color-annotation-950: hsl(158 50% 10%);
+
+  --color-neutral-50: var(--color-ink-50);
+  --color-neutral-100: var(--color-ink-100);
+  --color-neutral-200: var(--color-ink-200);
+  --color-neutral-300: var(--color-ink-300);
+  --color-neutral-400: var(--color-ink-400);
+  --color-neutral-500: var(--color-ink-500);
+  --color-neutral-600: var(--color-ink-600);
+  --color-neutral-700: var(--color-ink-700);
+  --color-neutral-800: var(--color-ink-800);
+  --color-neutral-900: var(--color-ink-900);
+  --color-neutral-950: var(--color-ink-950);
+
+  --color-primary-50: var(--color-cobalt-50);
+  --color-primary-100: var(--color-cobalt-100);
+  --color-primary-200: var(--color-cobalt-200);
+  --color-primary-300: var(--color-cobalt-300);
+  --color-primary-400: var(--color-cobalt-400);
+  --color-primary-500: var(--color-cobalt-500);
+  --color-primary-600: var(--color-cobalt-600);
+  --color-primary-700: var(--color-cobalt-700);
+  --color-primary-800: var(--color-cobalt-800);
+  --color-primary-900: var(--color-cobalt-900);
+  --color-primary-950: var(--color-cobalt-950);
+
+  --color-secondary-50: var(--color-annotation-50);
+  --color-secondary-100: var(--color-annotation-100);
+  --color-secondary-200: var(--color-annotation-200);
+  --color-secondary-300: var(--color-annotation-300);
+  --color-secondary-400: var(--color-annotation-400);
+  --color-secondary-500: var(--color-annotation-500);
+  --color-secondary-600: var(--color-annotation-600);
+  --color-secondary-700: var(--color-annotation-700);
+  --color-secondary-800: var(--color-annotation-800);
+  --color-secondary-900: var(--color-annotation-900);
+  --color-secondary-950: var(--color-annotation-950);
+
+  --ui-color-neutral-50: var(--color-ink-50);
+  --ui-color-neutral-100: var(--color-ink-100);
+  --ui-color-neutral-200: var(--color-ink-200);
+  --ui-color-neutral-300: var(--color-ink-300);
+  --ui-color-neutral-400: var(--color-ink-400);
+  --ui-color-neutral-500: var(--color-ink-500);
+  --ui-color-neutral-600: var(--color-ink-600);
+  --ui-color-neutral-700: var(--color-ink-700);
+  --ui-color-neutral-800: var(--color-ink-800);
+  --ui-color-neutral-900: var(--color-ink-900);
+  --ui-color-neutral-950: var(--color-ink-950);
+
+  --ui-color-primary-50: var(--color-cobalt-50);
+  --ui-color-primary-100: var(--color-cobalt-100);
+  --ui-color-primary-200: var(--color-cobalt-200);
+  --ui-color-primary-300: var(--color-cobalt-300);
+  --ui-color-primary-400: var(--color-cobalt-400);
+  --ui-color-primary-500: var(--color-cobalt-500);
+  --ui-color-primary-600: var(--color-cobalt-600);
+  --ui-color-primary-700: var(--color-cobalt-700);
+  --ui-color-primary-800: var(--color-cobalt-800);
+  --ui-color-primary-900: var(--color-cobalt-900);
+  --ui-color-primary-950: var(--color-cobalt-950);
+
+  --ui-color-secondary-50: var(--color-annotation-50);
+  --ui-color-secondary-100: var(--color-annotation-100);
+  --ui-color-secondary-200: var(--color-annotation-200);
+  --ui-color-secondary-300: var(--color-annotation-300);
+  --ui-color-secondary-400: var(--color-annotation-400);
+  --ui-color-secondary-500: var(--color-annotation-500);
+  --ui-color-secondary-600: var(--color-annotation-600);
+  --ui-color-secondary-700: var(--color-annotation-700);
+  --ui-color-secondary-800: var(--color-annotation-800);
+  --ui-color-secondary-900: var(--color-annotation-900);
+  --ui-color-secondary-950: var(--color-annotation-950);
+
+  --docs-primary: var(--color-cobalt-600);
+  --docs-secondary: var(--color-annotation-600);
+}
+
+:root,
+.light {
+  --ui-bg: var(--color-ink-50);
+  --ui-bg-muted: var(--color-ink-100);
+  --ui-bg-elevated: var(--color-ink-100);
+  --ui-bg-accented: var(--color-ink-200);
+  --ui-bg-inverted: var(--color-ink-900);
+  --ui-text: var(--color-ink-900);
+  --ui-text-highlighted: var(--color-ink-900);
+  --ui-text-toned: var(--color-ink-700);
+  --ui-text-muted: var(--color-ink-600);
+  --ui-text-dimmed: var(--color-ink-500);
+  --ui-text-inverted: var(--color-ink-50);
+  --ui-border: var(--color-ink-200);
+  --ui-border-muted: var(--color-ink-200);
+  --ui-border-accented: var(--color-ink-300);
+  --ui-border-inverted: var(--color-ink-900);
+  --ui-primary: var(--docs-primary);
+  --ui-secondary: var(--docs-secondary);
+  --ui-radius: 0.25rem;
+
+  --hairline: var(--color-ink-200);
+  --hairline-heavy: var(--color-ink-300);
+  --surface-code: color-mix(in srgb, var(--color-ink-100) 74%, var(--color-ink-50));
+  --docs-marker: var(--ui-secondary);
+}
+
+.dark {
+  --docs-primary: var(--color-cobalt-300);
+  --docs-secondary: var(--color-annotation-400);
+  --ui-bg: hsl(0 0% 8%);
+  --ui-bg-muted: hsl(0 0% 17.5%);
+  --ui-bg-elevated: hsl(0 0% 17.5%);
+  --ui-bg-accented: hsl(0 0% 24%);
+  --ui-bg-inverted: hsl(0 0% 96%);
+  --ui-text: hsl(0 0% 96%);
+  --ui-text-highlighted: hsl(0 0% 96%);
+  --ui-text-toned: hsl(0 0% 68%);
+  --ui-text-muted: hsl(0 0% 64%);
+  --ui-text-dimmed: hsl(0 0% 62%);
+  --ui-text-inverted: hsl(0 0% 8%);
+  --ui-border: hsl(0 0% 24%);
+  --ui-border-muted: hsl(0 0% 24%);
+  --ui-border-accented: hsl(0 0% 28%);
+  --ui-border-inverted: hsl(0 0% 86%);
+  --ui-primary: var(--docs-primary);
+  --ui-secondary: var(--docs-secondary);
+
+  --hairline: hsl(0 0% 24%);
+  --hairline-heavy: hsl(0 0% 28%);
+  --surface-code: hsl(0 0% 13%);
+  --docs-marker: var(--ui-secondary);
+}
+
+@layer base {
+  html {
+    background: var(--ui-bg);
+  }
+
+  body {
+    color: var(--ui-text);
+    background: var(--ui-bg);
+  }
+
+  ::selection {
+    color: var(--ui-text);
+    background: color-mix(in srgb, var(--ui-secondary) 24%, transparent);
+  }
+}
+
+@layer components {
+  :where(header, nav, aside, footer, button, input, [role="dialog"]) {
+    font-family: var(--docs-font-mono);
+  }
+
+  :where(main) :is(h1, h2, h3, h4) {
+    color: var(--ui-text-highlighted);
+    font-family: var(--docs-font-serif) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0;
+    text-wrap: pretty;
+  }
+
+  :where(main) h1 {
+    font-size: var(--docs-text-display) !important;
+    line-height: 1.06 !important;
+    margin-bottom: 1.6rem;
+  }
+
+  :where(main) h1::before {
+    content: "#";
+    margin-right: 0.4rem;
+    color: var(--docs-marker);
+    font-family: var(--docs-font-mono);
+    font-size: 0.48em;
+    font-weight: 400;
+    letter-spacing: 0;
+    vertical-align: 0.18em;
+  }
+
+  :where(main) h2 {
+    margin-top: 2.75rem !important;
+    margin-bottom: 1.35rem !important;
+    padding-top: 1rem;
+    border-top: 1px solid var(--hairline-heavy) !important;
+    font-size: 1.85rem !important;
+    line-height: 1.1 !important;
+  }
+
+  :where(main) h3 {
+    font-size: 1.3rem !important;
+    line-height: 1.18 !important;
+  }
+
+  :where(main) hr {
+    margin-top: 2.75rem !important;
+    margin-bottom: 1rem !important;
+    border-color: var(--hairline-heavy) !important;
+  }
+
+  :where(main) hr + h2 {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: 0 !important;
+  }
+
+  :where(main) h2 > a:first-child::before,
+  :where(main) h3 > a:first-child::before {
+    display: inline-block;
+    margin-right: 0.55rem;
+    color: var(--docs-marker);
+    font-family: var(--docs-font-mono);
+    font-size: 0.55em;
+    font-weight: 400;
+    letter-spacing: 0;
+    vertical-align: 0.16em;
+  }
+
+  :where(main) h2 > a:first-child::before {
+    content: "##";
+  }
+
+  :where(main) h3 > a:first-child::before {
+    content: "###";
+  }
+
+  :where(main) h2 > a > span.absolute,
+  :where(main) h3 > a > span.absolute {
+    display: none;
+  }
+
+  :where(main) :is(h2, h3, h4) > a:first-child {
+    color: inherit !important;
+    text-decoration-line: none !important;
+  }
+
+  :where(main) :is(p, li, dd) {
+    color: var(--ui-text-toned);
+  }
+
+  :where(main) p {
+    font-size: 1.02rem;
+    line-height: 1.72;
+  }
+
+  :where(main) a:not([class*="text-"]) {
+    color: var(--ui-primary);
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
+  :where(main) strong {
+    color: var(--ui-text-highlighted);
+    font-weight: 600;
+  }
+
+  :where(main) blockquote {
+    border-left-color: var(--hairline-heavy);
+    color: var(--ui-text-muted);
+    font-family: var(--docs-font-serif);
+    font-style: italic;
+  }
+
+  :where(main) :is(code, kbd) {
+    font-family: var(--docs-font-mono);
+  }
+
+  :where(main) :not(pre) > code {
+    color: var(--ui-text-highlighted);
+    background: var(--surface-code);
+    border: 1px solid var(--hairline);
+    border-radius: 0.2rem;
+  }
+
+  :where(main) pre {
+    background: var(--surface-code);
+    border-color: var(--hairline);
+    border-radius: 0.25rem;
+  }
+
+  :where(main) :is(table, th, td) {
+    border-color: var(--hairline);
+  }
+
+  :where(main) th {
+    color: var(--ui-secondary);
+    font-family: var(--docs-font-mono);
+    font-weight: 600;
+  }
+
+  :where(main) img {
+    border-color: var(--hairline);
+    border-radius: 0.25rem;
+  }
+
+  :where(main) [class*="shadow"] {
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --docs-text-display: 3.25rem;
+  }
+
+  :where(main) h2 {
+    margin-top: 3.5rem !important;
+    padding-top: 1.2rem;
+    font-size: 2.45rem !important;
+  }
+
+  :where(main) hr {
+    margin-top: 3.5rem !important;
+    margin-bottom: 1.2rem !important;
+  }
+
+  :where(main) h3 {
+    font-size: 1.55rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
