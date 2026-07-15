@@ -214,7 +214,7 @@
 
   :where(main) h1::before {
     content: "#";
-    margin-right: 0.4rem;
+    margin-right: 0.4rem !important;
     color: var(--docs-marker);
     font-family: var(--docs-font-mono);
     font-size: 0.48em;
@@ -252,7 +252,7 @@
   :where(main) h2 > a:first-child::before,
   :where(main) h3 > a:first-child::before {
     display: inline-block;
-    margin-right: 0.55rem;
+    margin-right: 0.9rem !important;
     color: var(--docs-marker);
     font-family: var(--docs-font-mono);
     font-size: 0.55em;
