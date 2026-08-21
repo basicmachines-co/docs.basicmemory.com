@@ -21,6 +21,230 @@
       "source": "Snapshot restore browser",
       "captured": "2026-06-07",
       "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-open-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Basic Memory MCP App Notes gallery inside an AI conversation",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-open-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Basic Memory MCP App Notes gallery inside an AI conversation",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-use-folder-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Use this folder action before selecting an active writing location",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-use-folder-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Use this folder action before selecting an active writing location",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-active-folder-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Active writing folder selected in the Basic Memory MCP App",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-active-folder-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Active writing folder selected in the Basic Memory MCP App",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-folder-confirmed-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Assistant confirmation of the active Basic Memory writing location",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-folder-confirmed-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Assistant confirmation of the active Basic Memory writing location",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-note-reader-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Note reader in the Basic Memory MCP App",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-note-reader-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Note reader in the Basic Memory MCP App",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-use-note-title-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Clickable note title shown in the full MCP App reader header",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-use-note-title-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Clickable note title shown in the full MCP App reader header",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-note-prompt-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Conversation prompt prepared with a Basic Memory note as context",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-note-prompt-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Conversation prompt prepared with a Basic Memory note as context",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-search-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Search results in the Basic Memory MCP App",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-search-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Search results in the Basic Memory MCP App",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-review-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Replacement suggestion in the Basic Memory MCP App editor",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-review-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Replacement suggestion in the Basic Memory MCP App editor",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-graph-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Full knowledge graph in the Basic Memory MCP App",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-graph-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Full knowledge graph in the Basic Memory MCP App",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-selection-light.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Selected text in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-selection-dark.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Selected text and selection toolbar in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-suggestion-menu-light.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Suggestion action menu in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-suggestion-menu-dark.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Suggestion action menu in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-inline-replacement-light.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Inline replacement suggestion in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-inline-replacement-dark.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Inline replacement suggestion in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-suggestion-thread-light.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Expanded replacement suggestion thread in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-suggestion-thread-dark.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Expanded replacement suggestion thread in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-review-rail-light.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Review rail with an unresolved suggestion and comment in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-review-rail-dark.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Review rail with an unresolved suggestion and comment in the Cloud rich editor",
+      "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-review-count-light.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Unresolved review count in the Cloud note toolbar",
+      "captured": "2026-08-20",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/cloud-app/critic-review-count-dark.png",
+      "page": "/cloud/comments-and-suggestions",
+      "source": "Unresolved review count in the Cloud note toolbar",
+      "captured": "2026-08-20",
+      "theme": "dark"
     }
   ]
 }
