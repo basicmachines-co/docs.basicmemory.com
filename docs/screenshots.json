@@ -37,6 +37,34 @@
       "theme": "dark"
     },
     {
+      "path": "screenshots/mcp-app/mcp-app-expand-control-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Expand action in the inline Basic Memory MCP App header",
+      "captured": "2026-08-22",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-expand-control-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Expand action in the inline Basic Memory MCP App header",
+      "captured": "2026-08-22",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-fullscreen-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Basic Memory MCP App expanded to the full-screen workspace",
+      "captured": "2026-08-22",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-fullscreen-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Basic Memory MCP App expanded to the full-screen workspace",
+      "captured": "2026-08-22",
+      "theme": "dark"
+    },
+    {
       "path": "screenshots/mcp-app/mcp-app-use-folder-light.png",
       "page": "/cloud/mcp-app",
       "source": "Use this folder action before selecting an active writing location",
@@ -90,6 +118,20 @@
       "page": "/cloud/mcp-app",
       "source": "Note reader in the Basic Memory MCP App",
       "captured": "2026-08-20",
+      "theme": "dark"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-use-note-gallery-light.png",
+      "page": "/cloud/mcp-app",
+      "source": "Use note in conversation action on a Notes gallery card",
+      "captured": "2026-08-22",
+      "theme": "light"
+    },
+    {
+      "path": "screenshots/mcp-app/mcp-app-use-note-gallery-dark.png",
+      "page": "/cloud/mcp-app",
+      "source": "Use note in conversation action on a Notes gallery card",
+      "captured": "2026-08-22",
       "theme": "dark"
     },
     {
