@@ -2,11 +2,10 @@
   <span class="block">
     <video
       :src="src"
+      :poster="poster"
       :aria-label="alt"
       class="block w-full rounded border border-default"
-      autoplay
-      loop
-      muted
+      controls
       playsinline
       preload="metadata"
     />
@@ -16,6 +15,7 @@
 <script setup lang="ts">
 defineProps<{
   src: string
+  poster?: string
   alt?: string
 }>()
 </script>
