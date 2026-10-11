@@ -12,7 +12,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 
 **Repository**: https://github.com/basicmachines-co/basic-memory
 **Website**: https://basicmemory.com
-**Current Version**: v0.19.0 (released March 2026)
+**Current Version**: v0.24.0 (released October 2026)
 
 **Key Features**:
 - 17 MCP tools for AI integration (write_note, read_note, edit_note, search_notes, build_context, etc.)
@@ -185,13 +185,13 @@ When updating docs for a new Basic Memory release, update all of the following:
 
 ## Documentation Status & Priorities
 
-Documentation is up-to-date for v0.22.x release. Cloud product documentation is complete.
+Documentation is up-to-date for v0.24.x release. Cloud product documentation is complete.
 
 ### Reference Materials
 
 When documenting features:
 - **Basic Memory CHANGELOG**: `gh api repos/basicmachines-co/basic-memory/contents/CHANGELOG.md`
-- **Release Notes**: `gh release view v0.22.0 --repo basicmachines-co/basic-memory`
+- **Release Notes**: `gh release view v0.24.0 --repo basicmachines-co/basic-memory`
 - **Basic Memory README**: https://github.com/basicmachines-co/basic-memory
 - **Cloud README**: https://github.com/basicmachines-co/basic-memory-cloud
 - **Cloud CLAUDE.md**: https://github.com/basicmachines-co/basic-memory-cloud/blob/main/CLAUDE.md
