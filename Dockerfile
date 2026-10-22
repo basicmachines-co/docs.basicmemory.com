@@ -1,4 +1,4 @@
-FROM node:25-bookworm AS build
+FROM node:24-bookworm AS build
 WORKDIR /app
 
 ARG CACHE_BUST=unknown
@@ -16,7 +16,7 @@ COPY . .
 RUN npx nuxt prepare && npx nuxt build
 
 # Production image
-FROM node:25-slim AS prod
+FROM node:24-slim AS prod
 
 RUN apt-get update && apt-get install -y \
     curl \
