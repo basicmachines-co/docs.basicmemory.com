@@ -12,7 +12,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 
 **Repository**: https://github.com/basicmachines-co/basic-memory
 **Website**: https://basicmemory.com
-**Current Version**: v0.24.0 (released October 2026)
+**Current Version**: v0.24.1 (released October 2026)
 
 **Key Features**:
 - 17 MCP tools for AI integration (write_note, read_note, edit_note, search_notes, build_context, etc.)
@@ -62,7 +62,7 @@ This documentation site covers both:
 1. **Basic Memory** (local-first product) - Installation, MCP tools, CLI, integrations, knowledge format
 2. **Basic Memory Cloud** (upcoming) - Cloud-specific features, authentication, sync, billing
 
-The site documents the latest v0.19.x release and includes cloud product documentation.
+The site documents the latest v0.24.x release and includes cloud product documentation.
 
 ## Development Commands
 
@@ -179,7 +179,7 @@ pip install basic-memory
 When updating docs for a new Basic Memory release, update all of the following:
 
 1. **Welcome page What's New callout** — `content/0.welcome.md`: update the version text (e.g., `v0.22`) and the headline; the link stays `/whats-new/changelog`
-2. **Changelog page** — `content/2.whats-new/1.changelog.md`: add a section for the new minor/major version at the top, linking the GitHub release tag(s). Patch release: add a short bullet list under its minor version's section instead. The `::github-releases` block at the bottom auto-fetches full release notes from the GitHub API — no manual update needed there. Since v0.23, significant releases also get a per-version What's New page (`content/02.whats-new/01.v0-XX.md`, zero-padded prefixes so 10+ pages sort correctly); the welcome-page `::note` callout links to it
+2. **Changelog page** — `content/02.whats-new/06.changelog.md`: add a section for the new minor/major version at the top, linking the GitHub release tag(s). Patch release: add a short bullet list under its minor version's section instead. The `::github-releases` block at the bottom auto-fetches full release notes from the GitHub API — no manual update needed there. Since v0.23, significant releases also get a per-version What's New page (`content/02.whats-new/01.v0-XX.md`, zero-padded prefixes so 10+ pages sort correctly); the welcome-page `::note` callout links to it
 3. **Feature docs** — if the release adds user-facing features, update the relevant guide and reference pages (`content/3.cloud/`, `content/9.reference/`, etc.)
 4. **Deploy** — push to main auto-deploys to development; production requires manual workflow dispatch via GitHub Actions
 
@@ -191,7 +191,7 @@ Documentation is up-to-date for v0.24.x release. Cloud product documentation is 
 
 When documenting features:
 - **Basic Memory CHANGELOG**: `gh api repos/basicmachines-co/basic-memory/contents/CHANGELOG.md`
-- **Release Notes**: `gh release view v0.24.0 --repo basicmachines-co/basic-memory`
+- **Release Notes**: `gh release view v0.24.1 --repo basicmachines-co/basic-memory`
 - **Basic Memory README**: https://github.com/basicmachines-co/basic-memory
 - **Cloud README**: https://github.com/basicmachines-co/basic-memory-cloud
 - **Cloud CLAUDE.md**: https://github.com/basicmachines-co/basic-memory-cloud/blob/main/CLAUDE.md
