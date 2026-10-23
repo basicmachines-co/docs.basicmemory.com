@@ -74,7 +74,9 @@ for (const file of markdownFiles) {
     }
   }
 
-  for (const match of source.matchAll(linkPattern)) {
+  // Links inside fenced code blocks are examples, not site navigation
+  const prose = source.replace(/^```[\s\S]*?^```/gm, '')
+  for (const match of prose.matchAll(linkPattern)) {
     let target = match[1] || match[2] || match[3]
     if (!target || target.startsWith('#') || /^[a-z]+:/i.test(target)) continue
     target = target.replace(/^<|>$/g, '').split('#')[0].split('?')[0]
