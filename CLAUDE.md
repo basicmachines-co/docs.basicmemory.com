@@ -15,7 +15,7 @@ This is the documentation website for Basic Memory (`docs.basicmemory.com`), bui
 **Current Version**: v0.24.1 (released October 2026)
 
 **Key Features**:
-- 17 MCP tools for AI integration (write_note, read_note, edit_note, search_notes, build_context, etc.)
+- Twelve core 1.0 MCP tools (`bm_read`, `bm_write`, `bm_edit`, `bm_search`, `bm_context`, etc.); reference pages are being prepared ahead of release
 - Local markdown files create a semantic knowledge graph
 - Multi-project support with project switching
 - Integrations with Claude Desktop, VS Code, Cursor, Obsidian
@@ -62,7 +62,7 @@ This documentation site covers both:
 1. **Basic Memory** (local-first product) - Installation, MCP tools, CLI, integrations, knowledge format
 2. **Basic Memory Cloud** (upcoming) - Cloud-specific features, authentication, sync, billing
 
-The site documents the latest v0.24.x release and includes cloud product documentation.
+Release history documents v0.24.x. Current MCP reference pages target the upcoming 1.0 surface and must state that status. Hosted extension documentation retains its separately advertised contract.
 
 ## Development Commands
 
