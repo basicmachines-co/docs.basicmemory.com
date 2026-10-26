@@ -67,12 +67,46 @@ Your AI can learn every component and its attributes from the \`memory-comark\` 
 ::
 `;
 
+// The live example is a whole note of pipelines, too long to show as one
+// render. Lay it out as its prose, then each view's source above its own
+// render (comark-live-<n>, captured in source order).
+function liveViews(markdown) {
+  const lines = markdown.trim().split("\n");
+  let out = "";
+  let prose = [];
+  let view = 0;
+  const flush = () => {
+    if (prose.join("").trim()) out += `${prose.join("\n").trim()}\n\n`;
+    prose = [];
+  };
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].startsWith("# ")) continue;
+    if (!lines[i].startsWith("::bm-")) {
+      prose.push(lines[i]);
+      continue;
+    }
+    flush();
+    const block = [lines[i]];
+    while (i + 1 < lines.length && lines[i] !== "::") block.push(lines[++i]);
+    view += 1;
+    out += `\`\`\`markdown\n${block.join("\n")}\n\`\`\`\n\n`;
+    out += `::theme-image{light="/screenshots/comark/comark-live-${view}-light.png" dark="/screenshots/comark/comark-live-${view}-dark.png" alt="Live view ${view} rendered from a sample project"}\n::\n\n`;
+  }
+  flush();
+  return out;
+}
+
 for (const [group, heading] of groups) {
   const items = examples.filter((e) => e.group === group);
   out += `\n---\n\n## ${heading}\n`;
   for (const e of items) {
     const fence = e.markdown.includes("```") ? "````" : "```";
-    out += `\n### ${e.group === "live" ? "Live pipelines" : e.label}\n\n\`${e.id}\`: ${e.description}\n\n${fence}markdown\n${e.markdown.trim()}\n${fence}\n\n`;
+    if (e.group === "live") {
+      out += `\n### Live pipelines\n\n\`${e.id}\`: ${e.description}\n\n${liveViews(e.markdown)}`;
+      out += `[Open in playground ↗](${PLAY}?example=${e.id}){target="_blank"}\n`;
+      continue;
+    }
+    out += `\n### ${e.label}\n\n\`${e.id}\`: ${e.description}\n\n${fence}markdown\n${e.markdown.trim()}\n${fence}\n\n`;
     if (e.group !== "live") {
       out += `::theme-image{light="/screenshots/comark/comark-${e.id}-light.png" dark="/screenshots/comark/comark-${e.id}-dark.png" alt="The ${e.id} example rendered"}\n::\n\n`;
     }
