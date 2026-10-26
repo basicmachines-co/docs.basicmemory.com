@@ -60,7 +60,7 @@ description: Every Basic Memory Comark component, with its Markdown source, how 
 
 Basic Memory Cloud renders these components in Notes, the [Wiki](/cloud/wiki), and [shared notes](/cloud/shared-notes). Each one is written as Markdown: a \`::bm-\` directive with attributes in braces, a body, and a closing \`::\`. Everywhere else, in a local editor, on GitHub, or in a raw \`bm_read\`, the same note reads as plain Markdown, so your AI writes and reads these as text.
 
-Each example below shows its source, how it renders, and every attribute it accepts. **Open in playground** loads it in the [Comark playground](${PLAY}), where you can edit the source and switch between the rendered view and the plain text an agent reads. See [Live Notes](/cloud/live-notes) for how components and live views fit into a note.
+Each example below shows its source, how it renders, and every attribute it accepts. **Open in playground** loads it in the [Comark playground](${PLAY}){target="_blank"}, where you can edit the source and switch between the rendered view and the plain text an agent reads. See [Live Notes](/cloud/live-notes) for how components and live views fit into a note.
 
 ::tip
 Your AI can learn every component and its attributes from the \`memory-comark\` [agent skill](/integrations/skills), or from the \`comark(7)\` manual page (\`bm man comark\`, or \`memory://man/comark(7)\` over MCP).
@@ -76,7 +76,7 @@ for (const [group, heading] of groups) {
     if (e.group !== "live") {
       out += `::theme-image{light="/screenshots/comark/comark-${e.id}-light.png" dark="/screenshots/comark/comark-${e.id}-dark.png" alt="The ${e.id} example rendered"}\n::\n\n`;
     }
-    out += `[Open in playground ↗](${PLAY}?example=${e.id})\n`;
+    out += `[Open in playground ↗](${PLAY}?example=${e.id}){target="_blank"}\n`;
     if (e.group !== "live") out += `\n#### ${e.label} attributes\n\n${attributeTable(e.id)}`;
   }
 }
