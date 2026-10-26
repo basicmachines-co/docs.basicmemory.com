@@ -22,6 +22,8 @@ export default defineNuxtConfig({
     '/whats-new/agent-skills': { redirect: { to: '/integrations/skills', statusCode: 301 } },
     '/whats-new/openclaw-plugin': { redirect: { to: '/integrations/openclaw', statusCode: 301 } },
     '/whats-new/ai-friendly-docs': { redirect: { to: '/reference/llms-txt', statusCode: 301 } },
+    // The Connect Agent pane was pulled from the web app.
+    '/cloud/ai-collaboration': { redirect: { to: '/cloud/comments-and-suggestions', statusCode: 301 } },
     '/integrations/claude-research-mode': { redirect: { to: '/integrations/claude-desktop', statusCode: 301 } },
   },
   app: {
