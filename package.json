@@ -8,6 +8,7 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "check:docs": "node scripts/check-docs.mjs",
+    "gen:comark": "bun --preload ./scripts/comark/raw-plugin.ts scripts/comark/generate-components-page.mjs",
     "check": "npm run check:docs && npm run build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
