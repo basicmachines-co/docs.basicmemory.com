@@ -3,6 +3,12 @@ export default defineNuxtConfig({
   modules: ['@nuxt/fonts', '@nuxtjs/sitemap'],
   css: ['~/assets/css/main.css'],
   compatibilityDate: '2025-07-15',
+  // Docus 5.15 turned on zeroRuntime, which makes OG images only for
+  // prerendered pages. The docs are server-rendered, so pages lost their
+  // og:image; generate them at request time as before.
+  ogImage: {
+    zeroRuntime: false,
+  },
   routeRules: {
     '/': { redirect: { to: '/welcome', statusCode: 301 } },
     '/start-here/getting-started': { redirect: { to: '/local/getting-started', statusCode: 301 } },
