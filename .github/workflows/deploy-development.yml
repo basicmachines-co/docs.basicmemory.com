@@ -25,6 +25,19 @@ jobs:
           envsubst < fly.toml.template > fly.toml
           cat fly.toml
 
+      - name: Stage OG image signing secret
+        # OG image URLs are signed. Without a stable secret nuxt-og-image makes
+        # a new one every build, so previews crawlers cached break after each
+        # deploy. The value is a GitHub environment secret.
+        run: |
+          set -a
+          source .env.development
+          set +a
+          flyctl secrets set NUXT_OG_IMAGE_SECRET="$NUXT_OG_IMAGE_SECRET" --app "$DOCS_APP_NAME" --stage
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          NUXT_OG_IMAGE_SECRET: ${{ secrets.NUXT_OG_IMAGE_SECRET }}
+
       - name: Deploy to Fly.io
         run: |
           GIT_SHA="${{ github.sha }}"

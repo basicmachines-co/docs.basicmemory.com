@@ -8,6 +8,10 @@ kill_timeout = '5s'
   NITRO_HOST = '0.0.0.0'
   NITRO_PORT = '3000'
   NODE_ENV = '${NODE_ENV}'
+  # nuxt-site-config, read at runtime: absolute URLs (canonical, og:image)
+  # point at this environment's host.
+  NUXT_SITE_URL = '${NUXT_SITE_URL}'
+  NUXT_SITE_INDEXABLE = '${NUXT_SITE_INDEXABLE}'
   PORT = '3000'
 
 [http_service]
